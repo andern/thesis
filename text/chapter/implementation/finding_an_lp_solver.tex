@@ -1,0 +1,62 @@
+\section{Finding an LP solver}
+The method described in Chapter \ref{ch:slp} relies on repetitively solving
+linear programs. Before implementing such a method, it is important to choose
+an appropriate LP solver. The solver must
+\begin{inparaenum}[\itshape a\upshape)]
+\item be released under a free license; and
+\item it must allow library calls in C/C++
+\end{inparaenum}
+
+Among a list of about 50 solvers (most of them proprietary), the
+following three matches the aforementioned criteria:
+\begin{description}
+\item[Clp] \hfill \\
+Clp is short for Coin-or linear programming. It is a free linear programming
+solver released under the Common Public License (CPL). It is primarily meant to
+be used as a callable library. Its license allows other software to link to the
+Clp library without requiring that that software is released under the same
+license (permissive). \cite{clp}
+\item[GLPK] \hfill \\
+GLPK is short for GNU Linear Programming Kit. It is a free linear (integer)
+programming software packaged released under the GNU General Public License
+(GNU GPL). GLPK is organized in the form of a callable library. Its license
+requires linking software to be released under the GNU GPL (reciprocal).
+\cite{glpk}
+\item[lp\_solve] \hfill \\
+lp\_solve is a free linear (integer) programming solver released under the GNU 
+Lesser General Public License (GNU LGPL). Its license is permissive like the
+CPL. \cite{lpsolve}
+\end{description}
+
+In addition to those criteria, it is important that the solver is fast.
+Moreover, it needs to be fast on problems that fit the description in
+Chapter \ref{ch:problem}.
+
+Testing the three solvers on linearized versions of the instances
+\textit{small} and \textit{large}---presented in
+Chapter \ref{ch:instances}---reveals the running times shown in Table
+\ref{table:lpres}.
+The running times are the number of seconds in CPU-time after 1000 runs.
+
+\begin{table}[h!]
+    \centering
+    \caption{Running time in CPU-seconds used by each solver to solve 1000
+             instances of each problem}
+    \begin{tabular}{lrrr}
+        Data Set       & Clp    & GLPK   & lp\_solve \\ \hline
+        \textit{small} & 6.929  & 26.096 & 4.734 \\
+        \textit{large} & 12.832 & 47.977 & 23.376
+    \end{tabular}
+    \label{table:lpres}
+\end{table}
+
+While lp\_solve is the fastest on a smaller LP, it doesn't scale as well as
+with larger problems like Clp does. GoodTech need to solve pro
+
+GoodTech need to solve problems with more than 200 variables, and
+\textit{small} is almost hitting that lower limit, so a good result on
+\textit{large} is prioritized over the other.
+This means that Clp outperforms the other two solvers in this test.
+
+Although this is not an extensive test, it is a pretty good indicator that Clp
+will be the fastest solver on similar problems.

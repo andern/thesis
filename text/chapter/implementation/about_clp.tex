@@ -1,0 +1,97 @@
+\section{About Clp}
+Matrices in Clp are stored in a compact format using three vectors.
+The first vector contains all the non-zero elements of the matrix.
+The second vector contains the indices of the elements in the first vector.
+The third vector contains an accumulated number of elements in each row/column.
+The order of the elements depends whether the matrix is row-ordered or
+column-ordered.
+The indices represent the column/row position of the elements, and the
+accumulated values represent the accumulated number of elements in the
+row/columns depending on whether the matrix is row-ordered or column-ordered,
+respectively.
+To get a better understanding of how they are stored, consider the matrix
+\[
+\left[
+\begin{array}{rrrrrrrr}
+    3 & 1 & 0   & -2  & -1 & 0 & 0    & -1 \\
+    0 & 2 & 1.1 & 0   & 0  & 0 & 0    & 0  \\
+    0 & 0 & 1   & 0   & 0  & 1 & 0    & 0  \\
+    0 & 0 & 0   & 2.8 & 0  & 0 & -1.2 & 0  \\
+  5.6 & 0 & 0   & 0   & 1  & 0 & 0    & 1.9  
+
+\end{array}
+\right]
+\]
+being stored in row-ordered format, then the element vector would be
+\[
+\left[
+\begin{array}{rrrrrrrrrrrrrr}
+    3 & 1 & -2 & -1 & -1 & 2 & 1.1 & 1 & 1 & 2.8 & -1.2 & 5.6 & 1 & 1.9
+\end{array}
+\right]^T,
+\]
+the vector containing the column indices would be
+\[
+\left[
+\begin{array}{rrrrrrrrrrrrrr}
+    0 & 1 & 3 & 4 & 7 & 1 & 2 & 2 & 5 & 3 & 6 & 0 & 4 & 7
+\end{array}
+\right]^T,
+\]
+and the vector containing the vector starts (the accumulated indices) would be
+\[
+\left[
+\begin{array}{rrrrrr}
+    0 & 5 & 7 & 9 & 11 & 14
+\end{array}
+\right]^T.
+\]
+The \texttt{CoinPackedMatrix} class represents such a compact matrix.
+To keep overhead at a minimum, it is important to implement the new solver
+(from here on called Slp) using the same compact format.
+
+Clp has a base class that holds data for both linear and quadratic models
+called \texttt{ClpModel}.
+The class itself knows nothing about the implementation of the algorithms, but
+it contains all the data about a problem needed to apply an algorithm on that
+data.
+This is very handy for passing data throughout Slp without much overhead.
+It also results in very neat function prototypes as only one parameter
+is needed for passing lots of information. For instance, the function prototype
+in Slp for the function that performs the line search described in Chapter
+\ref{ch:slp} looks like this:
+\begin{verbatim}
+double lineSearch(double* p1, double* p2, ClpModel model);
+\end{verbatim}
+Figure \ref{fig:clpmodel} shows the class hierarchy for \texttt{ClpModel}.
+The subclasses contain the implementation of the algorithms that their class
+names describe. For instance, \texttt{ClpSimplexDual} contains the
+implementation of the Dual Simplex Algorithm.
+\begin{figure}
+\centering
+\begin{tikzpicture}[node distance=2.5cm]
+    \tikzstyle{every state}=[rectangle,
+                             minimum width=10em,
+                             rounded corners,
+                             fill=blue!30,
+                             edge from parent,
+                             text=black]
+    \tikzset{node distance=1.7cm};
+
+    \node[state] (a)                    {\texttt{ClpModel}};
+    \node[state] (b) [below of = a]     {\texttt{ClpSimplex}};
+    \node[state] (c) [right = 0.5cm of b] {\texttt{ClpInterior}};
+    \node[state] (d) [below of = b]     {\texttt{ClpSimplexDual}};
+    \node[state] (e) [right = 0.5cm of d] {\texttt{ClpSimplexPrimal}};
+
+    \tikzset{edgestyle/.style={-, double=black}}
+%    \tikzset{every node/.style={fill=white}}
+
+    \path (a) edge [edgestyle] node {}  (b)
+          (a) edge [edgestyle] node {}  (c)
+          (b) edge [edgestyle] node {}  (d)
+          (b) edge [edgestyle] node {}  (e);
+\end{tikzpicture}
+\label{fig:clpmodel}
+\caption{Class hierarchy for \texttt{ClpModel}}
+\end{figure}

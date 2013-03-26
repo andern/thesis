@@ -1,0 +1,36 @@
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=0.25cm,
+    ylabel=Number of elements,
+    xmin=0.00001,
+    xmax=0.01,
+    xtick=data,
+    xlabel=Value,
+]
+
+\addplot+[hist={
+                bins=6,
+%                cumulative,
+%                density
+                }]
+         table[y=data] {include/data/vlargeHnonzero.dat};
+
+\addplot+[hist={
+                bins=6,
+%                cumulative,
+%                density
+                }]
+         table[y=data] {include/data/largeHnonzero.dat};
+
+\addplot+[hist={
+                bins=6,
+%                cumulative,
+%                density
+                }]
+         table[y=data] {include/data/smallHnonzero.dat};
+
+\legend{\textit{vlarge}, \textit{large}, \textit{small}}
+
+\end{axis}
+\end{tikzpicture}

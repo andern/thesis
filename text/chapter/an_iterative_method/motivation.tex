@@ -1,0 +1,76 @@
+\section{Motivation}
+One interesting property shared by several practical applications is that the
+coefficients in the linear term of the objective function is of a much higher
+magnitude than those in the quadratic term.
+From this one might think that the quadratic term is close to negligible.
+By removing the quadratic term from the objective function, leaving only the
+linear term, the QP transforms into an LP.
+Linearizing the objective function using a first-order Taylor series expansion
+at 0 would give us the same result.
+
+To see this, consider a first-order (linear) Taylor series expansion of a
+general function $f$ at a point $a$:
+\[
+T_a(x) = f(a) + \nabla f(a)^T(x-a)
+\]
+where $\nabla f(a)$ is the gradient of $f$ evaluated at $a$~\cite{apostol}.
+A linear approximation of function (\ref{eq:obj}) becomes
+\[
+T_a(x) = a^THa + b^Ta + (2a^TH + b^T)(x - a) \\
+\]
+Removing cancelling terms, the approximation becomes
+\begin{equation}
+\label{eq:texp}
+T_a(x) = - a^THa + 2a^THx + b^Tx
+\end{equation}
+Now, if $a = 0$ in (\ref{eq:texp}) we are left with
+\[
+T_0(x) = b^Tx
+\]
+
+Using $g(x) = T_0(x) = b^Tx$, we formulate a new LP that we call $\mathcal{L}$:
+\[
+\min_{x \in \mathbb{R}^n} g(x)
+\quad \textrm{subject to}
+~
+Ax = 0
+~
+\textrm{and}
+~
+l \le x \le u
+\]
+where $H$ is a positive semidefinite diagonal $n \times n$ matrix, $A$ is an
+$m \times n$ oriented incidence matrix of some network, and $b, l, u$ and $x$ are vectors in
+$\mathbb{R}^n$.
+We let $\hat{x}$ denote some optimal solution of $\mathcal{L}$, and let $x^*$
+denote some optimal solution of $\mathcal{Q}$.
+
+By minimizing $\mathcal{L}$, we can get an idea about the quality of
+$\mathcal{L}$'s solution with respect to $\mathcal{Q}$ by substituting
+$\hat{x}$ into (\ref{eq:obj}) and checking how much the numerical value
+deviates from the optimal objective value of $\mathcal{Q}$.
+For any QP and its linearized LP, we denote this deviation by $\Delta$.
+More specifically, using (\ref{eq:obj}):
+\[
+\Delta = \left|\frac{f(\hat{x}) - f(x^*)}{f(x^*)}\right|
+\]
+
+Figure \ref{fig:sparsobj} shows how $\Delta$ changes in respect to the sparsity
+in the objective function, both in the linear and the quadratic terms, on a
+specific network. The x- and y- axes represent the percentage of zeroes in the
+diagonal elements of $H$ and the elements of $b$, respectively. The y-axis
+stops at 75\% because $\Delta$ started reaching values above 1.
+
+\begin{figure}[h!]
+\begin{center}
+    Hidden. TODO: Show
+%    \input{include/delta3d}
+\end{center}
+\caption{Density in the objective function}
+\label{fig:sparsobj}
+\end{figure}
+
+$\mathcal{L}$ was always solved more than 85\% faster than $\mathcal{Q}$.
+(TODO: Test against CPLEX)
+These results give us an incentive to look into solution methods that are based
+upon linear programming, such as Successive Linear Programming (SLP).

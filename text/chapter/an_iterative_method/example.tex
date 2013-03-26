@@ -1,0 +1,126 @@
+\section{A Numerical Example}
+\label{sec:example}
+Consider the quadratic program $\mathcal{Q}$:
+\[
+\begin{array}{lcrcrcrcrcl}
+\textrm{Minimize}   & & x^2 &+& y^2 &-& 2 x &-& 2 y \\
+\textrm{subject to} & &     & &     & &   x &+&   y &\leq& 3 \\
+\textrm{and}        & &     & &     & &   x &-&   y &\leq& 1 \\
+\textrm{and}        & &     & &     &-&   x &+& 3 y &\leq& 4 \\
+\textrm{and}        & &     & &     & &   x &,&   y &\geq& 0
+\end{array}
+\]
+and let $x^*$ denote one of its optimal points and let $f$ denote its objective
+function.
+
+Let $x_0 = (0,0)$ such that $T_0 = -2x - 2y$.
+Figure \ref{fig:lp1} shows the feasible region of $\mathcal{L}_0$ and
+$\mathcal{Q}$\footnote{
+    The feasible region of $\mathcal{L}_k$ and $\mathcal{Q}$ are equal for all
+    $k$ as the constraints never change during the iterations of the algorithm.
+}
+, along with $T_0$ evaluated at $x_0$ (line in red), the optimal solution
+$\hat{x}_0$ of $\mathcal{L}_0$\footnote{
+    $\mathcal{L}_0$ has multiple optimal solutions so $\hat{x}_0$ may differ
+    between LP implementations
+}
+, the optimal solution $x^*$ of $\mathcal{Q}$ and the contours of $f$.
+On the right it also shows $\mathcal{L}_0$ in standard form (note that the
+objective has been negated.)
+
+\input{include/slpfirst}
+
+We perform a line search between the points $x_0$ and $\hat{x}_0$.
+We find a function $m$ of $\alpha$ that range all points collinear with $x_0$
+and $\hat{x}_0$:
+\[
+f(\alpha x_0 + (1-\alpha)x_0^*) = 5\alpha^2 - 4\alpha -1 = m(\alpha)
+\]
+To find the minimum of this one-dimensional convex parabola we set
+$m^\prime(\alpha) = 0$ and solve for $\alpha$ to achieve $\alpha = 0.4$
+(see Figure \ref{fig:steplength}).
+Note that $\alpha \in [0, 1]$ because the unconstrained minimum of $f$ is
+inside the feasible region.
+Now let
+\[
+x_1 = 0.4x_0 + 0.6\hat{x}_0 = (1.2, 0.6)
+\]
+and let us apply Equation (\ref{eq:texp}) to calculate a Taylor series
+expansion at $x_1$:
+\[
+\begin{array}{rcl}
+T_1 &=& -\left[
+         \begin{array}{cc}
+            1.2 & 0.6
+         \end{array}
+         \right]
+
+         \left[
+         \begin{array}{cc}
+            1 & 0 \\ 0 & 1
+         \end{array}
+         \right]
+         
+         \left[
+         \begin{array}{c}
+             1.2 \\ [5pt] 0.6
+         \end{array}
+         \right]
+         + 2
+         \left[
+         \begin{array}{cc}
+            1.2 & 0.6
+         \end{array}
+         \right]
+         
+         \left[
+         \begin{array}{cc}
+            1 & 0 \\ 0 & 1
+         \end{array}
+         \right]
+         
+         \left[
+         \begin{array}{c}
+            x \\ y
+         \end{array}
+         \right] \\
+         
+     & & +
+         \left[
+         \begin{array}{cc}
+            -2 & -2
+         \end{array}
+         \right]
+         
+         \left[
+         \begin{array}{c}
+            x \\ y
+         \end{array}
+         \right] \\ [15pt]
+    &=& \displaystyle 0.4x - 0.8y - 1.8
+\end{array}
+\]
+
+\input{include/slpsecond}
+
+Now, we minimize $T_1$ subject to the original constraints and call the LP for
+$\mathcal{L}_1$.
+Assume $\mathcal{L}_1$ has optimal solution $\hat{x}_1$
+(See Figure \ref{fig:lp2}).
+
+\input{include/slpthird}
+
+Again we perform a line search, but this time between the points $x_1$ and
+$\hat{x}_1$ and find that $\alpha = 0.73$, $x_2 = (0.88, 0.8)$ and
+$T_2 = -0.25x -0.4y -0.4$.
+Minimize $T_2$ subject to the original constraints and call the LP for
+$\mathcal{L}_2$.
+The optimal solution $\hat{x}_2$ of $\mathcal{L}_2$ is $(1.25, 1.75)$.
+Performing line search between $x_2$ and $\hat{x}_2$ we get that
+$\alpha = 0.77$ and that $x_3 = (0.96, 1.02)$.
+
+\input{include/slpfourth}
+
+Assume $\epsilon = 0.5$, which imples that
+$\frac{f(x_2) - f(x_3)}{|f(x_2)|} \leq \epsilon$, so we stop and return $x_3$
+as our solution.

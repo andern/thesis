@@ -1,0 +1,77 @@
+\section{The Method}
+\label{sec:method}
+Consider the quadratic programming problem presented in Chapter
+\ref{ch:problem}:
+\[
+\min_{x \in \mathbb{R}^n} f(x) = x^T H x + b^T x
+\quad \textrm{subject to}
+~
+Ax = 0
+~
+\textrm{and}
+~
+l \le x \le u
+\]
+and call the objective function $f$.
+The constraints are all linear, so by only linearizing the objective function
+we end up with a linear program.
+Let $T_k$ denote the Taylor series expansion at point $x_k$ of $f$.
+Denote the linear program defined by minimization of $T_k$ subject to these
+constraints by $\mathcal{L}_k$.
+Let $\hat{x}_k$ denote an optimal solution of $\mathcal{L}_k$.
+
+Let $k = 0$ and our initial guess $x_0$ be given.
+Applying (\ref{eq:texp}) we have that
+\[
+T_k = - x_k^THx_k + 2x_k^THx + b^Tx
+\]
+Assume the linear program $\mathcal{L}_k$ has an optimal solution $\hat{x}_k$.
+We note that $\mathcal{L}_k$ is minimizing in the direction of
+$x^{\mathcal{U}}$, i.e. the unconstrained minimum of $f$.
+Additionally we note that $\hat{x}_k$ lies on the boundary of the feasible
+region.
+From this we see that if the unconstrained minimum lies inside the feasible
+region ($x^* = x^\mathcal{U}$) there exists a point on the line segment between
+$x_k$ and $\hat{x}_k$ that is closer to $x^*$ than the two end points.
+
+We perform a \emph{line search} by finding the minimum value of $f$ on the
+straight line between the points $x_k$ and $\hat{x}_k$:
+\[
+\alpha_k \in \argmin_{\alpha \leq 1} f((1-\alpha) x_k + \alpha \hat{x}_k)
+\]
+Call $\alpha_k$ the \emph{step length}.
+
+We find a closed-form definition of the step length $\alpha_k$ by letting
+$m(\alpha) = f((1-\alpha) x_k + \alpha \hat{x}_k)$ and setting
+$m^\prime(\alpha) = 0$ and solving for $\alpha$:
+\[
+\alpha_k = \frac{
+                2x_k^T H x_k
+                - 2\hat{x}_k^T H x_k
+                + b^T x_k - b^T \hat{x}_k
+                }{
+                  2\hat{x}_k^T H \hat{x}_k
+                - 4\hat{x}_k^T H x_k
+                + 2x_k^T H x_k
+                }
+\]
+
+We calculate $x_{k+1}$ using the step length $\alpha_k$:
+\[
+x_{k+1} = \alpha_k x_k + (1-\alpha_k)\hat{x}_k
+\]
+If, however, the unconstrained minimum lies outside the feasible region
+($x^* \neq x^\mathcal{U}$), $\alpha_k$ might be less than $0$ and the minimum
+value of $f$ of all the \emph{feasible} points collinearly with $x^*$ and
+$\hat{x}_k$ will be $\hat{x}_k$.
+TODO: Illustrate with a figure?
+
+Increase $k$ by one and repeat the process from the calculation of $T_k$ until
+we reach our termination condition.
+We terminate when we are as close to $x^*$ as we want.
+Given some $\epsilon$, we terminate when
+\[
+\frac{f(x_{k-1}) - f(x_k)}{|f(x_{k-1})|} \leq \epsilon
+\]
+
+\input{include/slp_algo}
