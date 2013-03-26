@@ -1,0 +1,25 @@
+\documentclass[a4paper]{article}
+\begin{document}
+\title{Project Description of Master Thesis\\
+  \large Fast Solver of Quadratic Programming Problems}
+\author{Andreas Halle\\
+  Master's Programme in Informatics, Optimization\\
+  University of Bergen}
+\date{\today}
+\maketitle
+\thispagestyle{empty}
+
+Goodtech and MathConsult have developed tools to compute the reliability of delivery in a masked network where every link has an error rate. This method is based on reliability theory to find actual error cases for further analysis, and optimization theory to compute an optimal delivery through the network for every error case. The optimization problems are formulated as Quadratic Programming (QP) problems.
+
+Because the number of possible error cases increases rapidly as the size of the network increases, it is crucial that every error case is analyzed very quickly. Through the study of available QP solvers, the development group at Goodtech have come to the conclusion that CPLEX is the most efficient solver for the relevant problems. But since CPLEX is expensive and is not specialized for their use, Goodtech is interested in a specialised solver customized for them.
+
+The student shall develop a solver for effectively solving problems with the following characteristics:
+\begin{itemize}
+  \item Problem size of 100 - 2000 variables, but with the possibility of reducing the problem size through variable elimination.
+  \item Sparse matrices.
+  \item Positive-semidefinite quadratic terms in the objective function.
+  \item The QP problem shall be solved many times (in the order of thousands) with small variations in the constraints.
+\end{itemize}
+
+The project is supervised by Dag Haugland, University of Bergen.
+\end{document}
