@@ -64,8 +64,16 @@ That is entirely justified as \textit{large} is four \textit{small}-networks
 connected forming one large network.
 
 For each of these instances, GoodTech AS wants to solve several other instances
-with slight variations. GoodTech AS wants to simulate that all combinations of
-nodes in the network loses connection, by forcing their corresponding 
-variable values to zero. This means that for each of the three instances
-described in this chapter of size $m \times n$, they need to solve a total of
-$2^n$ instances.
+with slight variations.
+These instances are from here on called \emph{subinstances}.
+If one or more variables in an instance $\mathcal{Q}$ is forced to zero to form
+a new instance, the newly formed instance is a subinstance of $\mathcal{Q}$.
+GoodTech AS wants to simulate that all combinations of edges in the network
+falls down, by forcing their corresponding variable values to zero.
+This means that for each of the three instances described in this chapter,
+they ideally want to solve a total of $2^n$ subinstances.
+Solving all $2^n$ subinstances is  impossible.
+It is unlikely that all edges in the network break down.
+A more realistic approach is to try to solve all subinstances with no more than
+$k$ break-downs, i.e. we solve $\sum_{j=0}^k {n \choose j}$ subinstances
+with less than or equal to $k$ break-downs.
