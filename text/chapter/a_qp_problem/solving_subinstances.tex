@@ -1,0 +1,31 @@
+\section{The Subinstances}
+For one or more given variables, their lower and upper bounds are set to zero,
+i.e. forcing the variables to zero.
+Let us denote the set of variables that are to be forced to zero by
+$\mathcal{M}_k$ for some $1 \leq k \leq 2^n - 1$ where $n$ is the number
+of edges in the network.
+Forcing these variables to zero in some instance $\mathcal{Q}$ forms
+a subinstance $\mathcal{Q}_k$. We refer to $\mathcal{M}_k$ as a
+\emph{modifier} of $\mathcal{Q}$.
+To simplify notation from here on, we let
+$\mathcal{Q}_0 = \mathcal{Q}$ and loosen the terminology of
+\emph{subinstance} so that $\mathcal{Q}_0$ can be called a subinstance of
+$\mathcal{Q}$ where its modifier $\mathcal{M}_0 = \emptyset$.
+
+To distinguish between optimal solutions over several subinstances, we denote
+an optimal solution of $\mathcal{Q}_k$ as $x_k^*$.
+In any solution of any instance there might be variables that are zero.
+We denote the set of variables that are zero in an \emph{optimal} solution
+$x_k^*$ by $\mathcal{Z}_k$.
+If a modifier $\mathcal{M}_k$ only has variables that are zero in $x_0^*$,
+i.e. if $\mathcal{M}_k \subseteq \mathcal{Z}_0$, then $x_k^* = x_0^*$. However,
+if $\mathcal{M}_k$ has some variables that are non-zero in $x_0^*$, then
+we solve $\mathcal{Q}_k$ to achieve its solution $x_k^*$ along with the set
+$\mathcal{Z}_k$.
+
+Generally, for each $\mathcal{Q}_k$ and its modifier $\mathcal{M}_k$ we
+have that $x_l^* = x_k^*$ for all $l=1,2,\ldots,2^n-1$ if
+$\mathcal{M}_l = S \cup \mathcal{M}_k$ for some $S \subseteq \mathcal{Z}_k$.
+That is, instances $\mathcal{Q}_k$ and $\mathcal{Q}_l$ have identical optimal
+solutions if $\mathcal{M}_l$ is obtained by extending $\mathcal{M}_k$ only with
+variables that are zero in the optimal solution to $\mathcal{Q}_k$.

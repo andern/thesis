@@ -1,48 +1,10 @@
-\chapter{A Quadratic Programming (QP) Problem}
-\label{ch:problem}
-A general formulation of non-linear optimization problems is
-\begin{equation}
-    \label{eq:generalqp}
-    \min_{x \in \mathbb{R}^n} f(x) \quad \textrm{subject to}
-    \begin{cases}
-        ~c_i(x) = 0,   & i \in \mathcal{E}, \\
-        ~c_i(x) \ge 0, & i \in \mathcal{I},
-    \end{cases}
-\end{equation}
-where $f$ and the functions $c_i$ are all smooth, real-valued functions on a
-subset of $\mathbb{R}^n$, and $\mathcal{I}$ and $\mathcal{E}$ are two finite
-sets of indices~\cite{nocedal}.
+\chapter{Quadratic Programming (QP) Problems}
+\label{ch:qp}
 
-The problem discussed in this thesis has a convex, quadratic, separable
-objective function
-\begin{equation}
-    \label{eq:obj}
-    f(x) = x^T H x + b^T x
-\end{equation}
-and linear constraints. It qualifies as a QP problem and can be formulated as
-\begin{equation}
-    \label{eq:thesisqp}
-    \min_{x \in \mathbb{R}^n} f(x)
-    \quad \textrm{subject to}
-    ~
-    Ax = 0
-    ~
-    \textrm{and}
-    ~
-    l \le x \le u
-\end{equation}
-where $H$ is a positive semidefinite diagonal $n \times n$ matrix, $A$ is a
-$m \times n$ oriented incidence matrix, and $b, l, u$ and $x$ are vectors in
-$\mathbb{R}^n$.
+\input{chapter/a_qp_problem/a_formulation}
 
-The function $f$ in (\ref{eq:generalqp}) is called the objective function of
-the problem. In (\ref{eq:obj}) and (\ref{eq:thesisqp}), $f$ consists of a
-quadratic term ($x^T H x$) and a linear term ($b^T x$).
+\input{chapter/a_qp_problem/the_instances}
 
-In practical applications, a large proportion of the diagonal elements of H are
-zero, and for the non-zero elements we typically have
-$10^{-5} \le h_i \le 10^{-1}$. Here $h_i$ denotes the $i$th diagonal element of
-$H$. For the components $b_i$ of vector $b$, we typically have
-$10 \le |b_i| \le 70$. All elements of $l$ and $u$ are non-positive 
-and non-negative, respectively. However, the methods developed in this thesis
-do not require these values.
+\input{chapter/a_qp_problem/solving_subinstances}
+
+\input{chapter/a_qp_problem/storing_and_comparing}
