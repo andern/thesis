@@ -1,4 +1,4 @@
-\section{The Subinstances}
+\section{Subinstances}
 For one or more given variables, their lower and upper bounds are set to zero,
 i.e. forcing the variables to zero.
 Let us denote the set of variables that are to be forced to zero by
@@ -17,6 +17,8 @@ an optimal solution of $\mathcal{Q}_k$ as $x_k^*$.
 In any solution of any instance there might be variables that are zero.
 We denote the set of variables that are zero in an \emph{optimal} solution
 $x_k^*$ by $\mathcal{Z}_k$.
+Additionally, we denote the set of variables that are non-zero in an 
+optimal solution $x_k^*$ by $\mathcal{N}_k$.
 If a modifier $\mathcal{M}_k$ only has variables that are zero in $x_0^*$,
 i.e. if $\mathcal{M}_k \subseteq \mathcal{Z}_0$, then $x_k^* = x_0^*$. However,
 if $\mathcal{M}_k$ has some variables that are non-zero in $x_0^*$, then
@@ -29,3 +31,9 @@ $\mathcal{M}_l = S \cup \mathcal{M}_k$ for some $S \subseteq \mathcal{Z}_k$.
 That is, instances $\mathcal{Q}_k$ and $\mathcal{Q}_l$ have identical optimal
 solutions if $\mathcal{M}_l$ is obtained by extending $\mathcal{M}_k$ only with
 variables that are zero in the optimal solution to $\mathcal{Q}_k$.
+Additionally, for each $\mathcal{Q}_k$ and its modifier $\mathcal{M}_k$ we
+have that $x_l^* \neq x_k^*$ for all $l=1,2,\ldots,2^n-1$ if
+$\mathcal{M}_l = S \cup \mathcal{M}_k$ for some $S\not\subseteq \mathcal{N}_k$.
+That is, instances $\mathcal{Q}_k$ and $\mathcal{Q}_l$ have different optimal
+solutions if $\mathcal{M}_l$ is obtained by extending $\mathcal{M}_k$ with any
+variables that are non-zero in the optimal solution to $\mathcal{Q}_k$.
