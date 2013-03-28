@@ -1,4 +1,20 @@
 \chapter{Implementation}
+Recall from Chapter \ref{ch:qp} that we discussed limiting the amount
+of subinstances to solve. We did this by introducing a limit on the number of
+break-downs to simulate in the network.
+Another approach is to implement a service that waits for a query from
+a client containing a modifier of some instance. The server keeps a memory
+of unique solutions and its corresponding modifier.
+For each query, the server checks if it has previously solved a subinstance
+that should have the same solution. If that is the case, simply return that
+solution. If not, solve the new subinstance and store its solution. We can
+impose a memory limit that causes the server to delete old solutions when the
+memory is full.
+
+The difference in these two approaches are prominent, but they share the same
+core, namely a QP solver. In this chapter we first discuss the implementation
+of the solver declared in Chapter \ref{ch:slp}, before we move on to the
+implementation of the two approaches of solving several subinstances.
 \label{ch:implementation}
 
 \input{chapter/implementation/finding_an_lp_solver}

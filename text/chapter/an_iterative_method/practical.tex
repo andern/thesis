@@ -130,14 +130,3 @@ Continuing we find that
 \[
     x_1 = 0.8 x_0 + 0.2 \hat{x}_0 = (1.2, 0.4) = x^*.
 \]
-
-The right hand side values were changed to zero in the example above. However,
-in the problem described in Section \ref{sec:problem}, all the equalities are
-equal to zero. In real instances, these right hand side values are not changed,
-but another type of constraints are changed, namely the column bounds. For some
-given variables, their lower and upper bounds are set to zero, i.e. forcing
-these variables to a value of zero. If these variables are already zero in the
-previous solution, then forcing the variable equal to zero will not cause the
-feasible region to change, meaning that an already optimal solution will stay
-optimal. The next section talks about how we can use this property to our
-advantage.
