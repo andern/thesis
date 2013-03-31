@@ -1,15 +1,33 @@
 \section{Mapping Subinstances}
 In this section we will discuss how to map all subinstances of some arbitrary
-instance $\mathcal{Q}$. We will also discuss how to generate
+instance $\mathcal{Q}$. We will also discuss how to find 
 subinstances that we do not already know the solution to.
 We will construct a \emph{tree} of these ``unique'' solutions which will allow
-us to efficiently check if some modifier will form a subinstance with a unique
-solution or not.
+us to efficiently check if some modifier will form a subinstance with an
+unknown solution.
 
-After solving some $\mathcal{Q}_k$ to achieve some optimal solution $x_k^*$, we
-also achieve the set of zero-variables in $x_k^*$, denoted by $\mathcal{Z}_k$.
-The cardinality of $\mathcal{Z}_k$, i.e. $|\mathcal{Z}_k|$, determines the
-number of subinstances that share the solution $x_k^*$.
-Similarily, the cardinality of $\mathcal{N}_k$, i.e. $|\mathcal{N}_k|$,
-determines the number of subinstances where $\mathcal{M}_l$ is some 
-extension of $\mathcal{M}_k$ for some $l=1,2,\ldots,2^n-1$.
+If we were to try to solve all $2^n$ possible subinstances of an
+instance, we would most likely end up solving a huge amount of subinstances
+with the same optimal solution. This is evident in some of the real
+instances; when we solve the unmodified instance \texttt{vlarge}, we already
+have the solution to $2^{1749}$ of its possible subinstances, i.e.
+$|\mathcal{Z}_0| = 1749$.
+Just trying to unnecessarily solve all these subinstances---let alone store the
+solutions---would be a huge waste of resources.
+Instead, we try to find subinstances that we do not know the solution to.
+A good starting point would be to find all the subsets of $\mathcal{N}_0$ and
+use them as modifiers of $Q$. That would be equivalent to forcing non-zero
+variables in the optimal solution of the unchanged instance $Q$, to zero.
+Recall from the previous section that if $\mathcal{Q}$ is known, the modifier
+$\mathcal{M}_k$ is enough to find the subinstance $\mathcal{Q}_k$ for some
+$k=1,2,\ldots,2^n-1$.
+While finding modifiers $\mathcal{M}_k$ such that
+$\mathcal{M}_k \subseteq \mathcal{N}_0$ would assure us that $x_k^*\neq x_0^*$,
+it does not assure us that $x_k^* \neq x_l^*$ for all $l=1,2,\ldots,2^n-1$.
+To make sure that we do not solve any unnecessary subinstances, we need to make
+sure to find modifiers $\mathcal{M}_k$ such that
+$\mathcal{M}_k \not \subseteq \mathcal{Z}_l$
+for \emph{all} $l=1,2,\ldots,2^n-1$.
+
+Consider a set $\mathbb{U}$ that contains all subinstances $\mathcal{Q}_k$
+such that $x_k^* \neq x_l^*$ for all $\mathcal{Q}_l \in \mathbb{U}$.
