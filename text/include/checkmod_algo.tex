@@ -1,0 +1,19 @@
+\begin{algorithm}[H]
+\caption{\texttt{checkmod($\mathcal{M}_l$, $\mathcal{Q}_k$)}}
+\label{alg:checkmod}
+%\KwIn{Modifier $\mathcal{M}_l$}
+%\KwIn{Node $\mathcal{Q}_k$}
+
+%\SetAlgoLined
+\SetAlgoVlined
+\ForEach{child node $\mathcal{Q}_i$ of $\mathcal{Q}_k$}{
+  \If{$\mathcal{M}_i \subseteq \mathcal{M}_l$}{
+    \eIf{$\mathcal{M}_l \subseteq \mathcal{Z}_i$}{
+      \KwRet{$\mathcal{M}_i$}
+    }{
+      \KwRet{\texttt{checkmod($\mathcal{M}_l$, $\mathcal{Q}_i$)}}
+    }
+  }
+}
+\KwRet{$\mathcal{M}_l$}
+\end{algorithm}

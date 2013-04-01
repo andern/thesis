@@ -30,4 +30,36 @@ $\mathcal{M}_k \not \subseteq \mathcal{Z}_l$
 for \emph{all} $l=1,2,\ldots,2^n-1$.
 
 Consider a set $\mathbb{U}$ that contains all subinstances $\mathcal{Q}_k$
-such that $x_k^* \neq x_l^*$ for all $\mathcal{Q}_l \in \mathbb{U}$.
+such that $x_k^* \neq x_l^*$ for all
+$\mathcal{Q}_l \in \mathbb{U} \backslash \mathcal{Q}_k$.
+While constructing such a set, we have to obey the following rules:
+If $\mathcal{M}_k$ is a subset of any $\mathcal{Z}_l \in \mathbb{U}$, we know
+that $x_k^* = x_l^*$ and therefore we do not add $\mathcal{Q}_k$ to
+$\mathbb{U}$;
+if however, the opposite is true, we add $\mathcal{Q}_k$ to $\mathbb{U}$.
+With such a set; given an arbitrary modifier $\mathcal{M}_k$, we could check
+whether we would need to solve its corresponding subinstance $\mathcal{Q}_k$ or
+not.
+The downside to this is that we need to check all elements in $\mathbb{U}$ for
+each modifier we want to check.
+
+By constructing a tree instead of a set, we could check a modifier without
+checking it against all previous subinstances we have solved. Let each node
+represent a subinstance $\mathcal{Q}_k$. As with the set $\mathbb{U}$, we only
+allow subinstances $\mathcal{Q}_k$ such that $x_k^* \neq x_l^*$ for all
+subinstances $\mathcal{Q}_l$ in the tree where $l \neq k$. For each node in the
+tree representing a subinstance $\mathcal{Q}_k$ and its parent node
+representing a subinstance $\mathcal{Q}_l$, $\mathcal{M}_l$ must be a subset of
+$\mathcal{M}_k$. Put differently, each node and its corresponding modifier in
+the tree must be an extension of the modifier of its parent node. The root node
+which does not have any parent node, has a modifier that is equal to the empty
+set, i.e. $\mathcal{M}_0 = \emptyset$.
+\input{include/checkmod_algo}
+
+\begin{figure}[h!]
+\begin{center}
+\input{include/maptreesets}
+\end{center}
+\caption{A tree of the subinstances of some $\mathcal{Q}$.}
+\label{fig:mapgraph}
+\end{figure}
