@@ -1,0 +1,42 @@
+\begin{tikzpicture}[level/.style={sibling distance=10mm/#1, level distance=10mm}]
+\tikzset{every node/.style={shape=circle,fill=black!25,minimum size=7mm}}
+%\tikzset{every node/.style={shape=circle,
+%                            font=\bfseries \Large,
+%                            minimum size=3cm,
+%                            scale=0.4
+%                           }}
+\node[fill=red!40] (root) {$0$}
+    child {
+        node {$1$}
+        child {
+            node {$5$}
+            child {
+                node {$8$
+                }
+            }
+        }
+    }
+    child[fill=red!40] {
+        node[fill=red!40] {$2$}
+        child {
+            node[fill=red!40] {$6$}
+            child {
+                node {$9$}
+                child {node {$10$}
+                };
+                \path edge from parent[draw,line width=3pt,-,red!30];
+            };
+            \path edge from parent[draw,line width=3pt,-,red!30];
+        };
+    \path edge from parent[draw,line width=3pt,-,red!30];
+    }
+    child {node {$3$}}
+    child {
+        node {$4$}
+        child {
+            node {$7$}
+        };
+    \path edge from parent[draw,line width=3pt,-,red!30];
+    }
+    ;
+\end{tikzpicture}

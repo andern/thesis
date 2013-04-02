@@ -1,5 +1,8 @@
 \documentclass[a4paper]{report}
 
+\usepackage{caption}
+\usepackage{subcaption}
+
 \usepackage{amsmath}
 \usepackage{amsfonts}
 
@@ -12,18 +15,18 @@
 
 \usepackage{cite}
 
-\usepackage[ruled,noend,noline]{algorithm2e}
+\usepackage[ruled]{algorithm2e}
 
 \usepackage{paralist}
 
 \usepackage{url}
 
 \usepackage{verbatim}
-%\usepackage{chngcntr}
+\usepackage{chngcntr}
 %\counterwithin{figure}{section}
 %\counterwithin{equation}{section}
 %\counterwithin{table}{section}
-%\counterwithin{algo}{section}
+\counterwithin{algocf}{chapter}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 

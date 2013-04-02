@@ -1,18 +1,20 @@
-\begin{tikzpicture}[level/.style={sibling distance=30mm/#1, level distance=20mm}]
+\begin{tikzpicture}[level/.style={sibling distance=20mm/#1, level distance=10mm}]%, scale=0.6]
 \definecolor{over}{RGB}{90,107,140}
 \definecolor{middle}{RGB}{123,141,166}
 \definecolor{under}{RGB}{202,201,217}
 \tikzset{every node/.style={shape=circle split,
-                            font=\bfseries \Large,
+                            font=\Large,
                             minimum size=3cm,
-                            draw=middle,
-                            line width=0.5mm,
-                            circle split part fill={over!60,under},
-                            scale=0.4
+                            %draw=middle,
+                            draw=black,
+                            line width=0.1mm,
+                            %circle split part fill={over!60,under},
+                            circle split part fill={white,white},
+                            scale=0.3
                            }}
 
-\node (root) {$\mathcal{M}_0 = \left\{{}\right\}$\nodepart{lower}$\mathcal{Z}_0 = \left\{{1,3}\right\}$}
-      child {node (a) {$\mathcal{M}_1 = \left\{{2}\right\}$\nodepart{lower}$\left\{{2,3,5}\right\}$}
+\node (root) {$\left\{{}\right\}$\nodepart{lower}$\left\{{1,3}\right\}$}
+      child {node (a) {$\left\{{2}\right\}$\nodepart{lower}$\left\{{2,3,5}\right\}$}
         child {node (e) {$\left\{{2,1}\right\}$\nodepart{lower}$\left\{{2,1,4,5}\right\}$}
           child {node (f) {$\left\{{2,1,3}\right\}$\nodepart{lower}$\left\{{2,1,3,4}\right\}$}
             child {node (g) {$\left\{{2,1,3,5}\right\}$\nodepart{lower}$\left\{{2,1,3,5}\right\}$}
@@ -23,7 +25,7 @@
       child {node (b) {$\left\{{4}\right\}$\nodepart{lower}$\left\{{4,1,5}\right\}$}
         child {node (h) {$\left\{{4,3}\right\}$\nodepart{lower}$\left\{{4,3,1}\right\}$}
           child {node (j) {$\left\{{4,3,5}\right\}$\nodepart{lower}$\left\{{4,3,5,2}\right\}$}
-            child {node (k) {$\mathcal{M}_{12} = \left\{{4,3,5,1}\right\}$\nodepart{lower}$\mathcal{Z}_{12} = \left\{{4,3,5,1,2}\right\}$}
+            child {node (k) {$\left\{{4,3,5,1}\right\}$\nodepart{lower}$\left\{{4,3,5,1,2}\right\}$}
             }
           }
         }

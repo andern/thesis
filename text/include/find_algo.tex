@@ -1,0 +1,16 @@
+\begin{algorithm}[H]
+\caption{\texttt{find($\mathcal{M}_l$, $\mathcal{Q}_k$)}}
+\label{alg:find}
+%\KwIn{($\mathcal{M}_l$, $\mathcal{Q}_k$)}
+\SetAlgoVlined
+\ForEach{child node $\mathcal{Q}_i$ of $\mathcal{Q}_k$}{
+  \If{$\mathcal{M}_i \subseteq \mathcal{M}_l$}{
+    \eIf{$\mathcal{M}_l \subseteq \mathcal{Z}_i$}{
+      \KwRet{$i$}
+    }{
+      \KwRet{\texttt{find($\mathcal{M}_l$, $\mathcal{Q}_i$)}}
+    }
+  }
+}
+\KwRet{$-1$}
+\end{algorithm}
