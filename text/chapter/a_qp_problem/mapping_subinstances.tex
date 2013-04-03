@@ -42,18 +42,20 @@ whether we would need to solve its corresponding subinstance $\mathcal{Q}_k$ or
 not.
 The downside is that we need to check all elements in $\mathbb{U}$ for
 each modifier we want to check.
-
 By constructing a tree instead of a set, we could check a modifier without
-checking it against all previous subinstances we have solved. Let each node
-represent a subinstance $\mathcal{Q}_k$. As with the set $\mathbb{U}$, we only
-allow subinstances $\mathcal{Q}_k$ such that $x_k^* \neq x_l^*$ for all
-subinstances $\mathcal{Q}_l$ in the tree where $l \neq k$. For each node in the
-tree representing a subinstance $\mathcal{Q}_k$ and its parent node
-representing a subinstance $\mathcal{Q}_l$, $\mathcal{M}_l$ must be a subset of
-$\mathcal{M}_k$. Put differently, each node and its corresponding modifier in
-the tree must be an extension of the modifier of its parent node. The root node
-which does not have any parent node, has a modifier that is equal to the empty
-set, i.e. $\mathcal{M}_0 = \emptyset$.
+checking it against all previous subinstances we have solved.
+
+We define a tree as an ordered pair $G = (V,E)$ comprising a set $V$ of
+vertices together with a set $E$ of edges.
+Let each vertex $v_k \in V$ represent a subinstance $\mathcal{Q}_k$.
+As with the set $\mathbb{U}$, we only allow vertices $v_k$ such that
+$x_k^* \neq x_l^*$ for all vertices $v_l$ where $l \neq k$.
+Additionally, for each vertex $v_k$ and its parent $v_l$, $\mathcal{M}_l$ must
+be a subset of $\mathcal{M}_k$.
+Put differently, each vertex and its corresponding modifier in the tree must be
+an extension of the modifier of its parent.
+The root $v_0$ which does not have a parent, has a modifier that is equal
+to the empty set, i.e. $\mathcal{M}_0 = \emptyset$.
 
 \input{include/find_algo}
 
@@ -63,44 +65,35 @@ modifier $\mathcal{M}_l$ such that $x_l^* = x_i^*$. Note that the return value
 on the last line of the algorithm is implementation specific, but it should be
 a value that somehow tells us that we have not previously found the solution to
 $\mathcal{Q}_l$.
-\begin{figure}
+
+Consider a tree $G$ with a vertex set $V = \left\{{v_0,v_1,\ldots,v_{10}}\right\}$
+and an edge set $E = \left\{{\left\{{0,1}\right\},\left\{{0,2}\right\},\left\{{0,3}\right\},\left\{{0,4}\right\},\left\{{1,5}\right\},\left\{{2,6}\right\},\left\{{4,7}\right\},\left\{{5,8}\right\},\left\{{6,9}\right\},\left\{{9,10}\right\}}\right\}$
+and the following values:
+\[
+    \begin{array}{ll}
+        \mathcal{M}_0 = \left\{{}\right\}           & \mathcal{Z}_0 = \left\{{1,3}\right\} \\
+        \mathcal{M}_1 = \left\{{2}\right\}          & \mathcal{Z}_1 = \left\{{2,3,5}\right\} \\
+        \mathcal{M}_2 = \left\{{4}\right\}          & \mathcal{Z}_2 = \left\{{4,1,5}\right\} \\
+        \mathcal{M}_3 = \left\{{5}\right\}          & \mathcal{Z}_3 = \left\{{5,1,3}\right\} \\
+        \mathcal{M}_4 = \left\{{2,4}\right\}        & \mathcal{Z}_4 = \left\{{2,4,3,5}\right\} \\
+        \mathcal{M}_5 = \left\{{2,1}\right\}        & \mathcal{Z}_5 = \left\{{2,1,4,5}\right\}
+    \end{array}
+    \begin{array}{ll}
+        \mathcal{M}_6 = \left\{{4,3}\right\}        & \mathcal{Z}_6 = \left\{{4,3,1}\right\} \\
+        \mathcal{M}_7 = \left\{{2,4,1}\right\}      & \mathcal{Z}_7 = \left\{{2,4,1,3}\right\} \\
+        \mathcal{M}_8 = \left\{{2,1,3}\right\}      & \mathcal{Z}_8 = \left\{{2,1,3,5}\right\} \\
+        \mathcal{M}_9 = \left\{{4,3,5}\right\}      & \mathcal{Z}_9 = \left\{{4,3,5,2}\right\} \\
+        \mathcal{M}_{10} = \left\{{4,3,5,1}\right\} & \mathcal{Z}_{10} = \left\{{4,3,5,1,2}\right\} \\
+    \end{array}
+\]
+Figure \ref{fig:find} shows how Algorithm \ref{alg:find} would work with input
+$(\left\{{1,2,3,4}\right\}, v_0)$. The left side of the figure shows the tree
+specified above. See Appendix \ref{app:tree} for an alternative representation
+of the tree.
+
+\begin{figure}[H]
     \centering
-    \begin{tabular}{|c|c|}\hline
-    \begin{subfigure}[b]{0.5\textwidth}
-        \input{include/maptreesets}
-        %\input{include/maptreesets.tex.bak}
-        \caption{A tree of the subinstances of some $\mathcal{Q}$.}
-        \label{fig:mapgraph}
-    \end{subfigure}
-    & 
-    \begin{subfigure}[b]{0.40\textwidth}
-        \textbf{Table} \\
-        The sets $\mathcal{M}_k$ and $\mathcal{Z}_k$ for each node
-        $\mathcal{Q}_k$ in the tree in (a).
-        \begin{tabular}{rll}
-            $k$ & $\mathcal{M}_k$            & $\mathcal{Z}_k$ \\
-            0        & $\left\{{}\right\}$        & $\left\{{1,3}\right\}$ \\ 
-            1        & $\left\{{2}\right\}$       & $\left\{{2,3,5}\right\}$ \\ 
-            2        & $\left\{{4}\right\}$       & $\left\{{4,1,5}\right\}$ \\ 
-            3        & $\left\{{5}\right\}$       & $\left\{{5,1,3}\right\}$ \\ 
-            4        & $\left\{{2,4}\right\}$     & $\left\{{2,4,3,5}\right\}$ \\ 
-            5        & $\left\{{2,1}\right\}$     & $\left\{{2,1,4,5}\right\}$ \\ 
-            6        & $\left\{{4,3}\right\}$     & $\left\{{4,3,1}\right\}$ \\ 
-            7        & $\left\{{2,4,1}\right\}$   & $\left\{{2,4,1,3}\right\}$ \\ 
-            8        & $\left\{{2,1,3}\right\}$   & $\left\{{2,1,3,5}\right\}$ \\ 
-            9        & $\left\{{4,3,5}\right\}$   & $\left\{{4,3,5,2}\right\}$ \\ 
-            10       & $\left\{{4,3,5,1}\right\}$ & $\left\{{4,3,5,1,2}\right\}$
-        \end{tabular}
-    \end{subfigure}
-    \\ \hline
-    \end{tabular}
-\end{figure}
-
-
-
-\begin{figure}
-    \centering
-    \begin{tabular}{|c|c|}\hline
+    \begin{tabular}[t]{|c|l|}\hline
     \begin{subfigure}[b]{0.35\textwidth}
         \centering
         \input{include/maptreesets2}
@@ -116,12 +109,12 @@ $\mathcal{Q}_l$.
             3        & $\left\{{5}\right\}$       & $\left\{{5,1,3}\right\}$ \\ 
             4        & $\left\{{2,4}\right\}$     & $\left\{{2,4,3,5}\right\}$ \\ 
         \end{tabular}
-        \\
+%        \\
 
         We see that $\mathcal{M}_1$, $\mathcal{M}_2$ and $\mathcal{M}_4$ are
         subsets of $\mathcal{M}_l$. However, $\mathcal{M}_l$ is not a subset
         of either $\mathcal{Z}_1$, $\mathcal{Z}_2$ or $\mathcal{Z}_4$.
-        We then continue to search from the nodes $1$, $2$, and $4$.
+        Therefore we continue to search from the nodes $1$, $2$, and $4$.
     \end{subfigure}
     \\ \hline
     \begin{subfigure}[b]{0.35\textwidth}
@@ -136,7 +129,7 @@ $\mathcal{Q}_l$.
             5        & $\left\{{2,1}\right\}$     & $\left\{{2,1,4,5}\right\}$ \\ 
             8        & $\left\{{2,1,3}\right\}$   & $\left\{{2,1,3,5}\right\}$ \\ 
         \end{tabular}
-        \\
+%        \\
 
         Since $\mathcal{M}_5$ is a subset of $\mathcal{M}_l$ and that
         $\mathcal{M}_l$ is not a subset of $\mathcal{Z}_5$, we continue
@@ -157,17 +150,17 @@ $\mathcal{Q}_l$.
         \textbf{Finding $\mathcal{M}_l = \left\{{1,2,3,4}\right\}$ from node $\mathcal{Q}_2$.} \\
         \begin{tabular}{rll}
             $k$ & $\mathcal{M}_k$            & $\mathcal{Z}_k$ \\ \hline
-            2        & $\left\{{4}\right\}$       & $\left\{{4,1,5}\right\}$ \\ 
             6        & $\left\{{4,3}\right\}$     & $\left\{{4,3,1}\right\}$ \\ 
             9        & $\left\{{4,3,5}\right\}$   & $\left\{{4,3,5,2}\right\}$ \\ 
         \end{tabular}
-        \\
+%        \\
 
         Since $\mathcal{M}_6$ is a subset of $\mathcal{M}_l$ and that
         $\mathcal{M}_l$ is not a subset of $\mathcal{Z}_6$, we continue
         searching. Continuing, we see that $\mathcal{M}_9$ is \emph{not} a
         subset of $\mathcal{M}_l$ and therefore conclude that the subtree of
         $\mathcal{Q}_2$ does not contain a solution for $\mathcal{Q}_l$.
+        \\
         \\
     \end{subfigure}
     \\ \hline
@@ -182,7 +175,7 @@ $\mathcal{Q}_l$.
             $k$ & $\mathcal{M}_k$            & $\mathcal{Z}_k$ \\ \hline
             7        & $\left\{{2,4,1}\right\}$   & $\left\{{2,4,1,3}\right\}$ \\ 
         \end{tabular}
-        \\
+%        \\
 
         Since $\mathcal{M}_7$ is a subset of $\mathcal{M}_l$ and that
         $\mathcal{M}_l$ is a subset of $\mathcal{Z}_7$ we conclude that
@@ -196,6 +189,7 @@ $\mathcal{Q}_l$.
     \end{subfigure}
     \\ \hline
     \end{tabular}
+    \caption{\texttt{find} being executed on $G$ where
+             $\mathcal{M}_l = \left\{{1,2,3,4}\right\}$.}
+    \label{fig:find}
 \end{figure}
-See Appendix \ref{app:tree} for an alternative representation of the tree shown
-in Figure \ref{fig:mapgraph}.

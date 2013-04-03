@@ -1,24 +1,22 @@
-\begin{tikzpicture}[level/.style={sibling distance=20mm/#1, level distance=10mm}]%, scale=0.6]
+\begin{tikzpicture}[level/.style={sibling distance=30mm/#1, level distance=30mm}]
 \definecolor{over}{RGB}{90,107,140}
 \definecolor{middle}{RGB}{123,141,166}
 \definecolor{under}{RGB}{202,201,217}
 \tikzset{every node/.style={shape=circle split,
                             font=\Large,
                             minimum size=3cm,
-                            %draw=middle,
-                            draw=black,
+                            draw=middle,
+%                            draw=black,
                             line width=0.1mm,
-                            %circle split part fill={over!60,under},
-                            circle split part fill={white,white},
-                            scale=0.3
+                            circle split part fill={over!60,under},
+%                            circle split part fill={white,white},
+                            scale=0.5
                            }}
 
 \node (root) {$\left\{{}\right\}$\nodepart{lower}$\left\{{1,3}\right\}$}
       child {node (a) {$\left\{{2}\right\}$\nodepart{lower}$\left\{{2,3,5}\right\}$}
         child {node (e) {$\left\{{2,1}\right\}$\nodepart{lower}$\left\{{2,1,4,5}\right\}$}
-          child {node (f) {$\left\{{2,1,3}\right\}$\nodepart{lower}$\left\{{2,1,3,4}\right\}$}
-            child {node (g) {$\left\{{2,1,3,5}\right\}$\nodepart{lower}$\left\{{2,1,3,5}\right\}$}
-            }
+          child {node (f) {$\left\{{2,1,3}\right\}$\nodepart{lower}$\left\{{2,1,3,5}\right\}$}
           }
         }
       }
@@ -29,8 +27,6 @@
             }
           }
         }
-        child {node (i) {$\left\{{4,2,3}\right\}$\nodepart{lower}$\left\{{4,2,3,5}\right\}$}
-        }
       }
       child {node (c) {$\left\{{5}\right\}$\nodepart{lower}$\left\{{5,1,3}\right\}$}
       }
@@ -39,4 +35,5 @@
         }
       }
       ;
+\node at (5, 0) {$\mathcal{M}_k$\nodepart{lower}$\mathcal{Z}_k$};
 \end{tikzpicture}
