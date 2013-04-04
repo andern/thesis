@@ -100,7 +100,7 @@ of the tree.
     \end{subfigure}
     & 
     \begin{subfigure}[b]{0.64\textwidth}
-        \textbf{Finding $\mathcal{M}_l = \left\{{1,2,3,4}\right\}$ from node $\mathcal{Q}_0$.} \\
+        \textbf{Finding $\mathcal{M}_l = \left\{{1,2,3,4}\right\}$ from $v_0$} \\
         \begin{tabular}{rll}
             $k$ & $\mathcal{M}_k$            & $\mathcal{Z}_k$ \\ \hline
             0        & $\left\{{}\right\}$        & $\left\{{1,3}\right\}$ \\ 
@@ -114,7 +114,8 @@ of the tree.
         We see that $\mathcal{M}_1$, $\mathcal{M}_2$ and $\mathcal{M}_4$ are
         subsets of $\mathcal{M}_l$. However, $\mathcal{M}_l$ is not a subset
         of either $\mathcal{Z}_1$, $\mathcal{Z}_2$ or $\mathcal{Z}_4$.
-        Therefore we continue to search from the nodes $1$, $2$, and $4$.
+        Therefore we continue the search from the vertices $v_1$, $v_2$,
+        and $v_4$.
     \end{subfigure}
     \\ \hline
     \begin{subfigure}[b]{0.35\textwidth}
@@ -123,7 +124,7 @@ of the tree.
     \end{subfigure}
     & 
     \begin{subfigure}[b]{0.64\textwidth}
-        \textbf{Finding $\mathcal{M}_l = \left\{{1,2,3,4}\right\}$ from node $\mathcal{Q}_1$.} \\
+        \textbf{Finding $\mathcal{M}_l = \left\{{1,2,3,4}\right\}$ from $v_1$} \\
         \begin{tabular}{rll}
             $k$ & $\mathcal{M}_k$            & $\mathcal{Z}_k$ \\ \hline
             5        & $\left\{{2,1}\right\}$     & $\left\{{2,1,4,5}\right\}$ \\ 
@@ -136,8 +137,8 @@ of the tree.
         searching. Continuing, we see that $\mathcal{M}_8$ is a subset of
         $\mathcal{M}_l$ and that $\mathcal{M}_l$ is not a subset of
         $\mathcal{M}_8$. We would continue the search, but since
-        $\mathcal{Q}_8$ does not have any child nodes, we stop the search
-        and conclude that the subtree of $\mathcal{Q}_1$ does not contain
+        $v_8$ does not have any child vertices, we stop the search
+        and conclude that the subtree of $v_1$ does not contain
         a solution for $\mathcal{Q}_l$.
     \end{subfigure}
     \\ \hline
@@ -147,7 +148,7 @@ of the tree.
     \end{subfigure}
     & 
     \begin{subfigure}[b]{0.64\textwidth}
-        \textbf{Finding $\mathcal{M}_l = \left\{{1,2,3,4}\right\}$ from node $\mathcal{Q}_2$.} \\
+        \textbf{Finding $\mathcal{M}_l = \left\{{1,2,3,4}\right\}$ from $v_2$.} \\
         \begin{tabular}{rll}
             $k$ & $\mathcal{M}_k$            & $\mathcal{Z}_k$ \\ \hline
             6        & $\left\{{4,3}\right\}$     & $\left\{{4,3,1}\right\}$ \\ 
@@ -159,7 +160,7 @@ of the tree.
         $\mathcal{M}_l$ is not a subset of $\mathcal{Z}_6$, we continue
         searching. Continuing, we see that $\mathcal{M}_9$ is \emph{not} a
         subset of $\mathcal{M}_l$ and therefore conclude that the subtree of
-        $\mathcal{Q}_2$ does not contain a solution for $\mathcal{Q}_l$.
+        $v_2$ does not contain a solution for $\mathcal{Q}_l$.
         \\
         \\
     \end{subfigure}
@@ -170,7 +171,7 @@ of the tree.
     \end{subfigure}
     & 
     \begin{subfigure}[b]{0.64\textwidth}
-        \textbf{Finding $\mathcal{M}_l = \left\{{1,2,3,4}\right\}$ from node $\mathcal{Q}_4$.} \\
+        \textbf{Finding $\mathcal{M}_l = \left\{{1,2,3,4}\right\}$ from $v_4$.} \\
         \begin{tabular}{rll}
             $k$ & $\mathcal{M}_k$            & $\mathcal{Z}_k$ \\ \hline
             7        & $\left\{{2,4,1}\right\}$   & $\left\{{2,4,1,3}\right\}$ \\ 
