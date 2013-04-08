@@ -6,9 +6,11 @@
 \ForEach{child vertex $v_i$ of $v_k$}{
   \If{$\mathcal{M}_i \subseteq \mathcal{M}_l$}{
     \eIf{$\mathcal{M}_l \subseteq \mathcal{Z}_i$}{
-      \KwRet{$i$}
+      \textbf{return} $i$
+%      \KwRet{$i$}
     }{
-      \KwRet{\texttt{find($\mathcal{M}_l$, $v_i$)}}
+      \textbf{return} \texttt{find($\mathcal{M}_l$, $v_i$)}
+%      \KwRet{find($\mathcal{M}_l$, $v_i$)}
     }
   }
 }

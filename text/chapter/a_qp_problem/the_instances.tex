@@ -64,15 +64,15 @@ much alike.
 That is entirely justified as \textit{large} is four \textit{small}-networks
 connected forming one large network.
 
-For each of these instances, GoodTech AS wants to solve several other instances
-with slight variations.
+For each of these instances, GoodTech AS wants to solve several versions
+with slight variations in the input.
 If one or more variables in an instance is forced to zero, it forms a new
 instance that we refer to as a $\emph{subinstance}$ of the original instance.
 GoodTech AS wants to simulate that all combinations of edges in the network
-falls down, by forcing their corresponding variables to zero.
+fail, by forcing their corresponding variables to zero.
 This means that for each of the three instances described in this chapter,
 they ideally want to solve a total of $2^n - 1$ subinstances. While this is
 unrealistic, it is unlikely that all edges in the network breaks down.
 A more realistic approach is to try to solve all subinstances with no more than
-$k$ breakdowns, i.e. we solve $\sum_{j=0}^k {n \choose j}$ subinstances with
-less than or equal to $k$ break-downs.
+$b$ breakdowns, i.e. we solve $s = \sum_{j=0}^b {n \choose j}$ subinstances
+with less than or equal to $b$ breakdowns.
