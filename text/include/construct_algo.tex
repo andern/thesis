@@ -1,0 +1,28 @@
+\begin{algorithm}[H]
+\caption{$construct(\mathcal{Q})$}
+\label{alg:construct}
+$V \leftarrow \{v_0\}$ \\
+$E \leftarrow \emptyset$ \\
+$G \leftarrow (V, E)$ \\
+$Q \leftarrow \text{an empty queue}$ \\
+ENQUEUE$(Q, v_0)$ \\
+%let $V = \{v_0\}$, $E = \{\}$, $G = (V, E)$ and let $Q$ be an empty queue \\
+%solve $\mathcal{Q}$ \\
+%$Q \leftarrow$ is an empty queue
+%Enqueue($Q$, $v_0$) \\
+%\KwIn{($\mathcal{M}_l$, $\mathcal{Q}_k$)}
+\SetAlgoVlined
+\While{$Q$ is not empty}{
+    $v_k \leftarrow$ DEQUEUE$(Q)$ \\
+    \ForEach{modifier $\mathcal{M}_i \in \mathcal{P}(\mathcal{N}_k)$}{
+%        $j \leftarrow$ \texttt{find($\mathcal{M}_i$, $v_0$)} \\
+        \If{$find(\mathcal{M}_i, v_0) = -1$}{
+            $V \leftarrow V \cup \{v_i\}$ \\
+            $E \leftarrow E \cup \{(k, i)\}$ \\
+            ENQUEUE$(Q, v_i)$
+%            Enqueue($Q$, $v_i$) \\
+        }
+    }
+}
+\KwRet{$G$}
+\end{algorithm}

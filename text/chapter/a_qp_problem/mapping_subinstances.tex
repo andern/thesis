@@ -81,34 +81,60 @@ on the last line of the algorithm is implementation specific, but it should be
 a value that somehow tells us that we have not previously found the solution to
 $\mathcal{Q}_l$.
 
-Consider a tree $G$ with a vertex set $V = \left\{{v_0,v_1,\ldots,v_{10}}\right\}$
-and an edge set $E = \left\{{\left\{{0,1}\right\},\left\{{0,2}\right\},\left\{{0,3}\right\},\left\{{0,4}\right\},\left\{{1,5}\right\},\left\{{2,6}\right\},\left\{{4,7}\right\},\left\{{5,8}\right\},\left\{{6,9}\right\},\left\{{9,10}\right\}}\right\}$
+Consider a tree $G$ with a vertex set
+$
+V =
+\{
+v_0$,$v_2$,$v_{16}$,$v_{10}$,$v_3$,$v_{13}$,$v_{11}$,$v_7$,$v_{28}$,$v_{29}
+\}
+$
+and an edge set
+$
+E = \{
+\left\{{0,2}\right\}$,$\left\{{0,8}\right\}$,
+$\left\{{0,16}\right\}$,$\left\{{0,10}\right\}$,$\left\{{2,3}\right\}$,
+$\left\{{8,13}\right\}$,$\left\{{10,11}\right\}$,
+$\left\{{3,7}\right\}$,
+$\left\{{13,28}\right\}$,$\left\{{28,29}\right\} \}
+$
 and the following values:
 \[
     \begin{array}{ll}
-        \mathcal{M}_0 = \left\{{}\right\}           & \mathcal{Z}_0 = \left\{{1,3}\right\} \\
-        \mathcal{M}_1 = \left\{{2}\right\}          & \mathcal{Z}_1 = \left\{{2,3,5}\right\} \\
-        \mathcal{M}_2 = \left\{{4}\right\}          & \mathcal{Z}_2 = \left\{{4,1,5}\right\} \\
-        \mathcal{M}_3 = \left\{{5}\right\}          & \mathcal{Z}_3 = \left\{{5,1,3}\right\} \\
-        \mathcal{M}_4 = \left\{{2,4}\right\}        & \mathcal{Z}_4 = \left\{{2,4,3,5}\right\} \\
-        \mathcal{M}_5 = \left\{{2,1}\right\}        & \mathcal{Z}_5 = \left\{{2,1,4,5}\right\}
+        \mathcal{M}_0    = \left\{{}\right\}           & \mathcal{Z}_0    = \left\{{1,3}\right\} \\
+        \mathcal{M}_2    = \left\{{2}\right\}          & \mathcal{Z}_2    = \left\{{2,3,5}\right\} \\
+        \mathcal{M}_8    = \left\{{4}\right\}          & \mathcal{Z}_8    = \left\{{4,1,5}\right\} \\
+        \mathcal{M}_{16} = \left\{{5}\right\}          & \mathcal{Z}_{16} = \left\{{5,1,3}\right\} \\
+        \mathcal{M}_{10} = \left\{{2,4}\right\}        & \mathcal{Z}_{10} = \left\{{2,4,3,5}\right\} \\
+        \mathcal{M}_3    = \left\{{2,1}\right\}        & \mathcal{Z}_3    = \left\{{2,1,4,5}\right\}
     \end{array}
     \begin{array}{ll}
-        \mathcal{M}_6 = \left\{{4,3}\right\}        & \mathcal{Z}_6 = \left\{{4,3,1}\right\} \\
-        \mathcal{M}_7 = \left\{{2,4,1}\right\}      & \mathcal{Z}_7 = \left\{{2,4,1,3}\right\} \\
-        \mathcal{M}_8 = \left\{{2,1,3}\right\}      & \mathcal{Z}_8 = \left\{{2,1,3,5}\right\} \\
-        \mathcal{M}_9 = \left\{{4,3,5}\right\}      & \mathcal{Z}_9 = \left\{{4,3,5,2}\right\} \\
-        \mathcal{M}_{10} = \left\{{4,3,5,1}\right\} & \mathcal{Z}_{10} = \left\{{4,3,5,1,2}\right\} \\
+        \mathcal{M}_{13} = \left\{{4,3}\right\}        & \mathcal{Z}_{13} = \left\{{4,3,1}\right\} \\
+        \mathcal{M}_{11} = \left\{{2,4,1}\right\}      & \mathcal{Z}_{11} = \left\{{2,4,1,3}\right\} \\
+        \mathcal{M}_7    = \left\{{2,1,3}\right\}      & \mathcal{Z}_7    = \left\{{2,1,3,5}\right\} \\
+        \mathcal{M}_{28} = \left\{{4,3,5}\right\}      & \mathcal{Z}_{28} = \left\{{4,3,5,2}\right\} \\
+        \mathcal{M}_{29} = \left\{{4,3,5,1}\right\}    & \mathcal{Z}_{29} = \left\{{4,3,5,1,2}\right\} \\
     \end{array}
 \]
 The tree $G$ is a tree representation of a set $\mathbb{U}$ of some
 $\mathcal{Q}$ with $5$ variables.
 Figure \ref{fig:find} shows how Algorithm \ref{alg:find} would work with input
-$(\left\{{1,2,3,4}\right\}, v_0)$. The left side of the figure shows the tree
-specified above. See Appendix \ref{app:tree} for an alternative representation
-of the tree.
+$(\mathcal{M}_{15} = \left\{{1,2,3,4}\right\}, v_0)$.
+The left side of the figure shows the tree specified above.
+See Appendix \ref{app:tree} for an alternative representation of the tree.
 
-\begin{figure}[H]
+% Keeping this in case a mistake is found:
+% 1 = 2
+% 2 = 8
+% 3 = 16
+% 4 = 10
+% 5 = 3
+% 6 = 13
+% 7 = 11
+% 8 = 7
+% 9 = 28
+% 10 = 29
+
+\begin{figure}[ht!]
     \centering
     \begin{tabular}[t]{|c|l|}\hline
     \begin{subfigure}[b]{0.35\textwidth}
@@ -117,26 +143,20 @@ of the tree.
     \end{subfigure}
     & 
     \begin{subfigure}[b]{0.64\textwidth}
-        \textbf{Finding $\mathcal{M}_l = \left\{{1,2,3,4}\right\}$ from $v_0$} \\
+        \textbf{Finding $\mathcal{M}_{15} = \left\{{1,2,3,4}\right\}$ from $v_0$} \\
         \begin{tabular}{rll}
             $k$ & $\mathcal{M}_k$            & $\mathcal{Z}_k$ \\ \hline
-            0        & $\left\{{}\right\}$        & $\left\{{1,3}\right\}$ \\ 
-            1        & $\left\{{2}\right\}$       & $\left\{{2,3,5}\right\}$ \\ 
-            2        & $\left\{{4}\right\}$       & $\left\{{4,1,5}\right\}$ \\ 
-            3        & $\left\{{5}\right\}$       & $\left\{{5,1,3}\right\}$ \\ 
-            4        & $\left\{{2,4}\right\}$     & $\left\{{2,4,3,5}\right\}$ \\ 
+            0   & $\left\{{}\right\}$        & $\left\{{1,3}\right\}$ \\ 
+            2   & $\left\{{2}\right\}$       & $\left\{{2,3,5}\right\}$ \\ 
+            8   & $\left\{{4}\right\}$       & $\left\{{4,1,5}\right\}$ \\ 
+            16  & $\left\{{5}\right\}$       & $\left\{{5,1,3}\right\}$ \\ 
+            10  & $\left\{{2,4}\right\}$     & $\left\{{2,4,3,5}\right\}$ \\ 
         \end{tabular}
-%        \\
 
-        We see that $\mathcal{M}_3 \not \subseteq \mathcal{M}_l$, so we ignore
-        the subtree of $v_3$ completely. However, $\mathcal{M}_1 \cup
-        \mathcal{M}_2 \cup \mathcal{M}_4 \subseteq \mathcal{M}_l$, so we
-        continue searching from the vertices $v_1$, $v_2$ and $v_4$.
-%        We see that $\mathcal{M}_1$, $\mathcal{M}_2$ and $\mathcal{M}_4$ are
-%        subsets of $\mathcal{M}_l$. However, $\mathcal{M}_l$ is not a subset
-%        of any of $\mathcal{Z}_1$, $\mathcal{Z}_2$ or $\mathcal{Z}_4$.
-%        Therefore we continue the search from the vertices $v_1$, $v_2$,
-%        and $v_4$.
+        We see that $\mathcal{M}_{16} \not \subseteq \mathcal{M}_{15}$, so we
+        ignore the subtree of $v_{16}$ completely. However, $\mathcal{M}_2 \cup
+        \mathcal{M}_8 \cup \mathcal{M}_{10} \subseteq \mathcal{M}_{15}$, so we
+        continue searching from the vertices $v_2$, $v_8$ and $v_{10}$.
     \end{subfigure}
     \\ \hline
     \begin{subfigure}[b]{0.35\textwidth}
@@ -145,29 +165,20 @@ of the tree.
     \end{subfigure}
     & 
     \begin{subfigure}[b]{0.64\textwidth}
-        \textbf{Finding $\mathcal{M}_l = \left\{{1,2,3,4}\right\}$ from $v_1$} \\
+        \textbf{Finding $\mathcal{M}_{15} = \left\{{1,2,3,4}\right\}$ from $v_8$} \\
         \begin{tabular}{rll}
             $k$ & $\mathcal{M}_k$            & $\mathcal{Z}_k$ \\ \hline
-            5        & $\left\{{2,1}\right\}$     & $\left\{{2,1,4,5}\right\}$ \\ 
-            8        & $\left\{{2,1,3}\right\}$   & $\left\{{2,1,3,5}\right\}$ \\ 
+            16       & $\left\{{2,1}\right\}$     & $\left\{{2,1,4,5}\right\}$ \\ 
+            11       & $\left\{{2,1,3}\right\}$   & $\left\{{2,1,3,5}\right\}$ \\ 
         \end{tabular}
-%        \\
 
-        Since $\mathcal{M}_5 \subseteq \mathcal{M}_l \not \subset
-        \mathcal{Z}_5$, we continue searching. Continuing, we see that
-        $\mathcal{M}_8 \subseteq \mathcal{M}_l \not \subset \mathcal{Z}_8$.
-        We would continue the search, but since $v_8$ does not have any child
-        vertices, we stop the search and conclude that the subtree of $v_1$
-        does not contain a solution for $\mathcal{Q}_l$.
+        Since $\mathcal{M}_3 \subseteq \mathcal{M}_{15} \not \subset
+        \mathcal{Z}_3$, we continue searching. Continuing, we see that
+        $\mathcal{M}_7 \subseteq \mathcal{M}_{15} \not \subset \mathcal{Z}_7$.
+        We would continue the search, but since $v_7$ does not have any child
+        vertices, we stop the search and conclude that the subtree of $v_2$
+        does not contain a solution for $\mathcal{Q}_{15}$.
         \\
-%        Since $\mathcal{M}_5$ is a subset of $\mathcal{M}_l$ and that
-%        $\mathcal{M}_l$ is not a subset of $\mathcal{Z}_5$, we continue
-%        searching. Continuing, we see that $\mathcal{M}_8$ is a subset of
-%        $\mathcal{M}_l$ and that $\mathcal{M}_l$ is not a subset of
-%        $\mathcal{M}_8$. We would continue the search, but since
-%        $v_8$ does not have any child vertices, we stop the search
-%        and conclude that the subtree of $v_1$ does not contain
-%        a solution for $\mathcal{Q}_l$.
     \end{subfigure}
     \\ \hline
     \begin{subfigure}[b]{0.35\textwidth}
@@ -176,26 +187,19 @@ of the tree.
     \end{subfigure}
     & 
     \begin{subfigure}[b]{0.64\textwidth}
-        \textbf{Finding $\mathcal{M}_l = \left\{{1,2,3,4}\right\}$ from $v_2$.} \\
+        \textbf{Finding $\mathcal{M}_{15} = \left\{{1,2,3,4}\right\}$ from $v_2$.} \\
         \begin{tabular}{rll}
             $k$ & $\mathcal{M}_k$            & $\mathcal{Z}_k$ \\ \hline
-            6        & $\left\{{4,3}\right\}$     & $\left\{{4,3,1}\right\}$ \\ 
-            9        & $\left\{{4,3,5}\right\}$   & $\left\{{4,3,5,2}\right\}$ \\ 
+            13        & $\left\{{4,3}\right\}$     & $\left\{{4,3,1}\right\}$ \\ 
+            28        & $\left\{{4,3,5}\right\}$   & $\left\{{4,3,5,2}\right\}$ \\ 
         \end{tabular}
-%        \\
 
-        Since $\mathcal{M}_6 \subseteq \mathcal{M}_l \not \subset
-        \mathcal{Z}_6$, we continue searching. Continuing, we see that
-        $\mathcal{M}_9 \not \subseteq \mathcal{M}_l$ and therefore conclude
-        that the subtree of $v_2$ does not contain the solution for
-        $\mathcal{Q}_l$.
+        Since $\mathcal{M}_{13} \subseteq \mathcal{M}_{15} \not \subset
+        \mathcal{Z}_{13}$, we continue searching. Continuing, we see that
+        $\mathcal{M}_{28} \not \subseteq \mathcal{M}_{15}$ and therefore
+        conclude that the subtree of $v_8$ does not contain the solution for
+        $\mathcal{Q}_{15}$.
         \\
-%
-%        Since $\mathcal{M}_6$ is a subset of $\mathcal{M}_l$ and that
-%        $\mathcal{M}_l$ is not a subset of $\mathcal{Z}_6$, we continue
-%        searching. Continuing, we see that $\mathcal{M}_9$ is \emph{not} a
-%        subset of $\mathcal{M}_l$ and therefore conclude that the subtree of
-%        $v_2$ does not contain a solution for $\mathcal{Q}_l$.
         \\
         \\
     \end{subfigure}
@@ -206,19 +210,14 @@ of the tree.
     \end{subfigure}
     & 
     \begin{subfigure}[b]{0.64\textwidth}
-        \textbf{Finding $\mathcal{M}_l = \left\{{1,2,3,4}\right\}$ from $v_4$.} \\
+        \textbf{Finding $\mathcal{M}_{15} = \left\{{1,2,3,4}\right\}$ from $v_4$.} \\
         \begin{tabular}{rll}
             $k$ & $\mathcal{M}_k$            & $\mathcal{Z}_k$ \\ \hline
-            7        & $\left\{{2,4,1}\right\}$   & $\left\{{2,4,1,3}\right\}$ \\ 
+            11        & $\left\{{2,4,1}\right\}$   & $\left\{{2,4,1,3}\right\}$ \\ 
         \end{tabular}
-%        \\
 
-        Since $\mathcal{M}_7 \subseteq \mathcal{M}_l \subseteq \mathcal{Z}_7$
-        we conclude that $x_l^* = x_7^*$.
-%        Since $\mathcal{M}_7$ is a subset of $\mathcal{M}_l$ and that
-%        $\mathcal{M}_l$ is a subset of $\mathcal{Z}_7$ we conclude that
-%        $x_l^* = x_7^*$.
-        \\
+        Since $\mathcal{M}_{11} \subseteq \mathcal{M}_{15} \subseteq
+        \mathcal{Z}_{11}$ we conclude that $x_{15}^* = x_{11}^*$.
         \\
         \\
         \\
@@ -229,6 +228,6 @@ of the tree.
     \\ \hline
     \end{tabular}
     \caption{\texttt{find} being executed on $G$ where
-             $\mathcal{M}_l = \left\{{1,2,3,4}\right\}$.}
+             $\mathcal{M}_{15} = \left\{{1,2,3,4}\right\}$.}
     \label{fig:find}
 \end{figure}

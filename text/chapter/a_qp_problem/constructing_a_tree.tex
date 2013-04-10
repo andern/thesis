@@ -1,0 +1,24 @@
+\section{Constructing a Tree}
+\label{sec:construction}
+To construct a tree such as the one seen in Figure \ref{fig:find}, we start
+with some instance $\mathcal{Q}$, a modifier $\mathcal{M}_0 = \{ {} \}$ and
+a root $v_0$. After solving $\mathcal{Q}$, we know that all subinstances
+$\mathcal{Q}_k$ such that $\mathcal{M}_k \subseteq \mathcal{Z}_0$, will have
+a solution $x_k^* = x_0^*$. Because of this fact, we do not want to generate
+modifiers $\mathcal{M}_k$ such that $\mathcal{M}_k \subseteq \mathcal{Z}_0$,
+but rather generate modifiers $\mathcal{M}_k$ such that $\mathcal{M}_k
+\subseteq \mathcal{N}_0$.
+For each modifier $\mathcal{M}_k \subseteq \mathcal{N}_0$, we run
+\texttt{find($\mathcal{M}_k$, $v_0$)} to check if we already have the solution
+$x_k^*$.
+If we do not have the solution, we \emph{immediately} solve $\mathcal{Q}_k$
+and make $v_k$ a child of $v_0$. Once we have all child vertices $v_k$ of $v_0$
+such that all $\mathcal{Q}_k$ have distinct solutions and $\mathcal{M}_k
+\subseteq \mathcal{Z}_0$, we continue the same operation on $v_k$ as we did
+on $v_0$. Note that we always start Algorithm \ref{alg:find} from $v_0$
+regardless of which vertex we are currently operating on.
+
+\input{include/construct_algo}
+Algorithm \ref{alg:construct} describes an algorithm for constructing a tree
+$G$, given some instance $\mathcal{Q}$. Readers are encouraged to try to
+construct the tree in Figure \ref{fig:find} on their own.
