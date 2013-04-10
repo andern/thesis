@@ -6,7 +6,7 @@ AUTOMAKE_OPTIONS = subdir-objects
 ## make time. The ${ACLOCAL_FLAGS} variable is picked up from the environment
 ## to provide a way for the user to supply additional arguments.
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
-
+# -Waggregate-return
 AM_CPPFLAGS = -Iinclude\
 			  -std=c++0x\
               -pedantic\
@@ -16,9 +16,9 @@ AM_CPPFLAGS = -Iinclude\
               -Wswitch-default -Wswitch-enum -Wuninitialized\
               -Wstrict-overflow=5 -Wno-div-by-zero -Wtrampolines\
               -Wundef -Wshadow -Wcast-align\
-              -Wwrite-strings -Wconversion -Wlogical-op -Waggregate-return\
-              -Wmissing-declarations\
-              -Wmissing-field-initializers -Wpacked -Winline\
+              -Wwrite-strings -Wconversion -Wlogical-op\
+              -Wmissing-declarations -Winline\
+              -Wmissing-field-initializers -Wpacked\
               -Wvla -Wall -Wno-missing-braces -Wextra -Wstack-protector
 
 SRCDIR = src

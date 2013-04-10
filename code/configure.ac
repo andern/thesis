@@ -2,7 +2,7 @@ AC_PREREQ([2.68])
 AC_INIT([slp], [0.1.0], [Andreas Halle <andern at gmail dot com>])
 AM_INIT_AUTOMAKE([1.11 -Wall no-define])
 
-CXXFLAGS="$CFLAGS -Iinclude"
+CXXFLAGS="$CFLAGS -Iinclude -Llib -Wl,--rpath -Wl,lib"
 
 AC_CONFIG_SRCDIR([src])
 

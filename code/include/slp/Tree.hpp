@@ -16,6 +16,8 @@
 #ifndef SLP_TREE_H_
 #define SLP_TREE_H_
 
+#include <iostream>
+
 #include <set>
 #include <vector>
 
@@ -26,10 +28,13 @@
  * very specific and therefore only intended for one specific use.
  */
 struct vertex {
-        std::set<short> m;
-        std::set<short> z;
+    ~vertex() { std::cout << "deleted\n"; }
+    vertex() {};
+    vertex(const vertex&) { std::cout << "copied\n"; }
+    std::set<short> m;
+    std::set<short> z;
 
-        std::vector<struct vertex*> children;
+    std::vector<struct vertex*> children;
 };
 
 /**
