@@ -3,16 +3,8 @@
 
 #include "slp/Tree.hpp"
 
-void printset(const std::set<short>& s);
 
-void printset(const std::set<short>& s) {
-    for (std::set<short>::iterator it=s.begin(); it!=s.end(); ++it)
-        std::cout << *it;
-    std::cout << "\n";
-}
 
-//void buildTestTree(std::vector<struct vertex*>& vertices);
-//void buildTestTree(std::vector<struct vertex*>& vertices) {
 std::vector<struct vertex*> buildTestTree();
 std::vector<struct vertex*> buildTestTree() {
     struct vertex* v0 = new struct vertex;
@@ -138,9 +130,9 @@ std::vector<struct vertex*> buildTestTree() {
 
 int main() {
     std::vector<struct vertex*> vertices = buildTestTree();
-    struct vertex* v = vertices[1];
+    struct vertex* v = vertices[8];
 
-    printset(v->z);
+    printset(v->m);
 
     std::set<short> ml;
     ml.insert(1);
@@ -148,4 +140,9 @@ int main() {
     ml.insert(3);
     ml.insert(4);
     std::cout << "End of main" << std::endl;
+
+    // TODO: Find out why find() returns 0.
+
+    struct vertex* res = find(ml, vertices[0]); 
+    std::cout << (res == 0) << std::endl;
 }

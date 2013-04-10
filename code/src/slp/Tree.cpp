@@ -20,6 +20,8 @@
 
 #include "slp/Tree.hpp"
 
+#include <iostream>
+
 
 
 bool isSubset(const std::set<short>& a, const std::set<short>& b) {
@@ -34,8 +36,16 @@ struct vertex* find(const std::set<short>& m, struct vertex* v) {
 
     for (unsigned long i = 0; i < v->children.size(); i++) {
         struct vertex* vi = v->children[i];
-        if (isSubset(vi->m, m))
+        if (isSubset(vi->m, m)) {
+            printset(v->z);
             find(m, vi);
+        }
     }
     return 0;
+}
+
+void printset(const std::set<short>& s) {
+    for (std::set<short>::iterator it=s.begin(); it!=s.end(); ++it)
+        std::cout << *it;
+    std::cout << std::endl;
 }

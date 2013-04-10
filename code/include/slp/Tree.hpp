@@ -71,4 +71,8 @@ struct vertex* find(const std::set<short>& m, struct vertex* v);
  */
 std::vector<struct vertex> construct(ClpModel model);
 
+
+
+void printset(const std::set<short>& s);
+
 #endif
