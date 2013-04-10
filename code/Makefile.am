@@ -8,24 +8,23 @@ AUTOMAKE_OPTIONS = subdir-objects
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 
 AM_CPPFLAGS = -Iinclude\
-#              -std=c89\
+			  -std=c++0x\
               -pedantic\
               -O3\
               -Wall -Wextra -Werror\
               -Wdouble-promotion -Wformat=2 -Winit-self -Wmissing-include-dirs\
               -Wswitch-default -Wswitch-enum -Wuninitialized\
               -Wstrict-overflow=5 -Wno-div-by-zero -Wtrampolines\
-              -Wdeclaration-after-statement -Wundef -Wshadow -Wcast-align\
+              -Wundef -Wshadow -Wcast-align\
               -Wwrite-strings -Wconversion -Wlogical-op -Waggregate-return\
-              -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations\
-              -Wmissing-field-initializers -Wpacked -Wnested-externs -Winline\
-              -Wvla -Wall -Wno-missing-braces -Wextra -Wstack-protector\
-              -Wunsuffixed-float-constants
+              -Wmissing-declarations\
+              -Wmissing-field-initializers -Wpacked -Winline\
+              -Wvla -Wall -Wno-missing-braces -Wextra -Wstack-protector
 
 SRCDIR = src
 
-bin_PROGRAMS = master
+bin_PROGRAMS = slp
 
-slp_SOURCES = src/Main.c src/slp/Tree.cpp
+slp_SOURCES = src/Main.cpp src/slp/Tree.cpp
 
 slp_LDADD = ${slp_LIBS}

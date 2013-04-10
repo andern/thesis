@@ -1,3 +1,6 @@
+#ifndef SLP_HEADER_GUARD_H
+#define SLP_HEADER_GUARD_H
+
 #ifndef HAVE_CONFIG_H
 #define HAVE_CONFIG_H
 #endif
@@ -67,3 +70,5 @@
 #endif /* HAVE_CONFIG_H */
 
 #endif /*__CLPCONFIG_H__ */
+
+#endif /* SLP_HEADER_GUARD_H */

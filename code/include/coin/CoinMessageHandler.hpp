@@ -487,6 +487,7 @@ public:
     The default format code is `%d'.
   */
   CoinMessageHandler & operator<< (int intvalue);
+#ifdef COIN_BIG_INDEX
 #if COIN_BIG_INDEX==1
   /*! \brief Process a long integer parameter value.
 
@@ -499,6 +500,9 @@ public:
 
     The default format code is `%ld'.
   */
+  CoinMessageHandler & operator<< (long long longvalue);
+#endif
+#else
   CoinMessageHandler & operator<< (long long longvalue);
 #endif
   /*! \brief Process a double parameter value.

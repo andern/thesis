@@ -9,7 +9,8 @@ AM_INIT_AUTOMAKE([1.11 -Wall no-define])
 
 AC_CONFIG_SRCDIR([src])
 
-AC_PROG_CC
+#AC_PROG_CC
+AC_PROG_CXX
 AM_PROG_CC_C_O
 
 AC_CHECK_HEADERS([iostream])

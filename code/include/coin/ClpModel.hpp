@@ -686,7 +686,7 @@ public:
           else return matrix_->getPackedMatrix();
      }
      /// Number of elements in matrix
-     inline int getNumElements() const {
+     inline long long getNumElements() const {
           return matrix_->getNumElements();
      }
      /** Small element value - elements less than this set to zero,

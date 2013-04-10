@@ -292,6 +292,7 @@ CoinMemcpyN(register const T* from, const int size, register T* to)
     case 2: to[1] = from[1];
     case 1: to[0] = from[0];
     case 0: break;
+    default: break;
     }
 #endif
 #else
