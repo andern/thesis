@@ -130,9 +130,9 @@ std::vector<struct vertex*> buildTestTree() {
 
 int main() {
     std::vector<struct vertex*> vertices = buildTestTree();
-    struct vertex* v = vertices[8];
+    //struct vertex* v = vertices[8];
 
-    printset(v->m);
+    //printset(v->m);
 
     std::set<short> ml;
     ml.insert(1);
@@ -141,8 +141,6 @@ int main() {
     ml.insert(4);
     std::cout << "End of main" << std::endl;
 
-    // TODO: Find out why find() returns 0.
-
     struct vertex* res = find(ml, vertices[0]); 
-    std::cout << (res == 0) << std::endl;
+    printset(res->z);
 }

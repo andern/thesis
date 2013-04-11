@@ -22,6 +22,8 @@
 
 #include <iostream>
 
+struct vertex* finditer(const std::set<short>& m, struct vertex* v);
+
 
 
 bool isSubset(const std::set<short>& a, const std::set<short>& b) {
@@ -30,19 +32,28 @@ bool isSubset(const std::set<short>& a, const std::set<short>& b) {
 
 
 
-struct vertex* find(const std::set<short>& m, struct vertex* v) {
-    if (isSubset(m, v->z))
-        return v;
-
+struct vertex* finditer(const std::set<short>& m, struct vertex* v) {
     for (unsigned long i = 0; i < v->children.size(); i++) {
         struct vertex* vi = v->children[i];
         if (isSubset(vi->m, m)) {
-            printset(v->z);
-            find(m, vi);
+            if (isSubset(m, vi->z))
+                return vi;
+            else
+                finditer(m, vi);
         }
     }
     return 0;
 }
+
+
+
+struct vertex* find(const std::set<short>& m, struct vertex* v) {
+    if (v == 0) return 0;
+    if (isSubset(v->m, m) && isSubset(m, v->z)) return v;
+    return finditer(m, v);
+}
+
+
 
 void printset(const std::set<short>& s) {
     for (std::set<short>::iterator it=s.begin(); it!=s.end(); ++it)
