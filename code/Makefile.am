@@ -25,6 +25,6 @@ SRCDIR = src
 
 bin_PROGRAMS = slp
 
-slp_SOURCES = src/Main.cpp src/slp/Tree.cpp
+slp_SOURCES = src/Main.cpp src/slp/Tree.cpp src/slp/Algorithm.cpp
 
 slp_LDADD = ${slp_LIBS}
