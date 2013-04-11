@@ -20,9 +20,6 @@
 #include "coin/ClpModel.hpp"
 #include "slp/Good.hpp"
 
-// TODO: In solve(), value() is ran in order to calculate the stopping criteria.
-//       Use this to return an objective value in solve().
-
 /**
  * Solve several similar QP problems where only the bounds change between each
  * problem.

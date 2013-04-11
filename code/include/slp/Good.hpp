@@ -16,8 +16,8 @@
 #ifndef SLP_GOOD_H_
 #define SLP_GOOD_H_
 
-#include "format/xml.hpp" // TODO: Remove when the method of data acquiring is
-                          //       known. Remove everything XML-related.
+#include "coin/CoinPackedMatrix.hpp"
+#include "coin/ClpSimplex.hpp"
 
 /**
  * A struct containing all the data needed to solve the following problem:
@@ -56,9 +56,6 @@ struct good_qp {
 
 ClpSimplex clpfromqp(struct good_qp qp);
 
-struct good_qp readXml(char* file); // TODO: Remove
-struct good_qp readTxt(); // TODO: Remove
-
-CoinPackedMatrix packMatrix(double** m, int rows, int cols);
+struct good_qp readTxt();
 
 #endif

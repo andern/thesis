@@ -7,8 +7,7 @@ AUTOMAKE_OPTIONS = subdir-objects
 ## to provide a way for the user to supply additional arguments.
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 # -Waggregate-return
-AM_CPPFLAGS = -Iinclude\
-			  -std=c++0x\
+AM_CPPFLAGS = -std=c++0x\
               -pedantic\
               -O3\
               -Wall -Wextra -Werror\
@@ -25,6 +24,11 @@ SRCDIR = src
 
 bin_PROGRAMS = slp
 
-slp_SOURCES = src/Main.cpp src/slp/Tree.cpp src/slp/Algorithm.cpp
+slp_SOURCES = src/Main.cpp src/slp/Tree.cpp src/slp/Algorithm.cpp\
+			  src/slp/Good.cpp
 
-slp_LDADD = ${slp_LIBS}
+slp_CPPFLAGS = -Iinclude
+
+slp_LDFLAGS = -Llib -Wl,--rpath -Wl,lib
+
+slp_LDADD = ${slp_LIBS} -lClp -lCoinUtils
