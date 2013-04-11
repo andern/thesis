@@ -6,7 +6,7 @@ We construct a \emph{tree} of all subinstances with distinct optimal solutions.
 This tree enables us to efficiently check whether some modifier forms a
 subinstance with an unknown solution.
 
-If we were to try to solve all $u$ possible subinstances of an
+If we were to try to solve all $s$ possible subinstances of an
 instance, we would most likely end up solving a huge amount of subinstances
 with the same optimal solutions. This is evident in some of the real
 instances; when we solve the unmodified instance \texttt{vlarge}, if $b = n$,
@@ -21,15 +21,15 @@ variables in the optimal solution of the unchanged instance $Q$, to zero.
 Recall from the previous section that if $\mathcal{Q}$ is known, knowing the
 modifier $\mathcal{M}_k$ is sufficient to identify the subinstance
 $\mathcal{Q}_k$.
-While finding modifiers $\mathcal{M}_k$ such that
+While modifiers $\mathcal{M}_k$ such that
 $\mathcal{M}_k \subseteq \mathcal{N}_0$ ensures that $x_k^*\neq x_0^*$,
-it does not assure us that $x_k^* \neq x_l^*$ for all $l=1,2,\ldots,u-1$.
+it does not assure us that $x_k^* \neq x_l^*$ for all $l=1,2,\ldots,s-1$.
 To make sure that we only solve subinstances with distinct optimal solutions,
 we need to identify modifiers $\mathcal{M}_k$ such that
 $\mathcal{M}_k \not \subset \mathcal{Z}_l$
-for \emph{all} $l=1,2,\ldots,u-1$.
+for \emph{all} $l=1,2,\ldots,s-1$.
 
-Consider a set $\mathbb{U}\subseteq \left\{{1,2,\ldots,u-1}\right\}$ of indices
+Consider a set $\mathbb{U}\subseteq \left\{{1,2,\ldots,s-1}\right\}$ of indices
 such that if $i,j \in \mathbb{U}$, and $i \neq j$, then $x_i^* \neq x_j^*$.
 With such a set; given an arbitrary modifier $\mathcal{M}_k$, we can check
 if there exists an index $l \in \mathbb{U}$ such that $x_k^* = x_l^*$. By
@@ -85,7 +85,7 @@ Consider a tree $G$ with a vertex set
 $
 V =
 \{
-v_0$,$v_2$,$v_{16}$,$v_{10}$,$v_3$,$v_{13}$,$v_{11}$,$v_7$,$v_{28}$,$v_{29}
+v_0$,$v_2$,$v_{16}$,$v_{10}$,$v_3$,$v_{12}$,$v_{11}$,$v_7$,$v_{28}$,$v_{29}
 \}
 $
 and an edge set
@@ -93,9 +93,9 @@ $
 E = \{
 \left\{{0,2}\right\}$,$\left\{{0,8}\right\}$,
 $\left\{{0,16}\right\}$,$\left\{{0,10}\right\}$,$\left\{{2,3}\right\}$,
-$\left\{{8,13}\right\}$,$\left\{{10,11}\right\}$,
+$\left\{{8,12}\right\}$,$\left\{{10,11}\right\}$,
 $\left\{{3,7}\right\}$,
-$\left\{{13,28}\right\}$,$\left\{{28,29}\right\} \}
+$\left\{{12,28}\right\}$,$\left\{{28,29}\right\} \}
 $
 and the following values:
 \[
@@ -108,7 +108,7 @@ and the following values:
         \mathcal{M}_3    = \left\{{2,1}\right\}        & \mathcal{Z}_3    = \left\{{2,1,4,5}\right\}
     \end{array}
     \begin{array}{ll}
-        \mathcal{M}_{13} = \left\{{4,3}\right\}        & \mathcal{Z}_{13} = \left\{{4,3,1}\right\} \\
+        \mathcal{M}_{12} = \left\{{4,3}\right\}        & \mathcal{Z}_{12} = \left\{{4,3,1}\right\} \\
         \mathcal{M}_{11} = \left\{{2,4,1}\right\}      & \mathcal{Z}_{11} = \left\{{2,4,1,3}\right\} \\
         \mathcal{M}_7    = \left\{{2,1,3}\right\}      & \mathcal{Z}_7    = \left\{{2,1,3,5}\right\} \\
         \mathcal{M}_{28} = \left\{{4,3,5}\right\}      & \mathcal{Z}_{28} = \left\{{4,3,5,2}\right\} \\
@@ -128,7 +128,7 @@ See Appendix \ref{app:tree} for an alternative representation of the tree.
 % 3 = 16
 % 4 = 10
 % 5 = 3
-% 6 = 13
+% 6 = 12
 % 7 = 11
 % 8 = 7
 % 9 = 28
@@ -190,12 +190,12 @@ See Appendix \ref{app:tree} for an alternative representation of the tree.
         \textbf{Finding $\mathcal{M}_{15} = \left\{{1,2,3,4}\right\}$ from $v_2$.} \\
         \begin{tabular}{rll}
             $k$ & $\mathcal{M}_k$            & $\mathcal{Z}_k$ \\ \hline
-            13        & $\left\{{4,3}\right\}$     & $\left\{{4,3,1}\right\}$ \\ 
+            12        & $\left\{{4,3}\right\}$     & $\left\{{4,3,1}\right\}$ \\ 
             28        & $\left\{{4,3,5}\right\}$   & $\left\{{4,3,5,2}\right\}$ \\ 
         \end{tabular}
 
-        Since $\mathcal{M}_{13} \subseteq \mathcal{M}_{15} \not \subset
-        \mathcal{Z}_{13}$, we continue searching. Continuing, we see that
+        Since $\mathcal{M}_{12} \subseteq \mathcal{M}_{15} \not \subset
+        \mathcal{Z}_{12}$, we continue searching. Continuing, we see that
         $\mathcal{M}_{28} \not \subseteq \mathcal{M}_{15}$ and therefore
         conclude that the subtree of $v_8$ does not contain the solution for
         $\mathcal{Q}_{15}$.

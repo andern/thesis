@@ -15,10 +15,16 @@ If we do not have the solution, we \emph{immediately} solve $\mathcal{Q}_k$
 and make $v_k$ a child of $v_0$. Once we have all child vertices $v_k$ of $v_0$
 such that all $\mathcal{Q}_k$ have distinct solutions and $\mathcal{M}_k
 \subseteq \mathcal{Z}_0$, we continue the same operation on $v_k$ as we did
-on $v_0$. Note that we always start Algorithm \ref{alg:find} from $v_0$
+on $v_0$.
+We can also limit the number of subinstances by allowing a maximum of $b$
+breakdowns.
+To imitate this behaviour, we only generate modifiers $\mathcal{M}_k$ such that
+$|\mathcal{M}_k| \leq b$.
+Note that we always start Algorithm \ref{alg:find} from $v_0$
 regardless of which vertex we are currently operating on.
 
 \input{include/construct_algo}
 Algorithm \ref{alg:construct} describes an algorithm for constructing a tree
-$G$, given some instance $\mathcal{Q}$. Readers are encouraged to try to
-construct the tree in Figure \ref{fig:find} on their own.
+$G$, given some instance $\mathcal{Q}$ and a maximum number of breakdowns $b$.
+Readers are encouraged to try to construct the tree in Figure \ref{fig:find} on
+their own.

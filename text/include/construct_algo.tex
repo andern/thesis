@@ -1,5 +1,5 @@
 \begin{algorithm}[H]
-\caption{$construct(\mathcal{Q})$}
+\caption{$construct(\mathcal{Q}, b)$}
 \label{alg:construct}
 $V \leftarrow \{v_0\}$ \\
 $E \leftarrow \emptyset$ \\
@@ -14,7 +14,8 @@ ENQUEUE$(Q, v_0)$ \\
 \SetAlgoVlined
 \While{$Q$ is not empty}{
     $v_k \leftarrow$ DEQUEUE$(Q)$ \\
-    \ForEach{modifier $\mathcal{M}_i \in \mathcal{P}(\mathcal{N}_k)$}{
+    \ForEach{modifier $\mathcal{M}_i \in \mathcal{P}(\mathcal{N}_k),
+             |\mathcal{M}_i| \leq b$}{
 %        $j \leftarrow$ \texttt{find($\mathcal{M}_i$, $v_0$)} \\
         \If{$find(\mathcal{M}_i, v_0) = -1$}{
             $V \leftarrow V \cup \{v_i\}$ \\
