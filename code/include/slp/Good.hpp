@@ -16,6 +16,8 @@
 #ifndef SLP_GOOD_H_
 #define SLP_GOOD_H_
 
+#include <cstdio>
+
 #include "coin/CoinPackedMatrix.hpp"
 #include "coin/ClpSimplex.hpp"
 
@@ -41,20 +43,33 @@
  *         end
  */
 struct good_qp {
-        int rows;
-        int cols;
-        int numQp;
-        double** H;   // diagonal matrix of size cols  x cols
-        double* ff;   // vector of size          cols
-        double** Aeq; // matrix of size          rows  x cols
-        double* beq;  // vector of size          rows
-        double** Mp;  // matrix of size          numQP x cols
-        double* Dt;   // vector of size          cols
-        double* LB;   // vector of size          cols
-        double* UB;   // vector of size          cols
+    ~good_qp() {
+        for (int i = 0; i < rows; i++)
+            free(Aeq[i]);
+        for (int i = 0; i < cols; i++)
+            free(H[i]);
+        free(Aeq);
+        free(H);
+        free(ff);
+        free(LB);
+        free(UB);
+    }
+    int rows;
+    int cols;
+    int numQp;
+    double** H;   // diagonal matrix of size cols  x cols
+    double* ff;   // vector of size          cols
+    double** Aeq; // matrix of size          rows  x cols
+    double* beq;  // vector of size          rows
+    double** Mp;  // matrix of size          numQP x cols
+    double* Dt;   // vector of size          cols
+    double* LB;   // vector of size          cols
+    double* UB;   // vector of size          cols
 };
 
-ClpSimplex clpfromqp(struct good_qp qp);
+ClpSimplex clpfromqp(struct good_qp& qp);
+
+ClpSimplex clpFromTxt();
 
 struct good_qp readTxt();
 

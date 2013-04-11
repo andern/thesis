@@ -55,6 +55,10 @@
 #endif
 #endif
 //=============================================================================
+#ifndef COIN_BIG_INDEX
+#define COIN_BIG_INDEX 0
+#endif
+
 #if COIN_BIG_INDEX==0
 typedef int CoinBigIndex;
 #elif COIN_BIG_INDEX==1

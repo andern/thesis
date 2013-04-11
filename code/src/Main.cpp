@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "slp/Tree.hpp"
+#include "slp/Good.hpp"
 
 
 
@@ -18,8 +19,6 @@ std::vector<struct vertex*> buildTestTree() {
     struct vertex* v7 = new struct vertex;
     struct vertex* v28 = new struct vertex;
     struct vertex* v29 = new struct vertex;
-
-    std::cout << "end of declarations" << std::endl;
 
     /* Connect the vertices */
     v0->children.push_back(v2);
@@ -109,8 +108,6 @@ std::vector<struct vertex*> buildTestTree() {
     v29->z.insert(5);
     v29->z.insert(2);
 
-    std::cout << "before vertices" << std::endl;
-
     std::vector<struct vertex*> vertices;
     vertices.push_back(v0);
     vertices.push_back(v2);
@@ -124,23 +121,13 @@ std::vector<struct vertex*> buildTestTree() {
     vertices.push_back(v28);
     vertices.push_back(v29); 
 
-    std::cout << "end of build" << std::endl;
     return vertices;
 }
 
 int main() {
-    std::vector<struct vertex*> vertices = buildTestTree();
-    //struct vertex* v = vertices[8];
+    //std::vector<struct vertex*> vertices = buildTestTree();
 
-    //printset(v->m);
+    ClpSimplex model = clpFromTxt();
 
-    std::set<short> ml;
-    ml.insert(1);
-    ml.insert(2);
-    ml.insert(3);
-    ml.insert(4);
-    std::cout << "End of main" << std::endl;
-
-    struct vertex* res = find(ml, vertices[0]); 
-    printset(res->z);
+    std::cout << "end" << std::endl;
 }

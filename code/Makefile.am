@@ -7,27 +7,27 @@ AUTOMAKE_OPTIONS = subdir-objects
 ## to provide a way for the user to supply additional arguments.
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 # -Waggregate-return
-AM_CPPFLAGS = -std=c++0x\
-              -pedantic\
-              -O3\
-              -Wall -Wextra -Werror\
-              -Wdouble-promotion -Wformat=2 -Winit-self -Wmissing-include-dirs\
-              -Wswitch-default -Wswitch-enum -Wuninitialized\
-              -Wstrict-overflow=5 -Wno-div-by-zero -Wtrampolines\
-              -Wundef -Wshadow -Wcast-align\
-              -Wwrite-strings -Wconversion -Wlogical-op\
-              -Wmissing-declarations -Winline\
-              -Wmissing-field-initializers -Wpacked\
-              -Wvla -Wall -Wno-missing-braces -Wextra -Wstack-protector
 
 SRCDIR = src
 
 bin_PROGRAMS = slp
 
 slp_SOURCES = src/Main.cpp src/slp/Tree.cpp src/slp/Algorithm.cpp\
-			  src/slp/Good.cpp
+              src/slp/Good.cpp
 
-slp_CPPFLAGS = -Iinclude
+slp_CPPFLAGS = -Iinclude\
+               -std=c++0x\
+               -pedantic\
+               -O0 -g3\
+               -Wall -Wextra -Werror\
+               -Wdouble-promotion -Wformat=2 -Winit-self\
+               -Wswitch-default -Wswitch-enum -Wuninitialized\
+               -Wstrict-overflow=5 -Wno-div-by-zero -Wtrampolines\
+               -Wundef -Wshadow -Wcast-align -Wmissing-include-dirs\
+               -Wwrite-strings -Wconversion -Wlogical-op\
+               -Wmissing-declarations -Winline\
+               -Wmissing-field-initializers -Wpacked\
+               -Wvla -Wno-missing-braces -Wstack-protector
 
 slp_LDFLAGS = -Llib -Wl,--rpath -Wl,lib
 
