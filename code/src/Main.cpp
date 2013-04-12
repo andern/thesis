@@ -129,22 +129,36 @@ std::vector<struct vertex*> buildTestTree() {
 int main() {
     std::vector<struct vertex*> vertices = buildTestTree();
 
-    std::set<short> a;
-    a.insert(5);
-    a.insert(4);
-    a.insert(3);
-    a.insert(2);
+    std::set<int16_t> a;
     a.insert(1);
+    a.insert(2);
+    a.insert(3);
+    a.insert(4);
+    a.insert(5);
 
-    std::set<short> b;
-    b.insert(3);
-    b.insert(2);
+    std::set<int16_t> b;
     b.insert(1);
+    b.insert(2);
+    b.insert(3);
+
+    //do {
+    //    print(b.begin(), b.end());
+    //} while(next_combination(a.begin(), a.end(), b.begin(), b.end()));
+
+    std::set<int16_t> c = complement(b, 6);
+    print(c.begin(), c.end());
 
 
-    do {
-        printset(b);
-    } while(next_combination(a.begin(), a.end(), b.begin(), b.end()));
+
+    double arr[5];
+    arr[0] = 1.323;
+    arr[1] = 0;
+    arr[2] = 0;
+    arr[3] = 4.323;
+    arr[4] = 0.00001;
+
+    std::set<int16_t> z = toZSet(arr, 5, 1e-7);
+    print(z.begin(), z.end());
 
     std::cout << "end" << std::endl;
 }
