@@ -125,9 +125,9 @@ std::vector<struct vertex*> buildTestTree() {
 }
 
 int main() {
-    //std::vector<struct vertex*> vertices = buildTestTree();
+    std::vector<struct vertex*> vertices = buildTestTree();
 
-    ClpSimplex model = clpFromTxt();
+    //ClpSimplex model = clpFromTxt();
 
     std::cout << "end" << std::endl;
 }

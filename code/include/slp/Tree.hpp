@@ -38,17 +38,6 @@ struct vertex {
 };
 
 /**
- * Return true if a is a subset of b. False otherwise.
- *
- * @param  a
- *         a set.
- * @param  b
- *         a set.
- * @return true of a is a subset of b. False otherwise.
- */
-bool isSubset(const std::set<short>& a, const std::set<short>& b);
-
-/**
  * Return a vertex w in the tree where vertex v is a root, such that
  * the modifier m is a subset of the set of zeroes w.m.
  *
@@ -69,7 +58,7 @@ struct vertex* find(const std::set<short>& m, struct vertex* v);
  *         a ClpModel for an instance.
  * @return a vector of vertices.
  */
-std::vector<struct vertex> construct(ClpModel model);
+std::vector<struct vertex*> construct(ClpModel model, int breakdowns);
 
 
 
