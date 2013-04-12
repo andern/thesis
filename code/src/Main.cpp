@@ -1,5 +1,7 @@
 #include <vector>
 #include <iostream>
+#include <algorithm>
+#include <set>
 
 #include "slp/Tree.hpp"
 #include "slp/Good.hpp"
@@ -127,7 +129,22 @@ std::vector<struct vertex*> buildTestTree() {
 int main() {
     std::vector<struct vertex*> vertices = buildTestTree();
 
-    //ClpSimplex model = clpFromTxt();
+    std::set<short> a;
+    a.insert(5);
+    a.insert(4);
+    a.insert(3);
+    a.insert(2);
+    a.insert(1);
+
+    std::set<short> b;
+    b.insert(3);
+    b.insert(2);
+    b.insert(1);
+
+
+    do {
+        printset(b);
+    } while(next_combination(a.begin(), a.end(), b.begin(), b.end()));
 
     std::cout << "end" << std::endl;
 }

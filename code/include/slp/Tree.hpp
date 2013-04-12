@@ -16,7 +16,9 @@
 #ifndef SLP_TREE_H_
 #define SLP_TREE_H_
 
+
 #include <iostream>
+#include <iterator>
 
 #include <set>
 #include <vector>
@@ -60,7 +62,11 @@ struct vertex* find(const std::set<short>& m, struct vertex* v);
  */
 std::vector<struct vertex*> construct(ClpModel model, int breakdowns);
 
-
+//template <typename Iterator>
+//inline bool next_combination(const Iterator first, Iterator k, const Iterator last);
+template <class BidIt>
+bool next_combination(BidIt n_begin, BidIt n_end,
+BidIt r_begin, BidIt r_end);
 
 void printset(const std::set<short>& s);
 
