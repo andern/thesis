@@ -19,21 +19,22 @@
 #include <iostream>
 #include <iterator>
 
-#include <set>
 #include <vector>
 
 #include "coin/ClpModel.hpp"
+#include "coin/ClpSimplex.hpp"
 
 /**
  * A structure representing each vertex in a B+ tree. This implementation is
  * very specific and therefore only intended for one specific use.
  */
 struct vertex {
-    ~vertex() { std::cout << "deleted\n"; }
     vertex() {};
     vertex(const vertex&) { std::cout << "copied\n"; }
-    std::set<int16_t> m;
-    std::set<int16_t> z;
+    ~vertex() { std::cout << "deleted\n"; }
+    std::vector<uint16_t> m;
+    std::vector<uint16_t> z;
+    double* sol;
 
     std::vector<struct vertex*> children;
 };
@@ -48,7 +49,7 @@ struct vertex {
  *         a vertex.
  * @return a vertex.
  */
-struct vertex* find(const std::set<int16_t>& m, struct vertex* v);
+struct vertex* find(const std::vector<uint16_t>& m, struct vertex* v);
 
 /**
  * Return a vector of vertices linked together in a tree structure such that
@@ -59,10 +60,11 @@ struct vertex* find(const std::set<int16_t>& m, struct vertex* v);
  *         a ClpModel for an instance.
  * @return a vector of vertices.
  */
-std::vector<struct vertex*> construct(ClpModel model, int16_t breakdowns);
+std::vector<struct vertex*> construct(ClpModel& model, uint16_t breakdowns,
+int maxIters, double tolerance);
 
-std::set<int16_t> complement(const std::set<int16_t>& z, int16_t n);
-std::set<int16_t> toZSet(const double* arr, int16_t len, double epsilon);
+std::vector<uint16_t> complement(const std::vector<uint16_t>& z, uint16_t n);
+std::vector<uint16_t> toZSet(const double* arr, uint16_t len, double epsilon);
 
 template <class BidIt>
 inline bool next_combination(BidIt n_begin, BidIt n_end, BidIt r_begin, BidIt r_end)

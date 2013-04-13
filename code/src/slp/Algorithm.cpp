@@ -13,6 +13,7 @@
  * 
  * See description in header file. 
  */
+#include "coin/ClpModel.hpp"
 #include "coin/ClpSimplex.hpp"
 #include "slp/Algorithm.hpp"
 
@@ -43,9 +44,24 @@ static inline double lineSearch(const double* p1, const double* p2,
 }
 
 
+double lineSearch(const double* p1, const double* p2, const ClpModel& model) {
+    const ClpQuadraticObjective* quadObj =
+            (dynamic_cast<const ClpQuadraticObjective*>(
+                    model.objectiveAsObject()));
 
-static inline double solve(const ClpModel& quad, ClpSimplex& lin, double* x,
-        double* x_old, double* T, int maxIters, double tolerance, int numCols){
+    CoinPackedMatrix* quad = quadObj->quadraticObjective();
+
+    return lineSearch(p1, p2, model.getObjCoefficients(),
+                quad->getElements(), quad->getVectorStarts(),
+                quad->getVectorLengths(), quadObj->numberColumns());
+}
+
+
+
+
+double solve(const ClpModel& quad, ClpSimplex& lin, double* x,
+        double* x_old, double* T, int maxIters, double tolerance, int numCols)
+{
     double objval = 0;
     double stop = 0;
     int k = 0;
@@ -115,3 +131,31 @@ static inline double value(const double* point, const double* linCoeffs,
 
     return (val);
 }
+
+
+
+double value(const double* point, const ClpModel& model) {
+    const ClpQuadraticObjective* quadObj =
+            (dynamic_cast<const ClpQuadraticObjective*>(
+                    model.objectiveAsObject()));
+
+    CoinPackedMatrix* quad = quadObj->quadraticObjective();
+
+    return (value(point, model.getObjCoefficients(),
+                  quad->getElements(), quad->getVectorStarts(),
+                  quad->getVectorLengths(), quadObj->numberColumns()));
+}
+
+
+void taylor(double* destCoeffs, const double* point, const ClpModel& model) {
+    const ClpQuadraticObjective* quadObj =
+            (dynamic_cast<const ClpQuadraticObjective*>(
+                    model.objectiveAsObject()));
+
+    CoinPackedMatrix* quad = quadObj->quadraticObjective();
+
+    taylor(destCoeffs, point, model.getObjCoefficients(),
+            quad->getElements(), quad->getVectorStarts(),
+            quad->getVectorLengths(), quadObj->numberColumns());
+}
+

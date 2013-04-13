@@ -1,6 +1,6 @@
 /**
  * @file    Good.hpp
- * @author  Andreas Halle <andern@gmail.com>
+ * @author  Andreas Halle <andern@gmail.com>
  * @version 1.0
  *
  * @section LICENSE

@@ -1,7 +1,6 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
-#include <set>
 
 #include "slp/Tree.hpp"
 #include "slp/Good.hpp"
@@ -38,77 +37,77 @@ std::vector<struct vertex*> buildTestTree() {
     v10->children.push_back(v11);
 
     /* Add variables to the sets */
-    v0->z.insert(1);
-    v0->z.insert(3);
+    v0->z.push_back(1);
+    v0->z.push_back(3);
 
-    v2->m.insert(2);
-    v2->z.insert(2);
-    v2->z.insert(3);
-    v2->z.insert(5);
+    v2->m.push_back(2);
+    v2->z.push_back(2);
+    v2->z.push_back(3);
+    v2->z.push_back(5);
 
-    v8->m.insert(4);
-    v8->z.insert(4);
-    v8->z.insert(1);
-    v8->z.insert(5);
+    v8->m.push_back(4);
+    v8->z.push_back(4);
+    v8->z.push_back(1);
+    v8->z.push_back(5);
 
-    v16->m.insert(5);
-    v16->z.insert(5);
-    v16->z.insert(1);
-    v16->z.insert(3);
+    v16->m.push_back(5);
+    v16->z.push_back(5);
+    v16->z.push_back(1);
+    v16->z.push_back(3);
 
-    v10->m.insert(2);
-    v10->m.insert(4);
-    v10->z.insert(2);
-    v10->z.insert(4);
-    v10->z.insert(1);
-    v10->z.insert(3);
+    v10->m.push_back(2);
+    v10->m.push_back(4);
+    v10->z.push_back(2);
+    v10->z.push_back(4);
+    v10->z.push_back(1);
+    v10->z.push_back(3);
 
-    v3->m.insert(1);
-    v3->m.insert(2);
-    v3->z.insert(1);
-    v3->z.insert(2);
-    v3->z.insert(4);
-    v3->z.insert(5);
+    v3->m.push_back(1);
+    v3->m.push_back(2);
+    v3->z.push_back(1);
+    v3->z.push_back(2);
+    v3->z.push_back(4);
+    v3->z.push_back(5);
 
-    v13->m.insert(3);
-    v13->m.insert(4);
-    v13->z.insert(3);
-    v13->z.insert(4);
-    v13->z.insert(1);
+    v13->m.push_back(3);
+    v13->m.push_back(4);
+    v13->z.push_back(3);
+    v13->z.push_back(4);
+    v13->z.push_back(1);
 
-    v11->m.insert(1);
-    v11->m.insert(2);
-    v11->m.insert(4);
-    v11->z.insert(1);
-    v11->z.insert(2);
-    v11->z.insert(4);
-    v11->z.insert(3);
+    v11->m.push_back(1);
+    v11->m.push_back(2);
+    v11->m.push_back(4);
+    v11->z.push_back(1);
+    v11->z.push_back(2);
+    v11->z.push_back(4);
+    v11->z.push_back(3);
 
-    v7->m.insert(1);
-    v7->m.insert(2);
-    v7->m.insert(3);
-    v7->z.insert(1);
-    v7->z.insert(2);
-    v7->z.insert(3);
-    v7->z.insert(5);
+    v7->m.push_back(1);
+    v7->m.push_back(2);
+    v7->m.push_back(3);
+    v7->z.push_back(1);
+    v7->z.push_back(2);
+    v7->z.push_back(3);
+    v7->z.push_back(5);
 
-    v28->m.insert(3);
-    v28->m.insert(4);
-    v28->m.insert(5);
-    v28->z.insert(3);
-    v28->z.insert(4);
-    v28->z.insert(5);
-    v28->z.insert(2);
+    v28->m.push_back(3);
+    v28->m.push_back(4);
+    v28->m.push_back(5);
+    v28->z.push_back(3);
+    v28->z.push_back(4);
+    v28->z.push_back(5);
+    v28->z.push_back(2);
 
-    v29->m.insert(1);
-    v29->m.insert(3);
-    v29->m.insert(4);
-    v29->m.insert(5);
-    v29->z.insert(1);
-    v29->z.insert(3);
-    v29->z.insert(4);
-    v29->z.insert(5);
-    v29->z.insert(2);
+    v29->m.push_back(1);
+    v29->m.push_back(3);
+    v29->m.push_back(4);
+    v29->m.push_back(5);
+    v29->z.push_back(1);
+    v29->z.push_back(3);
+    v29->z.push_back(4);
+    v29->z.push_back(5);
+    v29->z.push_back(2);
 
     std::vector<struct vertex*> vertices;
     vertices.push_back(v0);
@@ -129,23 +128,23 @@ std::vector<struct vertex*> buildTestTree() {
 int main() {
     std::vector<struct vertex*> vertices = buildTestTree();
 
-    std::set<int16_t> a;
-    a.insert(1);
-    a.insert(2);
-    a.insert(3);
-    a.insert(4);
-    a.insert(5);
+    std::vector<uint16_t> a;
+    a.push_back(1);
+    a.push_back(2);
+    a.push_back(3);
+    a.push_back(4);
+    a.push_back(5);
 
-    std::set<int16_t> b;
-    b.insert(1);
-    b.insert(2);
-    b.insert(3);
+    std::vector<uint16_t> b;
+    b.push_back(1);
+    b.push_back(2);
+    b.push_back(3);
 
     //do {
     //    print(b.begin(), b.end());
     //} while(next_combination(a.begin(), a.end(), b.begin(), b.end()));
 
-    std::set<int16_t> c = complement(b, 6);
+    std::vector<uint16_t> c = complement(b, 6);
     print(c.begin(), c.end());
 
 
@@ -157,7 +156,7 @@ int main() {
     arr[3] = 4.323;
     arr[4] = 0.00001;
 
-    std::set<int16_t> z = toZSet(arr, 5, 1e-7);
+    std::vector<uint16_t> z = toZSet(arr, 5, 1e-7);
     print(z.begin(), z.end());
 
     std::cout << "end" << std::endl;

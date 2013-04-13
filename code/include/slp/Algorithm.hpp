@@ -18,6 +18,8 @@
 #define SLP_ALGORITHM_H_
 
 #include "coin/ClpModel.hpp"
+#include "coin/ClpQuadraticObjective.hpp"
+#include "coin/ClpSimplex.hpp"
 #include "slp/Good.hpp"
 
 /**
@@ -50,7 +52,7 @@ double* good_solve_clp(double** destPoints, struct good_qp in, int maxIters,
  * @param model
  *        ClpModel that has the objective function.
  */
-void taylor(double* destCoeffs, double* point, ClpModel model);
+void taylor(double* destCoeffs, const double* point, const ClpModel& model);
 
 /**
  * Solve a QP problem using SLP with line search.
@@ -66,7 +68,10 @@ void taylor(double* destCoeffs, double* point, ClpModel model);
  *         Epsilon for the stopping criteria.
  * @return the objective value of the solved QP problem..
  */
-double solve(ClpModel quad, double* x, int maxIters, double tolerance);
+//double solve(ClpModel quad, double* x, int maxIters, double tolerance);
+
+double solve(const ClpModel& quad, ClpSimplex& lin, double* x,
+double* x_old, double* T, int maxIters, double tolerance, int numCols);
 
 /**
  * Evaluate the objective function of the given model at the given point.
@@ -76,7 +81,7 @@ double solve(ClpModel quad, double* x, int maxIters, double tolerance);
  * @param model
  *        ClpModel that has the objective function to evaluate.
  */
-double value(double* point, ClpModel model);
+double value(const double* point, const ClpModel& model);
 
 /**
  * Perform a line search by finding the minimum objective value of the given
@@ -90,6 +95,6 @@ double value(double* point, ClpModel model);
  *         ClpModel of the QP problem.
  * @return the step length alpha.
  */
-double lineSearch(double* p1, double* p2, const ClpModel model);
+double lineSearch(const double* p1, const double* p2, const ClpModel& model);
 
 #endif
