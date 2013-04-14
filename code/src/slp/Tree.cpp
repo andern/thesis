@@ -185,7 +185,7 @@ int maxIters, double tolerance)
     quad.setPrimalTolerance(tolerance);
     quad.setMaximumIterations(maxIters);
 
-    ClpCholeskyBase *cholesky = new ClpCholeskyBase(1);
+    ClpCholeskyBase* cholesky = new ClpCholeskyBase(1);
     cholesky->setKKT(true);
     quad.setCholesky(cholesky);
     quad.setLogLevel(0);
@@ -233,6 +233,8 @@ int maxIters, double tolerance)
 
     free(x_old);
     free(T);
+
+    delete cholesky;
 
     return v0;
 }
