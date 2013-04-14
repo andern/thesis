@@ -177,26 +177,27 @@ int maxIters, double tolerance)
     double* T = (double*) malloc(cols*sizeof(double));
 
     /* A temporary linear model for running slp. */
-    ClpSimplex lin(model);
+/*    ClpSimplex lin(model);
     lin.setLogLevel(0);
     lin.deleteQuadraticObjective();
-/*    ClpInterior quad(model);
+    */
+    ClpInterior quad(model);
     quad.setDualTolerance(tolerance);
     quad.setPrimalTolerance(tolerance);
     quad.setMaximumIterations(maxIters);
 
     ClpCholeskyBase* cholesky = new ClpCholeskyBase();
     cholesky->setKKT(true);
-    quad.setCholesky(&cholesky);
+    quad.setCholesky(cholesky);
     quad.setLogLevel(0);
-    */
+    
 
     /* Get the root ready. */
     struct vertex* v0 = new struct vertex;
     v0->sol = (double*) malloc(cols*sizeof(double));
     
-    mod_solve(model, lin, v0->m, v0->sol, x_old, T, maxIters, tolerance, cols);
-//    mod_solve_clp(model, quad, v0->m, v0->sol);
+    //mod_solve(model, lin, v0->m, v0->sol, x_old, T, maxIters, tolerance, cols);
+    mod_solve_clp(model, quad, v0->m, v0->sol);
 
     v0->z = toZSet(v0->sol, cols, 1e-7);
 
@@ -221,11 +222,11 @@ int maxIters, double tolerance)
                     q.push(nv);
                     nv->m = f; // Data is copied!
                     nv->sol = (double*) malloc(cols*sizeof(double));
-                    //mod_solve_clp(model, quad, nv->m, nv->sol);
-                    std::cout << mod_solve(model, lin, nv->m, nv->sol, x_old, T,
-                                           maxIters, tolerance, cols) << std::endl;
+                    mod_solve_clp(model, quad, nv->m, nv->sol);
+                    //std::cout << mod_solve(model, lin, nv->m, nv->sol, x_old, T,
+                    //                       maxIters, tolerance, cols) << std::endl;
                     nv->z = toZSet(nv->sol, cols, tolerance);
-                    std::cout << lin.getObjValue() << ": ";
+                    std::cout << quad.getObjValue() << ": ";
                     print(f.begin(), f.end());
                     //std::cout << quad.getObjValue() << std::endl;
                 }
@@ -235,6 +236,7 @@ int maxIters, double tolerance)
 
     free(x_old);
     free(T);
+    quad.setCholesky(0);
 
     return v0;
 }
