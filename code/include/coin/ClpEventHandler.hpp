@@ -1,6 +1,8 @@
-/* $Id: ClpEventHandler.hpp 1533 2010-03-23 15:26:32Z forrest $ */
+/* $Id: ClpEventHandler.hpp 1825 2011-11-20 16:02:57Z forrest $ */
 // Copyright (C) 2004, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
+
 #ifndef ClpEventHandler_H
 #define ClpEventHandler_H
 
@@ -31,24 +33,57 @@ public:
      */
      enum Event {
           endOfIteration = 100, // used to set secondary status
-          endOfFactorization,
+          endOfFactorization, // after gutsOfSolution etc
           endOfValuesPass,
           node, // for Cbc
           treeStatus, // for Cbc
           solution, // for Cbc
           theta, // hit in parametrics
-          pivotRow // used to choose pivot row
+          pivotRow, // used to choose pivot row
+	  presolveStart, // ClpSolve presolve start
+	  presolveSize, // sees if ClpSolve presolve too big or too small
+	  presolveInfeasible, // ClpSolve presolve infeasible
+	  presolveBeforeSolve, // ClpSolve presolve before solve
+	  presolveAfterFirstSolve, // ClpSolve presolve after solve
+	  presolveAfterSolve, // ClpSolve presolve after solve
+	  presolveEnd, // ClpSolve presolve end
+	  goodFactorization, // before gutsOfSolution
+	  complicatedPivotIn, // in modifyCoefficients
+	  noCandidateInPrimal, // tentative end
+	  looksEndInPrimal, // About to declare victory (or defeat)
+	  endInPrimal, // Victory (or defeat)
+	  beforeStatusOfProblemInPrimal,
+	  startOfStatusOfProblemInPrimal,
+	  complicatedPivotOut, // in modifyCoefficients
+	  noCandidateInDual, // tentative end
+	  looksEndInDual, // About to declare victory (or defeat)
+	  endInDual, // Victory (or defeat)
+	  beforeStatusOfProblemInDual,
+	  startOfStatusOfProblemInDual,
+	  startOfIterationInDual,
+	  updateDualsInDual,
+	  endOfCreateRim,
+	  slightlyInfeasible,
+	  modifyMatrixInMiniPresolve,
+	  moreMiniPresolve,
+	  modifyMatrixInMiniPostsolve,
+	  noTheta // At end (because no pivot)
      };
-     /**@name Virtual method that the derived classe should provide.
+     /**@name Virtual method that the derived classes should provide.
       The base class instance does nothing and as event() is only useful method
       it would not be very useful NOT providing one!
      */
      //@{
      /** This can do whatever it likes.  If return code -1 then carries on
          if 0 sets ClpModel::status() to 5 (stopped by event) and will return to user.
-         At present if <-1 carries on and if >0 acts as if 0 - this may change
+         At present if <-1 carries on and if >0 acts as if 0 - this may change.
+	 For ClpSolve 2 -> too big return status of -2 and -> too small 3
      */
      virtual int event(Event whichEvent);
+     /** This can do whatever it likes.  Return code -1 means no action.
+	 This passes in something
+     */
+     virtual int eventWithInfo(Event whichEvent, void * info) ;
      //@}
 
 

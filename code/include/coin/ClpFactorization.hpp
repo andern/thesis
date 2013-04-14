@@ -1,6 +1,8 @@
-/* $Id: ClpFactorization.hpp 1525 2010-02-26 17:27:59Z mjs $ */
+/* $Id: ClpFactorization.hpp 1665 2011-01-04 17:55:54Z lou $ */
 // Copyright (C) 2002, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
+
 #ifndef ClpFactorization_H
 #define ClpFactorization_H
 
@@ -17,6 +19,7 @@ class CoinOtherFactorization;
 #endif
 #ifdef CLP_MULTIPLE_FACTORIZATIONS
 #include "CoinDenseFactorization.hpp"
+#include "ClpSimplex.hpp"
 #endif
 #ifndef COIN_FAST_CODE
 #define COIN_FAST_CODE
@@ -404,6 +407,10 @@ private:
      CoinFactorization * coinFactorizationA_;
      /// Pointer to CoinOtherFactorization
      CoinOtherFactorization * coinFactorizationB_;
+#ifdef CLP_REUSE_ETAS
+     /// Pointer to model
+     ClpSimplex * model_;
+#endif
      /// If nonzero force use of 1,dense 2,small 3,osl
      int forceB_;
      /// Switch to osl if number rows <= this

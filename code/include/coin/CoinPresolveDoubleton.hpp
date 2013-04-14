@@ -1,6 +1,7 @@
-/* $Id: CoinPresolveDoubleton.hpp 1215 2009-11-05 11:03:04Z forrest $ */
+/* $Id: CoinPresolveDoubleton.hpp 1498 2011-11-02 15:25:35Z mjs $ */
 // Copyright (C) 2002, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
 
 #ifndef CoinPresolveDoubleton_H
 #define CoinPresolveDoubleton_H
@@ -65,7 +66,7 @@ class doubleton_action : public CoinPresolveAction {
   
   void postsolve(CoinPostsolveMatrix *prob) const;
 
-  ~doubleton_action();
+  virtual ~doubleton_action();
 };
 #endif
 

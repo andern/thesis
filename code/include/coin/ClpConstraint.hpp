@@ -1,6 +1,8 @@
-/* $Id: ClpConstraint.hpp 1525 2010-02-26 17:27:59Z mjs $ */
+/* $Id: ClpConstraint.hpp 1665 2011-01-04 17:55:54Z lou $ */
 // Copyright (C) 2007, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
+
 #ifndef ClpConstraint_H
 #define ClpConstraint_H
 

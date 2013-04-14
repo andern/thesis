@@ -1,6 +1,8 @@
-/* $Id: ClpNonLinearCost.hpp 1525 2010-02-26 17:27:59Z mjs $ */
+/* $Id: ClpNonLinearCost.hpp 1769 2011-07-26 09:31:51Z forrest $ */
 // Copyright (C) 2002, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
+
 #ifndef ClpNonLinearCost_H
 #define ClpNonLinearCost_H
 
@@ -147,6 +149,8 @@ public:
      void refreshCosts(const double * columnCosts);
      /// Puts feasible bounds into lower and upper
      void feasibleBounds();
+     /// Refresh - assuming regions OK
+     void refresh();
      /** Sets bounds and cost for one variable
          Returns change in cost
       May need to be inline for speed */

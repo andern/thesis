@@ -1,6 +1,7 @@
-/* $Id: CoinPresolveUseless.hpp 1215 2009-11-05 11:03:04Z forrest $ */
+/* $Id: CoinPresolveUseless.hpp 1566 2012-11-29 19:33:56Z lou $ */
 // Copyright (C) 2002, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
 
 #ifndef CoinPresolveUseless_H
 #define CoinPresolveUseless_H
@@ -36,9 +37,27 @@ class useless_constraint_action : public CoinPresolveAction {
 
   void postsolve(CoinPostsolveMatrix *prob) const;
 
-  ~useless_constraint_action();
+  virtual ~useless_constraint_action();
 
 };
+
+/*! \relates useless_constraint_action
+    \brief Scan constraints looking for useless constraints
+
+  A front end to identify useless constraints and hand them to
+  useless_constraint_action::presolve() for processing.
+
+  In a bit more detail, the routine implements a greedy algorithm that
+  identifies a set of necessary constraints. A constraint is necessary if it
+  implies a tighter bound on a variable than the original column bound. These
+  tighter column bounds are then used to calculate row activity and identify
+  constraints that are useless given the presence of the necessary
+  constraints. 
+*/
+
+const CoinPresolveAction *testRedundant(CoinPresolveMatrix *prob,
+					const CoinPresolveAction *next) ;
+
 
 
 #endif

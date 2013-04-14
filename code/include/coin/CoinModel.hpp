@@ -1,11 +1,14 @@
-/* $Id: CoinModel.hpp 1215 2009-11-05 11:03:04Z forrest $ */
+/* $Id: CoinModel.hpp 1581 2013-04-06 12:48:50Z stefan $ */
 // Copyright (C) 2005, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
+
 #ifndef CoinModel_H
 #define CoinModel_H
 
 #include "CoinModelUseful.hpp"
 #include "CoinPackedMatrix.hpp"
+#include "CoinFinite.hpp"
 class CoinBaseModel {
 
 public:
@@ -692,6 +695,12 @@ public:
   /// Return column names array
   inline const CoinModelHash * columnNames() const
   { return &columnName_;}
+  /// Reset row names
+  inline void zapRowNames()
+  { rowName_=CoinModelHash();}
+  /// Reset column names
+  inline void zapColumnNames()
+  { columnName_=CoinModelHash();}
   /// Returns array of 0 or nonzero if can be a cut (or returns NULL)
   inline const int * cutMarker() const
   { return cut_;}
@@ -807,13 +816,15 @@ public:
    //@{
    /** Default constructor. */
    CoinModel();
-    /** Read a problem in MPS or GAMS format from the given filename.
-    */
-    CoinModel(const char *fileName, int allowStrings=0);
-    /** Read a problem from AMPL nl file
-	NOTE - as I can't work out configure etc the source code is in Cbc_ampl.cpp!
-    */
-    CoinModel( int nonLinear, const char * fileName,const void * info);
+   /** Constructor with sizes. */
+   CoinModel(int firstRows, int firstColumns, int firstElements,bool noNames=false);
+   /** Read a problem in MPS or GAMS format from the given filename.
+   */
+   CoinModel(const char *fileName, int allowStrings=0);
+   /** Read a problem from AMPL nl file
+       NOTE - as I can't work out configure etc the source code is in Cbc_ampl.cpp!
+   */
+   CoinModel( int nonLinear, const char * fileName,const void * info);
   /// From arrays
   CoinModel(int numberRows, int numberColumns,
 	    const CoinPackedMatrix * matrix,
@@ -1016,6 +1027,8 @@ private:
       3 matrix is CoinPackedMatrix (and at present can't be modified);
   */
   mutable int type_;
+  /// True if no names EVER being used (for users who know what they are doing)
+  bool noNames_;
   /** Links present (could be tested by sizes of objects)
       0 - none,
       1 - row links,

@@ -1,6 +1,8 @@
-/* $Id: ClpDynamicMatrix.hpp 1525 2010-02-26 17:27:59Z mjs $ */
+/* $Id: ClpDynamicMatrix.hpp 1755 2011-06-28 18:24:31Z lou $ */
 // Copyright (C) 2004, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
+
 #ifndef ClpDynamicMatrix_H
 #define ClpDynamicMatrix_H
 
@@ -92,6 +94,8 @@ public:
      virtual double reducedCost( ClpSimplex * model, int sequence) const;
      /// Does gub crash
      void gubCrash();
+     /// Writes out model (without names)
+     void writeMps(const char * name);
      /// Populates initial matrix from dynamic status
      void initialProblem();
      /** Adds in a column to gub structure (called from descendant) and returns sequence */
@@ -131,7 +135,7 @@ public:
      ClpDynamicMatrix(ClpSimplex * model, int numberSets,
                       int numberColumns, const int * starts,
                       const double * lower, const double * upper,
-                      const int * startColumn, const int * row,
+                      const CoinBigIndex * startColumn, const int * row,
                       const double * element, const double * cost,
                       const double * columnLower = NULL, const double * columnUpper = NULL,
                       const unsigned char * status = NULL,
@@ -163,10 +167,26 @@ public:
           st_byte = static_cast<unsigned char>(st_byte & ~7);
           st_byte = static_cast<unsigned char>(st_byte | status);
      }
+     /// Whether flagged slack
+     inline bool flaggedSlack(int i) const {
+          return (status_[i] & 8) != 0;
+     }
+     inline void setFlaggedSlack(int i) {
+          status_[i] = static_cast<unsigned char>(status_[i] | 8);
+     }
+     inline void unsetFlaggedSlack(int i) {
+          status_[i] = static_cast<unsigned char>(status_[i] & ~8);
+     }
      /// Number of sets (dynamic rows)
      inline int numberSets() const {
           return numberSets_;
      }
+     /// Number of possible gub variables
+     inline int numberGubEntries() const
+     { return startSet_[numberSets_];}
+     /// Sets
+     inline int * startSets() const
+     { return startSet_;}
      /// Whether flagged
      inline bool flagged(int i) const {
           return (dynamicStatus_[i] & 8) != 0;

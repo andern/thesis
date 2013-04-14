@@ -1,6 +1,10 @@
-/* $Id: ClpCholeskyDense.hpp 1525 2010-02-26 17:27:59Z mjs $ */
-/* Copyright (C) 2003, International Business Machines Corporation
-   and others.  All Rights Reserved. */
+/* $Id: ClpCholeskyDense.hpp 1910 2013-01-27 02:00:13Z stefan $ */
+/*
+  Copyright (C) 2003, International Business Machines Corporation
+  and others.  All Rights Reserved.
+
+  This code is licensed under the terms of the Eclipse Public License (EPL).
+*/
 #ifndef ClpCholeskyDense_H
 #define ClpCholeskyDense_H
 

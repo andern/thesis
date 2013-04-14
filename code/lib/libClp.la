@@ -14,7 +14,7 @@ library_names='libClp.so.0.0.0 libClp.so.0 libClp.so'
 old_library=''
 
 # Libraries that this one depends upon.
-dependency_libs=' -llapack -lblas'
+dependency_libs=''
 
 # Version information for libClp.
 current=0
@@ -32,4 +32,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/home/andern/Dropbox/Programming/workspace/fu/coin-Clp/lib'
+libdir='/home/andern/delete_later/coin-Clp/lib'

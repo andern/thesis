@@ -1,6 +1,8 @@
-/* $Id: ClpModel.hpp 1606 2010-09-20 20:53:00Z stefan $ */
+/* $Id: ClpModel.hpp 1941 2013-04-10 16:52:27Z stefan $ */
 // Copyright (C) 2002, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
+
 #ifndef ClpModel_H
 #define ClpModel_H
 
@@ -17,6 +19,7 @@
 #include "ClpPackedMatrix.hpp"
 #include "CoinMessageHandler.hpp"
 #include "CoinHelperFunctions.hpp"
+#include "CoinTypes.hpp"
 #include "CoinFinite.hpp"
 #include "ClpParameters.hpp"
 #include "ClpObjective.hpp"
@@ -180,6 +183,9 @@ public:
 
      /// Deletes columns
      void deleteColumns(int number, const int * which);
+     /// Deletes rows AND columns (keeps old sizes)
+     void deleteRowsAndColumns(int numberRows, const int * whichRows,
+			       int numberColumns, const int * whichColumns);
      /// Add one column
      void addColumn(int numberInColumn,
                     const int * rows,
@@ -260,8 +266,8 @@ public:
      /// Drops names - makes lengthnames 0 and names empty
      void dropNames();
      /// Copies in names
-     void copyNames(std::vector<std::string> & rowNames,
-                    std::vector<std::string> & columnNames);
+     void copyNames(const std::vector<std::string> & rowNames,
+                    const std::vector<std::string> & columnNames);
      /// Copies in Row names - modifies names first .. last-1
      void copyRowNames(const std::vector<std::string> & rowNames, int first, int last);
      /// Copies in Column names - modifies names first .. last-1
@@ -349,7 +355,7 @@ public:
           return dblParam_[ClpPresolveTolerance];
      }
 #ifndef CLP_NO_STD
-     inline std::string problemName() const {
+     inline const std::string & problemName() const {
           return strParam_[ClpProbName];
      }
 #endif
@@ -609,6 +615,11 @@ public:
      inline double * mutableInverseColumnScale() const {
           return inverseColumnScale_;
      }
+     inline double * swapRowScale(double * newScale) {
+          double * oldScale = rowScale_;
+	  rowScale_ = newScale;
+          return oldScale;
+     }
      void setRowScale(double * scale) ;
      void setColumnScale(double * scale);
      /// Scaling of objective
@@ -686,7 +697,7 @@ public:
           else return matrix_->getPackedMatrix();
      }
      /// Number of elements in matrix
-     inline long long getNumElements() const {
+     inline int getNumElements() const {
           return matrix_->getNumElements();
      }
      /** Small element value - elements less than this set to zero,
@@ -715,6 +726,12 @@ public:
      inline void setClpScaledMatrix(ClpPackedMatrix * scaledMatrix) {
           delete scaledMatrix_;
           scaledMatrix_ = scaledMatrix;
+     }
+     /// Swaps pointer to scaled ClpPackedMatrix
+     inline ClpPackedMatrix * swapScaledMatrix(ClpPackedMatrix * scaledMatrix) {
+          ClpPackedMatrix * oldMatrix = scaledMatrix_;
+          scaledMatrix_ = scaledMatrix;
+	  return oldMatrix;
      }
      /** Replace Clp Matrix (current is not deleted unless told to
          and new is used)
@@ -747,8 +764,11 @@ public:
      }
      /** Infeasibility/unbounded ray (NULL returned if none/wrong)
          Up to user to use delete [] on these arrays.  */
-     double * infeasibilityRay() const;
+     double * infeasibilityRay(bool fullRay=false) const;
      double * unboundedRay() const;
+     /// For advanced users - no need to delete - sign not changed
+     inline double * ray() const
+     { return ray_;}
      /// just test if infeasibility or unbounded Ray exists
      inline bool rayExists() const {
          return (ray_!=NULL);
@@ -758,6 +778,10 @@ public:
          delete [] ray_;
          ray_=NULL;
      }
+	 /// Access internal ray storage. Users should call infeasibilityRay() or unboundedRay() instead.
+	 inline const double * internalRay() const {
+		 return ray_;
+	 }
      /// See if status (i.e. basis) array exists (partly for OsiClp)
      inline bool statusExists() const {
           return (status_ != NULL);
@@ -815,6 +839,8 @@ public:
      inline void setLanguage(CoinMessages::Language language) {
           newLanguage(language);
      }
+     /// Overrides message handler with a default one
+     void setDefaultMessageHandler();
      /// Return handler
      inline CoinMessageHandler * messageHandler() const       {
           return handler_;
@@ -1010,6 +1036,7 @@ public:
          262144 - extra copy of scaled matrix
          524288 - Clp fast dual
          1048576 - don't need to finish dual (can return 3)
+	 2097152 - zero costs!
          NOTE - many applications can call Clp but there may be some short cuts
                 which are taken which are not guaranteed safe from all applications.
                 Vetted applications will have a bit set and the code may test this
@@ -1168,6 +1195,18 @@ protected:
              top bits may be used internally
        shift by 65336 is 3 all same, 1 all except col bounds
      */
+#define ROW_COLUMN_COUNTS_SAME 1
+#define MATRIX_SAME 2
+#define MATRIX_JUST_ROWS_ADDED 4
+#define MATRIX_JUST_COLUMNS_ADDED 8
+#define ROW_LOWER_SAME 16
+#define ROW_UPPER_SAME 32
+#define OBJECTIVE_SAME 64 
+#define COLUMN_LOWER_SAME 128
+#define COLUMN_UPPER_SAME 256
+#define BASIS_SAME 512
+#define ALL_SAME 65339
+#define ALL_SAME_EXCEPT_COLUMN_BOUNDS 65337
      unsigned int whatsChanged_;
      /// Status of problem
      int problemStatus_;

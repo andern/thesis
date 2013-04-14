@@ -1,7 +1,8 @@
-/* $Id: CoinPresolveDual.hpp 1215 2009-11-05 11:03:04Z forrest $ */
+/* $Id: CoinPresolveDual.hpp 1510 2011-12-08 23:56:01Z lou $ */
 
 // Copyright (C) 2002, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
 
 #ifndef CoinPresolveDual_H
 #define CoinPresolveDual_H
@@ -29,24 +30,56 @@
   negative, then at optimality the corresponding variable must be nonbasic
   at its lower or upper bound, respectively. If the required bound is lacking,
   the problem is unbounded.
-
-  There is no postsolve object specific to remove_dual_action, but execution
-  will queue postsolve actions for any variables that are fixed.
 */
 
 class remove_dual_action : public CoinPresolveAction {
- public:
-  remove_dual_action(int nactions,
-		     //const action *actions,
-		      const CoinPresolveAction *next);
-/*! \brief Attempt to fix variables by bounding reduced costs
 
-  Always scans all variables. Propagates bounds on reduced costs until there's
-  no change or until some set of variables can be fixed.
-*/
+  public:
+
+  /// Destructor
+  ~remove_dual_action () ;
+
+  /// Name
+  inline const char *name () const { return ("remove_dual_action") ; }
+
+  /*! \brief Attempt to fix variables by bounding reduced costs
+
+    Always scans all variables. Propagates bounds on reduced costs until there's
+    no change or until some set of variables can be fixed.
+  */
   static const CoinPresolveAction *presolve(CoinPresolveMatrix *prob,
-					 const CoinPresolveAction *next);
-};
+					    const CoinPresolveAction *next) ;
+
+  /*! \brief Postsolve
+
+    In addition to fixing variables (handled by make_fixed_action), we may
+    need use our own postsolve to restore constraint bounds.
+  */
+  void postsolve (CoinPostsolveMatrix *prob) const ;
+
+  private:
+
+  /// Postsolve (bound restore) instruction
+  struct action {
+    double rlo_ ;  ///< restored row lower bound
+    double rup_ ;  ///< restored row upper bound
+    int ndx_ ;     ///< row index
+  } ;
+
+  /// Constructor with postsolve actions.
+  remove_dual_action(int nactions, const action *actions,
+		     const CoinPresolveAction *next)
+    : CoinPresolveAction(next),
+      nactions_(nactions),
+      actions_(actions)
+  {}
+
+  /// Count of bound restore entries
+  const int nactions_ ;
+  /// Bound restore entries
+  const action *actions_ ;
+
+} ;
 #endif
 
 

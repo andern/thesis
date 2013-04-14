@@ -16,7 +16,6 @@
 #include <algorithm>
 #include <vector>
 #include <queue>
-#include <deque>
 #include <iostream>
 
 #include "coin/ClpCholeskyBase.hpp"
@@ -84,8 +83,8 @@ std::vector<uint16_t> complement(const std::vector<uint16_t>& z, uint16_t n) {
         i++;
     }
 
-    for (; i < n; i++)
-        c.push_back(i);
+ //   for (; i < n; i++)
+ //       c.push_back(i);
 
 /*    uint16_t i = 0;
     for (std::set<uint16_t>::iterator it = z.begin(); it != z.end(); ++it) {
@@ -107,7 +106,7 @@ std::vector<uint16_t> complement(const std::vector<uint16_t>& z, uint16_t n) {
 std::vector<uint16_t> toZSet(const double* arr, uint16_t len, double epsilon) {
     std::vector<uint16_t> s;
 
-    for (uint16_t i = 0; i < len; i++)
+    for (uint16_t i = 0; i < 20; i++)
         if (approximatelyZero(arr[i], epsilon))
             s.push_back(i);
 
@@ -168,7 +167,7 @@ static inline std::vector<uint16_t> get_first(std::vector<uint16_t>& s, uint16_t
 
 
 
-std::vector<struct vertex*> construct(ClpModel& model, uint16_t breakdowns,
+struct vertex* construct(ClpModel& model, uint16_t breakdowns,
 int maxIters, double tolerance)
 {
     uint16_t cols = (uint16_t) model.getNumCols();
@@ -192,32 +191,23 @@ int maxIters, double tolerance)
     quad.setLogLevel(0);
 
     /* Get the root ready. */
-    std::cout << "Getting root ready!" << std::endl;
     struct vertex* v0 = new struct vertex;
-    std::cout << "Right before malloc!" << std::endl;
     v0->sol = (double*) malloc(cols*sizeof(double));
+    
     //mod_solve(model, lin, v0->m, v0->sol, x_old, T, maxIters, tolerance, cols);
-    std::cout << "Right before solve!" << std::endl;
     mod_solve_clp(model, quad, v0->m, v0->sol);
-    v0->z = toZSet(v0->sol, cols, 1e-7);
-    std::cout << "size of z0: " <<  v0->z.size() << std::endl;
-/*    for (int i = 0; i < cols; i++) {
-        std::cout << v0->sol[i] << std::endl;
-    } */
-//    std::cout << std::endl;
-    std::cout << "Root is ready!" << std::endl;
 
-    std::vector<struct vertex*> vertices;
+    v0->z = toZSet(v0->sol, cols, 1e-7);
+
+    //std::vector<struct vertex*> vertices;
     
     /* Create queue and start with the root. */
-    std::deque<struct vertex*> q;
-    q.push_front(v0);
-    std::cout << "Beginning on construction!" << std::endl;
+    std::queue<struct vertex*> q;
+    q.push(v0);
     while (!q.empty()) {
         struct vertex* cur = q.front();
-//        print(cur->z.begin(), cur->z.end());
-        q.pop_back();
-        vertices.push_back(cur);
+        //vertices.push_back(cur);
+        q.pop();
 
         uint16_t breaks = std::min((uint16_t)cur->z.size(), breakdowns);
         std::vector<uint16_t> n = complement(cur->z, cols); // z.size >= cur.size, always
@@ -228,8 +218,8 @@ int maxIters, double tolerance)
                 if (find(f, v0) == 0) {
                     struct vertex* nv = new struct vertex;
                     cur->children.push_back(nv);
-                    q.push_front(nv);
-                    nv->m = f;
+                    q.push(nv);
+                    nv->m = f; // Data is copied!
                     nv->sol = (double*) malloc(cols*sizeof(double));
                     mod_solve_clp(model, quad, nv->m, nv->sol);
                     nv->z = toZSet(nv->sol, cols, tolerance);
@@ -244,5 +234,5 @@ int maxIters, double tolerance)
     free(x_old);
     free(T);
 
-    return vertices;
+    return v0;
 }

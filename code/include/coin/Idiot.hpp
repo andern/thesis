@@ -1,6 +1,8 @@
-/* $Id: Idiot.hpp 1525 2010-02-26 17:27:59Z mjs $ */
+/* $Id: Idiot.hpp 1665 2011-01-04 17:55:54Z lou $ */
 // Copyright (C) 2002, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
+
 // "Idiot" as the name of this algorithm is copylefted.  If you want to change
 // the name then it should be something equally stupid (but not "Stupid") or
 // even better something witty.

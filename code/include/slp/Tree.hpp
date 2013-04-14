@@ -31,7 +31,13 @@
 struct vertex {
     vertex() {};
     vertex(const vertex&) { std::cout << "copied\n"; }
-    ~vertex() { std::cout << "deleted\n"; }
+    ~vertex() {
+        free(sol);
+        std::cout << "deleted\n";
+        for (uint16_t i = 0; i < children.size(); i++) {
+            delete children[i];
+        }
+    }
     std::vector<uint16_t> m;
     std::vector<uint16_t> z;
     double* sol;
@@ -60,7 +66,7 @@ struct vertex* find(const std::vector<uint16_t>& m, struct vertex* v);
  *         a ClpModel for an instance.
  * @return a vector of vertices.
  */
-std::vector<struct vertex*> construct(ClpModel& model, uint16_t breakdowns,
+struct vertex* construct(ClpModel& model, uint16_t breakdowns,
 int maxIters, double tolerance);
 
 std::vector<uint16_t> complement(const std::vector<uint16_t>& z, uint16_t n);

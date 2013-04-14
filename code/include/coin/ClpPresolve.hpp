@@ -1,6 +1,7 @@
-/* $Id: ClpPresolve.hpp 1525 2010-02-26 17:27:59Z mjs $ */
+/* $Id: ClpPresolve.hpp 1928 2013-04-06 12:54:16Z stefan $ */
 // Copyright (C) 2002, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
 
 #ifndef ClpPresolve_H
 #define ClpPresolve_H
@@ -42,15 +43,18 @@ public:
                                  bool keepIntegers = true,
                                  int numberPasses = 5,
                                  bool dropNames = false,
-                                 bool doRowObjective = false);
+                                 bool doRowObjective = false,
+				 const char * prohibitedRows=NULL,
+				 const char * prohibitedColumns=NULL);
 #ifndef CLP_NO_STD
      /** This version saves data in a file.  The passed in model
-         is updated to be presolved model.  names are always dropped.
+         is updated to be presolved model.  
          Returns non-zero if infeasible*/
      int presolvedModelToFile(ClpSimplex &si, std::string fileName,
                               double feasibilityTolerance = 0.0,
                               bool keepIntegers = true,
                               int numberPasses = 5,
+			      bool dropNames = false,
                               bool doRowObjective = false);
 #endif
      /** Return pointer to presolved model,
@@ -163,6 +167,14 @@ public:
           if (doGubrow) presolveActions_  &= ~1024;
           else presolveActions_ |= 1024;
      }
+     /// Whether we want to do twoxtwo part of presolve
+     inline bool doTwoxTwo() const {
+          return (presolveActions_ & 2048) != 0;
+     }
+     inline void setDoTwoxtwo(bool doTwoxTwo) {
+          if (!doTwoxTwo) presolveActions_  &= ~2048;
+          else presolveActions_ |= 2048;
+     }
      /// Set whole group
      inline int presolveActions() const {
           return presolveActions_ & 0xffff;
@@ -178,6 +190,8 @@ public:
      inline void statistics() {
           presolveActions_ |= 0x80000000;
      }
+     /// Return presolve status (0,1,2)
+     int presolveStatus() const;
 
      /**@name postsolve - postsolve the problem.  If the problem
        has not been solved to optimality, there are no guarantees.
@@ -253,6 +267,8 @@ protected:
                bool keepIntegers,
                int numberPasses,
                bool dropNames,
-               bool doRowObjective);
+					       bool doRowObjective,
+					       const char * prohibitedRows=NULL,
+					       const char * prohibitedColumns=NULL);
 };
 #endif

@@ -1,6 +1,8 @@
-/* $Id: ClpPrimalColumnPivot.hpp 1525 2010-02-26 17:27:59Z mjs $ */
+/* $Id: ClpPrimalColumnPivot.hpp 1732 2011-05-31 08:09:41Z forrest $ */
 // Copyright (C) 2002, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
+
 #ifndef ClpPrimalcolumnPivot_H
 #define ClpPrimalcolumnPivot_H
 
@@ -147,5 +149,7 @@ protected:
      bool looksOptimal_;
      //@}
 };
-
+#ifndef CLP_PRIMAL_SLACK_MULTIPLIER
+#define CLP_PRIMAL_SLACK_MULTIPLIER 1.01
+#endif
 #endif

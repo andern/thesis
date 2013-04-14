@@ -1,6 +1,8 @@
-/* $Id: ClpDualRowPivot.hpp 1525 2010-02-26 17:27:59Z mjs $ */
+/* $Id: ClpDualRowPivot.hpp 1732 2011-05-31 08:09:41Z forrest $ */
 // Copyright (C) 2002, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
+
 #ifndef ClpDualRowPivot_H
 #define ClpDualRowPivot_H
 
@@ -119,5 +121,7 @@ protected:
      int type_;
      //@}
 };
-
+#ifndef CLP_DUAL_COLUMN_MULTIPLIER
+//#define CLP_DUAL_COLUMN_MULTIPLIER 0.99999
+#endif
 #endif

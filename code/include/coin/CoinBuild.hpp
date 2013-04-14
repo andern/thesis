@@ -1,11 +1,14 @@
-/* $Id: CoinBuild.hpp 1215 2009-11-05 11:03:04Z forrest $ */
+/* $Id: CoinBuild.hpp 1416 2011-04-17 09:57:29Z stefan $ */
 // Copyright (C) 2005, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
+
 #ifndef CoinBuild_H
 #define CoinBuild_H
 
 
 #include "CoinPragma.hpp"
+#include "CoinTypes.hpp"
 #include "CoinFinite.hpp"
 
 

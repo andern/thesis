@@ -1,6 +1,8 @@
-/* $Id: CoinShallowPackedVector.hpp 1215 2009-11-05 11:03:04Z forrest $ */
+/* $Id: CoinShallowPackedVector.hpp 1498 2011-11-02 15:25:35Z mjs $ */
 // Copyright (C) 2000, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
+
 #ifndef CoinShallowPackedVector_H
 #define CoinShallowPackedVector_H
 
@@ -117,7 +119,7 @@ public:
    /** Copy constructor. */
    CoinShallowPackedVector(const CoinShallowPackedVector &);
    /** Destructor. */
-   ~CoinShallowPackedVector() {}
+   virtual ~CoinShallowPackedVector() {}
    /// Print vector information.
    void print();
    //@}

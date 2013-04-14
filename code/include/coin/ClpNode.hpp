@@ -1,6 +1,8 @@
-/* $Id: ClpNode.hpp 1525 2010-02-26 17:27:59Z mjs $ */
+/* $Id: ClpNode.hpp 1910 2013-01-27 02:00:13Z stefan $ */
 // Copyright (C) 2008, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
+
 #ifndef ClpNode_H
 #define ClpNode_H
 
@@ -216,7 +218,7 @@ public:
      double integerTolerance_;
      /// Integer increment
      double integerIncrement_;
-     /// Small chnage in branch
+     /// Small change in branch
      double smallChange_;
      /// Down pseudo costs
      double * downPseudo_;
@@ -242,6 +244,10 @@ public:
      int * whichRow_;
      /// Which columns in large model
      int * whichColumn_;
+#ifndef NO_FATHOM_PRINT
+     /// Cbc's message handler
+     CoinMessageHandler * handler_;
+#endif
      /// Number bounds in large model
      int nBound_;
      /// Save of specialOptions_ (local)
@@ -271,6 +277,12 @@ public:
      int numberIterations_;
      /// Type of presolve - 0 none, 1 crunch
      int presolveType_;
+#ifndef NO_FATHOM_PRINT
+     /// Depth passed in
+     int startingDepth_;
+     /// Node at which called
+     int nodeCalled_;
+#endif
      //@}
 };
 class ClpHashValue {

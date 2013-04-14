@@ -1,11 +1,13 @@
-/* $Id: CoinSnapshot.hpp 1191 2009-07-25 08:38:12Z forrest $ */
+/* $Id: CoinSnapshot.hpp 1416 2011-04-17 09:57:29Z stefan $ */
 // Copyright (C) 2006, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
+
 #ifndef CoinSnapshot_H
 #define CoinSnapshot_H
 
 class CoinPackedMatrix;
-#include "CoinFinite.hpp"
+#include "CoinTypes.hpp"
 
 //#############################################################################
 

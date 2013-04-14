@@ -1,12 +1,14 @@
-/* $Id: CoinPresolveTripleton.hpp 1215 2009-11-05 11:03:04Z forrest $ */
+/* $Id: CoinPresolveTripleton.hpp 1498 2011-11-02 15:25:35Z mjs $ */
 // Copyright (C) 2003, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
 
 #ifndef CoinPresolveTripleton_H
 #define CoinPresolveTripleton_H
 #define TRIPLETON 11
 /** We are only going to do this if it does not increase number of elements?.
-    It could be generalized to more than three but it seems unlikely it would help.
+    It could be generalized to more than three but it seems unlikely it would
+    help.
 
     As it is adapted from doubleton icoly is one dropped.
  */
@@ -57,7 +59,7 @@ class tripleton_action : public CoinPresolveAction {
   
   void postsolve(CoinPostsolveMatrix *prob) const;
 
-  ~tripleton_action();
+  virtual ~tripleton_action();
 };
 #endif
 

@@ -1,11 +1,13 @@
-/* $Id: ClpMatrixBase.hpp 1525 2010-02-26 17:27:59Z mjs $ */
+/* $Id: ClpMatrixBase.hpp 1722 2011-04-17 09:58:37Z stefan $ */
 // Copyright (C) 2002, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
+
 #ifndef ClpMatrixBase_H
 #define ClpMatrixBase_H
 
 #include "CoinPragma.hpp"
-#include "CoinFinite.hpp"
+#include "CoinTypes.hpp"
 
 #include "CoinPackedMatrix.hpp"
 class CoinIndexedVector;

@@ -1,6 +1,7 @@
-/* $Id: CoinWarmStartVector.hpp 1191 2009-07-25 08:38:12Z forrest $ */
+/* $Id: CoinWarmStartVector.hpp 1498 2011-11-02 15:25:35Z mjs $ */
 // Copyright (C) 2000, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
 
 #ifndef CoinWarmStartVector_H
 #define CoinWarmStartVector_H
@@ -251,6 +252,7 @@ public:
       t_ = rhs.t_;
       u_ = rhs.u_;
     }	
+    return *this;
   }
 
   inline void swap(CoinWarmStartVectorPair<T,U>& rhs) {
@@ -293,12 +295,15 @@ public:
   CoinWarmStartVectorPairDiff() {}
   CoinWarmStartVectorPairDiff(const CoinWarmStartVectorPairDiff<T,U>& rhs) :
     tdiff_(rhs.tdiff_), udiff_(rhs.udiff_) {}
-  ~CoinWarmStartVectorPairDiff() {}
+  virtual ~CoinWarmStartVectorPairDiff() {}
 
   virtual CoinWarmStartVectorPairDiff&
   operator=(const CoinWarmStartVectorPairDiff<T,U>& rhs) {
-    tdiff_ = rhs.tdiff_;
-    udiff_ = rhs.udiff_;
+	  if (this != &rhs) {
+		  tdiff_ = rhs.tdiff_;
+		  udiff_ = rhs.udiff_;
+	  }
+    return *this;
   }
 
   virtual CoinWarmStartDiff * clone() const {

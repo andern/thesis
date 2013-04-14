@@ -1,7 +1,8 @@
-/* $Id: CoinWarmStartBasis.hpp 1215 2009-11-05 11:03:04Z forrest $ */
+/* $Id: CoinWarmStartBasis.hpp 1515 2011-12-10 23:38:04Z lou $ */
 /*! \legal
   Copyright (C) 2000 -- 2003, International Business Machines Corporation
   and others.  All Rights Reserved.
+  This code is licensed under the terms of the Eclipse Public License (EPL).
 */
 
 /*! \file CoinWarmStart.hpp
@@ -362,6 +363,10 @@ inline void setStatus(char * array, int i, CoinWarmStartBasis::Status st) {
   st_byte = static_cast<char>(st_byte | (st << ((i&3)<<1))) ;
 }
 
+/*! \relates CoinWarmStartBasis
+    \brief Generate a print string for a status code
+*/
+const char *statusName(CoinWarmStartBasis::Status status) ;
 
 
 /*! \class CoinWarmStartBasisDiff

@@ -1,12 +1,23 @@
-/* $Id: ClpPackedMatrix.hpp 1525 2010-02-26 17:27:59Z mjs $ */
+/* $Id: ClpPackedMatrix.hpp 1836 2011-12-15 20:22:39Z lou $ */
 // Copyright (C) 2002, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
+
 #ifndef ClpPackedMatrix_H
 #define ClpPackedMatrix_H
 
 #include "CoinPragma.hpp"
 
 #include "ClpMatrixBase.hpp"
+
+// Compilers can produce better code if they know about __restrict
+#ifndef COIN_RESTRICT
+#ifdef COIN_USE_RESTRICT
+#define COIN_RESTRICT __restrict
+#else
+#define COIN_RESTRICT
+#endif
+#endif
 
 /** This implements CoinPackedMatrix as derived from ClpMatrixBase.
 
@@ -322,6 +333,12 @@ public:
      inline void checkGaps() {
           flags_ = (matrix_->hasGaps()) ? (flags_ | 2) : (flags_ & (~2));
      }
+     /// number of active columns (normally same as number of columns)
+     inline int numberActiveColumns() const
+     { return numberActiveColumns_;}
+     /// Set number of active columns (normally same as number of columns)
+     inline void setNumberActiveColumns(int value)
+     { numberActiveColumns_ = value;}
      //@}
 
 
@@ -419,6 +436,13 @@ private:
      int gutsOfTransposeTimesByRowGE3(const CoinIndexedVector * COIN_RESTRICT piVector,
                                       int * COIN_RESTRICT index,
                                       double * COIN_RESTRICT output,
+                                      double * COIN_RESTRICT array2,
+                                      const double tolerance,
+                                      const double scalar) const;
+     /// Meat of transposeTimes by row n > 2 if packed - returns number nonzero
+     int gutsOfTransposeTimesByRowGE3a(const CoinIndexedVector * COIN_RESTRICT piVector,
+                                      int * COIN_RESTRICT index,
+                                      double * COIN_RESTRICT output,
                                       int * COIN_RESTRICT lookup,
                                       char * COIN_RESTRICT marked,
                                       const double tolerance,
@@ -450,7 +474,7 @@ protected:
          8 - has special column copy
          16 - wants special column copy
      */
-     int flags_;
+     mutable int flags_;
      /// Special row copy
      ClpPackedMatrix2 * rowCopy_;
      /// Special column copy

@@ -1,18 +1,23 @@
-/* $Id: CoinPackedVector.hpp 1215 2009-11-05 11:03:04Z forrest $ */
+/* $Id: CoinPackedVector.hpp 1509 2011-12-05 13:50:48Z forrest $ */
 // Copyright (C) 2000, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
+
 #ifndef CoinPackedVector_H
 #define CoinPackedVector_H
 
-#if defined(_MSC_VER)
-// Turn off compiler warning about long names
-#  pragma warning(disable:4786)
-#endif
-
 #include <map>
 
+#include "CoinPragma.hpp"
 #include "CoinPackedVectorBase.hpp"
 #include "CoinSort.hpp"
+
+#ifdef COIN_FAST_CODE
+#ifndef COIN_NOTEST_DUPLICATE
+#define COIN_NOTEST_DUPLICATE
+#endif
+#endif
+
 #ifndef COIN_NOTEST_DUPLICATE
 #define COIN_DEFAULT_VALUE_FOR_DUPLICATE true
 #else
@@ -129,6 +134,12 @@ public:
    virtual const double * getElements() const { return elements_; }
    /// Get indices of elements
    int * getIndices() { return indices_; }
+   /// Get the size
+   inline int getVectorNumElements() const { return nElements_; }
+   /// Get indices of elements
+   inline const int * getVectorIndices() const { return indices_; }
+   /// Get element values
+   inline const double * getVectorElements() const { return elements_; }
    /// Get element values
    double * getElements() { return elements_; }
    /** Get pointer to int * vector of original postions.

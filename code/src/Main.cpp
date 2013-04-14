@@ -128,5 +128,6 @@ std::vector<struct vertex*> buildTestTree() {
 int main() {
     ClpModel quad = clpFromTxt();
 
-    std::vector<struct vertex*> vertices = construct(quad, 1, 10000, 1e-7);
+    struct vertex* root = construct(quad, 1, 10000, 1e-7);
+    delete root;
 }

@@ -1,7 +1,8 @@
 
-/* $Id: CbcOrClpParam.hpp 1525 2010-02-26 17:27:59Z mjs $ */
+/* $Id: CbcOrClpParam.hpp 1928 2013-04-06 12:54:16Z stefan $ */
 // Copyright (C) 2002, International Business Machines
 // Corporation and others.  All Rights Reserved.
+// This code is licensed under the terms of the Eclipse Public License (EPL).
 
 #ifdef USE_CBCCONFIG
 # include "CbcConfig.h"
@@ -56,6 +57,7 @@ enum CbcOrClpParameterType
      CLP_PARAM_DBL_PRIMALWEIGHT,
      CLP_PARAM_DBL_OBJSCALE,
      CLP_PARAM_DBL_RHSSCALE,
+     CLP_PARAM_DBL_ZEROTOLERANCE,
 
      CBC_PARAM_DBL_INFEASIBILITYWEIGHT = 51,
      CBC_PARAM_DBL_CUTOFF,
@@ -98,6 +100,8 @@ enum CbcOrClpParameterType
      CLP_PARAM_INT_CPP,
      CLP_PARAM_INT_PROCESSTUNE,
      CLP_PARAM_INT_USESOLUTION,
+     CLP_PARAM_INT_RANDOMSEED,
+     CLP_PARAM_INT_MORESPECIALOPTIONS,
 
      CBC_PARAM_INT_STRONGBRANCHING = 151,
      CBC_PARAM_INT_CUTDEPTH,
@@ -131,6 +135,12 @@ enum CbcOrClpParameterType
 #ifdef COIN_HAS_CBC
      CLP_PARAM_INT_LOGLEVEL ,
 #endif
+     CBC_PARAM_INT_MAXSAVEDSOLS,
+     CBC_PARAM_INT_RANDOMSEED,
+     CBC_PARAM_INT_MULTIPLEROOTS,
+     CBC_PARAM_INT_STRONG_STRATEGY,
+     CBC_PARAM_INT_EXTRA_VARIABLES,
+     CBC_PARAM_INT_MAX_SLOW_CUTS,
 
      CLP_PARAM_STR_DIRECTION = 201,
      CLP_PARAM_STR_DUALPIVOT,
@@ -155,6 +165,8 @@ enum CbcOrClpParameterType
      CLP_PARAM_STR_VECTOR,
      CLP_PARAM_STR_FACTORIZATION,
      CLP_PARAM_STR_ALLCOMMANDS,
+     CLP_PARAM_STR_TIME_MODE,
+     CLP_PARAM_STR_ABCWANTED,
 
      CBC_PARAM_STR_NODESTRATEGY = 251,
      CBC_PARAM_STR_BRANCHSTRATEGY,
@@ -175,6 +187,7 @@ enum CbcOrClpParameterType
      CBC_PARAM_STR_FPUMP,
      CBC_PARAM_STR_GREEDY,
      CBC_PARAM_STR_COMBINE,
+     CBC_PARAM_STR_PROXIMITY,
      CBC_PARAM_STR_LOCALTREE,
      CBC_PARAM_STR_SOS,
      CBC_PARAM_STR_LANDPCUTS,
@@ -197,6 +210,11 @@ enum CbcOrClpParameterType
      CBC_PARAM_STR_CROSSOVER2,
      CBC_PARAM_STR_PIVOTANDCOMPLEMENT,
      CBC_PARAM_STR_VND,
+     CBC_PARAM_STR_LAGOMORYCUTS,
+     CBC_PARAM_STR_LATWOMIRCUTS,
+     CBC_PARAM_STR_REDSPLIT2CUTS,
+     CBC_PARAM_STR_GMICUTS,
+     CBC_PARAM_STR_CUTOFF_CONSTRAINT,
 
      CLP_PARAM_ACTION_DIRECTORY = 301,
      CLP_PARAM_ACTION_DIRSAMPLE,
@@ -245,13 +263,17 @@ enum CbcOrClpParameterType
      CLP_PARAM_ACTION_CSVSTATISTICS,
      CLP_PARAM_ACTION_STOREDFILE,
      CLP_PARAM_ACTION_ENVIRONMENT,
+     CLP_PARAM_ACTION_PARAMETRICS,
+     CLP_PARAM_ACTION_GMPL_SOLUTION,
 
      CBC_PARAM_ACTION_BAB = 351,
      CBC_PARAM_ACTION_MIPLIB,
      CBC_PARAM_ACTION_STRENGTHEN,
      CBC_PARAM_ACTION_PRIORITYIN,
+     CBC_PARAM_ACTION_MIPSTART,
      CBC_PARAM_ACTION_USERCBC,
      CBC_PARAM_ACTION_DOHEURISTIC,
+     CLP_PARAM_ACTION_NEXTBESTSOLUTION,
 
      CBC_PARAM_NOTUSED_OSLSTUFF = 401,
      CBC_PARAM_NOTUSED_CBCSTUFF,
@@ -464,7 +486,7 @@ int CoinReadGetIntField(int argc, const char *argv[], int * valid);
 double CoinReadGetDoubleField(int argc, const char *argv[], int * valid);
 void CoinReadPrintit(const char * input);
 void setCbcOrClpPrinting(bool yesNo);
-#define CBCMAXPARAMETERS 200
+#define CBCMAXPARAMETERS 250
 /*
   Subroutine to establish the cbc parameter array. See the description of
   class CbcOrClpParam for details. Pulled from C..Main() for clarity.
