@@ -16,6 +16,7 @@
 #include <algorithm>
 #include <vector>
 #include <queue>
+#include <deque>
 #include <iostream>
 
 #include "coin/ClpCholeskyBase.hpp"
@@ -57,8 +58,17 @@ struct vertex* find(const std::vector<uint16_t>& m, struct vertex* v) {
 
 
 
-static bool essentiallyEqual(double a, double b, double epsilon) {
-    return fabs(a - b) <= ( (fabs(a) > fabs(b) ? fabs(b) : fabs(a)) * epsilon);
+/* From Donald Knuth. */
+//static bool essentiallyEqual(double a, double b, double epsilon) {
+//    return fabs(a - b) <= ( (fabs(a) > fabs(b) ? fabs(b) : fabs(a)) * epsilon);
+//}
+
+//static bool approximatelyEqual(double a, double b, double epsilon) {
+//    return fabs(a - b) <= ( (fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * epsilon);
+//}
+
+static bool approximatelyZero(double num, double epsilon) {
+    return fabs(num) <= epsilon;
 }
 
 
@@ -98,7 +108,7 @@ std::vector<uint16_t> toZSet(const double* arr, uint16_t len, double epsilon) {
     std::vector<uint16_t> s;
 
     for (uint16_t i = 0; i < len; i++)
-        if (essentiallyEqual(arr[i], 0, epsilon))
+        if (approximatelyZero(arr[i], epsilon))
             s.push_back(i);
 
     return s;
@@ -189,38 +199,43 @@ int maxIters, double tolerance)
     //mod_solve(model, lin, v0->m, v0->sol, x_old, T, maxIters, tolerance, cols);
     std::cout << "Right before solve!" << std::endl;
     mod_solve_clp(model, quad, v0->m, v0->sol);
-    v0->z = toZSet(v0->sol, cols, tolerance);
+    v0->z = toZSet(v0->sol, cols, 1e-7);
+    std::cout << "size of z0: " <<  v0->z.size() << std::endl;
+/*    for (int i = 0; i < cols; i++) {
+        std::cout << v0->sol[i] << std::endl;
+    } */
+//    std::cout << std::endl;
     std::cout << "Root is ready!" << std::endl;
 
     std::vector<struct vertex*> vertices;
     
     /* Create queue and start with the root. */
-    std::queue<struct vertex*> q;
-    q.push(v0);
+    std::deque<struct vertex*> q;
+    q.push_front(v0);
     std::cout << "Beginning on construction!" << std::endl;
     while (!q.empty()) {
         struct vertex* cur = q.front();
 //        print(cur->z.begin(), cur->z.end());
-        q.pop();
+        q.pop_back();
         vertices.push_back(cur);
 
         uint16_t breaks = std::min((uint16_t)cur->z.size(), breakdowns);
         std::vector<uint16_t> n = complement(cur->z, cols); // z.size >= cur.size, always
-        for (uint16_t i = 0; i < breaks; i++) {
+        for (uint16_t i = (uint16_t) cur->m.size(); i < breaks; i++) {
             std::vector<uint16_t> f(n.begin(), n.begin()+(i+1));
             do {
+                print(f.begin(), f.end());
                 if (find(f, v0) == 0) {
                     struct vertex* nv = new struct vertex;
                     cur->children.push_back(nv);
-                    q.push(nv);
+                    q.push_front(nv);
                     nv->m = f;
                     nv->sol = (double*) malloc(cols*sizeof(double));
                     mod_solve_clp(model, quad, nv->m, nv->sol);
                     nv->z = toZSet(nv->sol, cols, tolerance);
                     //std::cout << mod_solve(model, lin, nv->m, nv->sol, x_old, T,
                     //          maxIters, tolerance, cols) << std::endl;
-                    std::cout << quad.getObjValue() << std::endl;
-                    print(f.begin(), f.end());
+                    //std::cout << quad.getObjValue() << std::endl;
                 }
             } while(next_combination(n.begin(), n.end(), f.begin(), f.end()));
         }
