@@ -150,14 +150,13 @@ ClpModel clpFromTxt() {
     out.loadProblem(Aeq, x_L, x_U, c, rowlb, rowub);
     out.loadQuadraticObjective(H);
 
-    /* Do not free if ClpSimplex does not make a copy. */
     free(c);
     free(x_L);
     free(x_U);
     free(rowlb);
     free(rowub);
 
-    return (out);
+    return out;
 
 }
 

@@ -106,7 +106,7 @@ std::vector<uint16_t> complement(const std::vector<uint16_t>& z, uint16_t n) {
 std::vector<uint16_t> toZSet(const double* arr, uint16_t len, double epsilon) {
     std::vector<uint16_t> s;
 
-    for (uint16_t i = 0; i < 20; i++)
+    for (uint16_t i = 0; i < 50; i++)
         if (approximatelyZero(arr[i], epsilon))
             s.push_back(i);
 
