@@ -125,7 +125,7 @@ inline bool next_combination(BidIt n_begin, BidIt n_end, BidIt r_begin, BidIt r_
 
 template<class Obj> void print(Obj begin, Obj end) {
     for (Obj it = begin; it != end; ++it)
-        std::cout << *it;
+        std::cout << " " << *it;
     std::cout << std::endl;
 }
 #endif

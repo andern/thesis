@@ -18,11 +18,13 @@
 #include <queue>
 #include <iostream>
 
+#include "coin/ClpCholeskyBase.hpp"
+#include "coin/ClpInterior.hpp"
+#include "coin/ClpModel.hpp"
 #include "coin/ClpSimplex.hpp"
 
 #include "slp/Algorithm.hpp"
 #include "slp/Tree.hpp"
-
 
 
 
@@ -104,26 +106,41 @@ std::vector<uint16_t> toZSet(const double* arr, uint16_t len, double epsilon) {
 
 
 /* Solve a ClpModel with a given modifier. Uses warm-start if possible */
-static inline double
-mod_solve(const ClpModel& quad, ClpSimplex& lin, const std::vector<uint16_t>& m,
-double* x, double* x_old, double* T, int maxIters, double tolerance, int numCols)
+static inline double mod_solve(const ClpModel& quad, ClpSimplex& lin,
+const std::vector<uint16_t>& m, double* x, double* x_old, double* T,
+int maxIters, double tolerance, int numCols)
 {
     for (uint16_t ele : m) {
         lin.setColBounds(ele, 0, 0);
     }
-//    for (std::set<uint16_t>::iterator it = m.begin(); it != m.end(); ++it) {
-//        lin.setColBounds(*it, 0, 0);
-//    }
-    lin.checkSolution(1);
+    lin.checkSolution(0);
 
     double val = solve(quad, lin, x, x_old, T, maxIters, tolerance, numCols);
+
     for (uint16_t ele : m) {
-        lin.setColBounds(ele, quad.getColLower()[ele], quad.getColUpper()[ele]);
+        lin.setColBounds(ele, quad.getColLower()[ele],quad.getColUpper()[ele]);
     }
-/*    for (std::set<uint16_t>::iterator it = m.begin(); it != m.end(); ++it) {
-        lin.setColBounds(*it, quad.getColLower()[*it], quad.getColUpper()[*it]);
-    } */
+
     return val;
+}
+
+
+
+static inline double mod_solve_clp(const ClpModel& model, ClpInterior& quad,
+const std::vector<uint16_t>& m, double* x)
+{
+    for (uint16_t ele : m) {
+        quad.setColBounds(ele, 0, 0);
+    }
+
+    quad.primalDual();
+    memcpy(x, quad.getColSolution(), quad.getNumCols()*sizeof(double));
+
+    for (uint16_t ele : m) {
+        quad.setColBounds(ele, model.getColLower()[ele],
+                          model.getColUpper()[ele]);
+    }
+    return quad.getObjValue();
 }
 
 
@@ -151,28 +168,46 @@ int maxIters, double tolerance)
     double* T = (double*) malloc(cols*sizeof(double));
 
     /* A temporary linear model for running slp. */
-    ClpSimplex lin(model);
+//    ClpSimplex lin(model);
+//    lin.setLogLevel(0);
+//    lin.deleteQuadraticObjective();
+    ClpInterior quad(model);
+    quad.setDualTolerance(tolerance);
+    quad.setPrimalTolerance(tolerance);
+    quad.setMaximumIterations(maxIters);
+
+    ClpCholeskyBase *cholesky = new ClpCholeskyBase(1);
+    cholesky->setKKT(true);
+    quad.setCholesky(cholesky);
+    quad.setLogLevel(0);
 
     /* Get the root ready. */
+    std::cout << "Getting root ready!" << std::endl;
     struct vertex* v0 = new struct vertex;
+    std::cout << "Right before malloc!" << std::endl;
     v0->sol = (double*) malloc(cols*sizeof(double));
-    mod_solve(model, lin, v0->m, v0->sol, x_old, T, maxIters, tolerance, cols);
+    //mod_solve(model, lin, v0->m, v0->sol, x_old, T, maxIters, tolerance, cols);
+    std::cout << "Right before solve!" << std::endl;
+    mod_solve_clp(model, quad, v0->m, v0->sol);
     v0->z = toZSet(v0->sol, cols, tolerance);
+    std::cout << "Root is ready!" << std::endl;
 
     std::vector<struct vertex*> vertices;
     
     /* Create queue and start with the root. */
     std::queue<struct vertex*> q;
     q.push(v0);
+    std::cout << "Beginning on construction!" << std::endl;
     while (!q.empty()) {
         struct vertex* cur = q.front();
+//        print(cur->z.begin(), cur->z.end());
         q.pop();
         vertices.push_back(cur);
 
-        uint16_t breaks = std::min((uint16_t)cur->m.size(), breakdowns);
+        uint16_t breaks = std::min((uint16_t)cur->z.size(), breakdowns);
         std::vector<uint16_t> n = complement(cur->z, cols); // z.size >= cur.size, always
-        for (uint16_t i = 1; i < breaks; i++) {
-            std::vector<uint16_t> f(n.begin(), n.begin()+i);
+        for (uint16_t i = 0; i < breaks; i++) {
+            std::vector<uint16_t> f(n.begin(), n.begin()+(i+1));
             do {
                 if (find(f, v0) == 0) {
                     struct vertex* nv = new struct vertex;
@@ -180,8 +215,12 @@ int maxIters, double tolerance)
                     q.push(nv);
                     nv->m = f;
                     nv->sol = (double*) malloc(cols*sizeof(double));
-                    mod_solve(model, lin, nv->m, nv->sol, x_old, T,
-                              maxIters, tolerance, cols);
+                    mod_solve_clp(model, quad, nv->m, nv->sol);
+                    nv->z = toZSet(nv->sol, cols, tolerance);
+                    //std::cout << mod_solve(model, lin, nv->m, nv->sol, x_old, T,
+                    //          maxIters, tolerance, cols) << std::endl;
+                    std::cout << quad.getObjValue() << std::endl;
+                    print(f.begin(), f.end());
                 }
             } while(next_combination(n.begin(), n.end(), f.begin(), f.end()));
         }

@@ -186,8 +186,8 @@ public:
      }
 protected:
      /// Sets type
-     inline void setType(int type) {
-          type_ = type;
+     inline void setType(int __type) {
+          type_ = __type;
      }
      /// model.
      inline void setModel(ClpInterior * model) {

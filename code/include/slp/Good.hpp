@@ -69,7 +69,7 @@ struct good_qp {
 
 ClpSimplex clpfromqp(struct good_qp& qp);
 
-ClpSimplex clpFromTxt();
+ClpModel clpFromTxt();
 
 struct good_qp readTxt();
 

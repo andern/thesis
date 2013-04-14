@@ -126,38 +126,7 @@ std::vector<struct vertex*> buildTestTree() {
 }
 
 int main() {
-    std::vector<struct vertex*> vertices = buildTestTree();
+    ClpModel quad = clpFromTxt();
 
-    std::vector<uint16_t> a;
-    a.push_back(1);
-    a.push_back(2);
-    a.push_back(3);
-    a.push_back(4);
-    a.push_back(5);
-
-    std::vector<uint16_t> b;
-    b.push_back(1);
-    b.push_back(2);
-    b.push_back(3);
-
-    //do {
-    //    print(b.begin(), b.end());
-    //} while(next_combination(a.begin(), a.end(), b.begin(), b.end()));
-
-    std::vector<uint16_t> c = complement(b, 6);
-    print(c.begin(), c.end());
-
-
-
-    double arr[5];
-    arr[0] = 1.323;
-    arr[1] = 0;
-    arr[2] = 0;
-    arr[3] = 4.323;
-    arr[4] = 0.00001;
-
-    std::vector<uint16_t> z = toZSet(arr, 5, 1e-7);
-    print(z.begin(), z.end());
-
-    std::cout << "end" << std::endl;
+    std::vector<struct vertex*> vertices = construct(quad, 2, 10000, 1e-6);
 }

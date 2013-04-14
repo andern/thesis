@@ -117,7 +117,7 @@ static double** readMatrix(const char* filepath) {
     return arr;
 }
 
-ClpSimplex clpFromTxt() {
+ClpModel clpFromTxt() {
     int rows = 0;
     int cols = 0;
     std::ifstream fin("data/vlarge/A.txt");
@@ -132,7 +132,7 @@ ClpSimplex clpFromTxt() {
     double* x_L = readArray("data/vlarge/x_L.txt");
     double* x_U = readArray("data/vlarge/x_U.txt");
 
-    ClpSimplex out;
+    ClpModel out;
 
     CoinPackedMatrix Aeq = packMatrix(A, rows, cols);
     CoinPackedMatrix H = packMatrix(F, cols, cols);
