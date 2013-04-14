@@ -16,6 +16,7 @@
 #include <cstdio>
 #include <fstream>
 
+#include "coin/ClpPackedMatrix.hpp"
 #include "coin/ClpSimplex.hpp"
 #include "coin/CoinPackedMatrix.hpp"
 #include "slp/Good.hpp"
@@ -45,7 +46,7 @@ static CoinPackedMatrix packMatrix(double** m, int rows, int cols) {
     CoinPackedMatrix cpm(false, rowIndices, colIndices, elements, numels);
     cpm.setDimensions(rows, cols);
 
-    return (cpm);
+    return cpm;
 }
 
 
@@ -54,7 +55,6 @@ ClpSimplex clpfromqp(struct good_qp& qp) {
     ClpSimplex out;
 
     CoinPackedMatrix Aeq = packMatrix(qp.Aeq, qp.rows, qp.cols);
-    CoinPackedMatrix H = packMatrix(qp.H, qp.cols, qp.cols);
 
     double* rowlb = (double*) calloc(qp.cols, sizeof(double));
     double* rowub = (double*) calloc(qp.cols, sizeof(double));
@@ -134,7 +134,7 @@ ClpModel clpFromTxt() {
 
     ClpModel out;
 
-    CoinPackedMatrix Aeq = packMatrix(A, rows, cols);
+    ClpPackedMatrix Aeq(packMatrix(A, rows, cols));
     CoinPackedMatrix H = packMatrix(F, cols, cols);
 
     for (int i = 0; i < rows; i++)
