@@ -177,25 +177,26 @@ int maxIters, double tolerance)
     double* T = (double*) malloc(cols*sizeof(double));
 
     /* A temporary linear model for running slp. */
-//    ClpSimplex lin(model);
-//    lin.setLogLevel(0);
-//    lin.deleteQuadraticObjective();
-    ClpInterior quad(model);
+    ClpSimplex lin(model);
+    lin.setLogLevel(0);
+    lin.deleteQuadraticObjective();
+/*    ClpInterior quad(model);
     quad.setDualTolerance(tolerance);
     quad.setPrimalTolerance(tolerance);
     quad.setMaximumIterations(maxIters);
 
-    ClpCholeskyBase* cholesky = new ClpCholeskyBase(1);
+    ClpCholeskyBase* cholesky = new ClpCholeskyBase();
     cholesky->setKKT(true);
-    quad.setCholesky(cholesky);
+    quad.setCholesky(&cholesky);
     quad.setLogLevel(0);
+    */
 
     /* Get the root ready. */
     struct vertex* v0 = new struct vertex;
     v0->sol = (double*) malloc(cols*sizeof(double));
     
-    //mod_solve(model, lin, v0->m, v0->sol, x_old, T, maxIters, tolerance, cols);
-    mod_solve_clp(model, quad, v0->m, v0->sol);
+    mod_solve(model, lin, v0->m, v0->sol, x_old, T, maxIters, tolerance, cols);
+//    mod_solve_clp(model, quad, v0->m, v0->sol);
 
     v0->z = toZSet(v0->sol, cols, 1e-7);
 
@@ -214,17 +215,18 @@ int maxIters, double tolerance)
         for (uint16_t i = (uint16_t) cur->m.size(); i < breaks; i++) {
             std::vector<uint16_t> f(n.begin(), n.begin()+(i+1));
             do {
-                print(f.begin(), f.end());
                 if (find(f, v0) == 0) {
                     struct vertex* nv = new struct vertex;
                     cur->children.push_back(nv);
                     q.push(nv);
                     nv->m = f; // Data is copied!
                     nv->sol = (double*) malloc(cols*sizeof(double));
-                    mod_solve_clp(model, quad, nv->m, nv->sol);
+                    //mod_solve_clp(model, quad, nv->m, nv->sol);
+                    std::cout << mod_solve(model, lin, nv->m, nv->sol, x_old, T,
+                                           maxIters, tolerance, cols) << std::endl;
                     nv->z = toZSet(nv->sol, cols, tolerance);
-                    //std::cout << mod_solve(model, lin, nv->m, nv->sol, x_old, T,
-                    //          maxIters, tolerance, cols) << std::endl;
+                    std::cout << lin.getObjValue() << ": ";
+                    print(f.begin(), f.end());
                     //std::cout << quad.getObjValue() << std::endl;
                 }
             } while(next_combination(n.begin(), n.end(), f.begin(), f.end()));
@@ -233,8 +235,6 @@ int maxIters, double tolerance)
 
     free(x_old);
     free(T);
-
-    delete cholesky;
 
     return v0;
 }
