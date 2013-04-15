@@ -66,8 +66,11 @@ struct vertex* find(const std::vector<uint16_t>& m, struct vertex* v);
  *         a ClpModel for an instance.
  * @return a vector of vertices.
  */
-struct vertex* construct(ClpModel& model, uint16_t breakdowns,
-int maxIters, double tolerance);
+struct vertex* construct(ClpModel& model, uint16_t breakdowns, int maxIters,
+double tolerance);
+
+struct vertex* construct_clp(ClpModel& model, uint16_t breakdowns, int maxIters,
+double tolerance);
 
 std::vector<uint16_t> complement(const std::vector<uint16_t>& z, uint16_t n);
 std::vector<uint16_t> toZSet(const double* arr, uint16_t len, double epsilon);

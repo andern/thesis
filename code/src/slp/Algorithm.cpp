@@ -62,6 +62,7 @@ double lineSearch(const double* p1, const double* p2, const ClpModel& model) {
 double solve(const ClpModel& quad, ClpSimplex& lin, double* x,
         double* x_old, double* T, int maxIters, double tolerance, int numCols)
 {
+    std::cout.precision(12);
     double objval = 0;
     double stop = 0;
     int k = 0;
@@ -69,10 +70,10 @@ double solve(const ClpModel& quad, ClpSimplex& lin, double* x,
         taylor(T, x, quad);
 
         lin.chgObjCoefficients(T);
-        lin.checkSolution(2);
+//        lin.checkSolution(2);
         lin.primal(0, 1);
 
-        double* xhat = lin.primalColumnSolution();
+        const double* xhat = lin.primalColumnSolution();
 
         /*
          * If the step length sends us outside the feasible region,
@@ -88,11 +89,11 @@ double solve(const ClpModel& quad, ClpSimplex& lin, double* x,
             x[i] = x_old[i]*alpha + (1-alpha)*xhat[i];
         }
 
-
         objval = value(x, quad);
 
         stop = (value(x_old, quad) - objval);
         stop /= fabs(value(x_old, quad));
+        if (k < 3) stop = tolerance + 1;
     } while(k++ < maxIters && stop > tolerance);
 
     return (objval);

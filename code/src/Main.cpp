@@ -2,8 +2,13 @@
 #include <iostream>
 #include <algorithm>
 
+#include "coin/ClpModel.hpp"
+#include "coin/ClpInterior.hpp"
+#include "coin/ClpCholeskyBase.hpp"
+
 #include "slp/Tree.hpp"
 #include "slp/Good.hpp"
+#include "slp/Algorithm.hpp"
 
 
 
@@ -126,8 +131,64 @@ std::vector<struct vertex*> buildTestTree() {
 }
 
 int main() {
-    ClpModel quad = clpFromTxt();
+    ClpModel mmodel = clpFromTxt();
+    // TODO: FIND OUT WHY FIND(.) ALWAYS RETURNS FALSE! THAT IS, FIND OUT
+    //       WHY EVERY POSSIBLE COMBINATION IS SOLVED IN CONSTRUCT.
 
-    struct vertex* root = construct(quad, 1, 10000, 1e-4);
+    struct vertex* root = construct_clp(mmodel, 2, 10000, 1e-7);
     delete root;
+
+    /*
+    ClpModel mmodel = clpFromTxt();
+    ClpInterior quad(mmodel);
+    ClpSimplex model(mmodel);
+    model.deleteQuadraticObjective();
+    model.setLogLevel(0);
+
+    ClpCholeskyBase* cholesky = new ClpCholeskyBase;
+    cholesky->setKKT(true);
+    quad.setCholesky(cholesky);
+
+    const double* lower = mmodel.getColLower();
+    const double* upper = mmodel.getColUpper();
+
+    double* nlower = model.columnLower();
+    double* nupper = model.columnUpper();
+
+    quad.primalDual();
+
+    double* x = (double*) calloc(model.getNumCols(),sizeof(double));
+    memcpy(x, quad.getColSolution(), model.getNumCols()*sizeof(double));
+    double* x_old = (double*) malloc(model.getNumCols()*sizeof(double));
+    double* T = (double*) malloc(model.getNumCols()*sizeof(double));
+
+    solve(quad, model, x, x_old, T, 1000, 1e-4, model.getNumCols());
+    std::cout << model.statusOfProblem() << std::endl;
+    std::cout << value(x, quad) << std::endl;
+
+    nlower[8] = 0;
+    nupper[8] = 0;
+
+//    model.chgColumnLower(nlower);
+//    model.chgColumnUpper(nupper);
+
+    std::cout << model.statusOfProblem() << std::endl;
+    model.dual();
+    std::cout << value(model.primalColumnSolution(), quad) << std::endl;
+    std::cout << model.statusOfProblem() << std::endl;
+
+    memcpy(x, model.primalColumnSolution(), model.getNumCols()*sizeof(double));
+    solve(quad, model, x, x_old, T, 10000, 1e-4, model.getNumCols());
+    std::cout << model.statusOfProblem() << std::endl;
+    std::cout << value(x, quad) << std::endl;
+
+
+//    solve(quad, model, x, x_old, T, 1000, 1e-7, model.getNumCols());
+    free(x);
+    free(x_old);
+    free(T);
+    //free(nlower);
+    //free(nupper);
+*/
+
 }

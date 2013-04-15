@@ -97,4 +97,7 @@ double value(const double* point, const ClpModel& model);
  */
 double lineSearch(const double* p1, const double* p2, const ClpModel& model);
 
+
+double solve(const ClpModel& quad, ClpSimplex& lin, double* x,
+double* x_old, double* T, int maxIters, double tolerance, int numCols);
 #endif
