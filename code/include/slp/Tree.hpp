@@ -20,6 +20,7 @@
 #include <iterator>
 
 #include <vector>
+#include <set>
 
 #include "coin/ClpModel.hpp"
 #include "coin/ClpSimplex.hpp"
@@ -33,13 +34,13 @@ struct vertex {
     vertex(const vertex&) { std::cout << "copied\n"; }
     ~vertex() {
         free(sol);
-        std::cout << "deleted\n";
+//        std::cout << "deleted\n";
         for (uint16_t i = 0; i < children.size(); i++) {
             delete children[i];
         }
     }
-    std::vector<uint16_t> m;
-    std::vector<uint16_t> z;
+    std::set<uint16_t> m;
+    std::set<uint16_t> z;
     double* sol;
 
     std::vector<struct vertex*> children;
@@ -55,7 +56,8 @@ struct vertex {
  *         a vertex.
  * @return a vertex.
  */
-struct vertex* find(const std::vector<uint16_t>& m, struct vertex* v);
+struct vertex* find(const std::set<uint16_t>& m, struct vertex* v);
+struct vertex* find2(const std::set<uint16_t>& m, struct vertex* v, bool& found);
 
 /**
  * Return a vector of vertices linked together in a tree structure such that
@@ -66,14 +68,14 @@ struct vertex* find(const std::vector<uint16_t>& m, struct vertex* v);
  *         a ClpModel for an instance.
  * @return a vector of vertices.
  */
-struct vertex* construct(ClpModel& model, uint16_t breakdowns, int maxIters,
-double tolerance);
+struct vertex* construct(ClpModel& model, uint16_t breakdowns, int maxIters, double tolerance);
+struct vertex* construct_clp(ClpModel& model, uint16_t breakdowns, int maxIters, double tolerance);
+void construct_all(ClpModel& model, uint16_t breakdowns, int maxIters, double tolerance);
+void construct_all_clp(ClpModel& model, uint16_t breakdowns, int maxIters, double tolerance);
 
-struct vertex* construct_clp(ClpModel& model, uint16_t breakdowns, int maxIters,
-double tolerance);
-
-std::vector<uint16_t> complement(const std::vector<uint16_t>& z, uint16_t n);
-std::vector<uint16_t> toZSet(const double* arr, uint16_t len, double epsilon);
+std::vector<uint16_t> complement(const std::set<uint16_t>& z, uint16_t n);
+std::set<uint16_t> toZSet(const double* arr, uint16_t len, double epsilon);
+bool isSubset(const std::set<uint16_t>& a, const std::set<uint16_t>& b);
 
 template <class BidIt>
 inline bool next_combination(BidIt n_begin, BidIt n_end, BidIt r_begin, BidIt r_end)
@@ -134,7 +136,6 @@ inline bool next_combination(BidIt n_begin, BidIt n_end, BidIt r_begin, BidIt r_
 
 template<class Obj> void print(Obj begin, Obj end) {
     for (Obj it = begin; it != end; ++it)
-        std::cout << " " << *it;
-    std::cout << std::endl;
+        std::cout << *it << " ";
 }
 #endif

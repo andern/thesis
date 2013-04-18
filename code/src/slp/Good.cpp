@@ -120,17 +120,17 @@ static double** readMatrix(const char* filepath) {
 ClpModel clpFromTxt() {
     int rows = 0;
     int cols = 0;
-    std::ifstream fin("data/vlarge/A.txt");
+    std::ifstream fin("data/small/A.txt");
     fin >> rows;
     fin >> cols;
     fin.close();
 
-    double** A = readMatrix("data/vlarge/A.txt");
-    double** F = readMatrix("data/vlarge/F.txt");
+    double** A = readMatrix("data/small/A.txt");
+    double** F = readMatrix("data/small/F.txt");
 
-    double* c = readArray("data/vlarge/c.txt");
-    double* x_L = readArray("data/vlarge/x_L.txt");
-    double* x_U = readArray("data/vlarge/x_U.txt");
+    double* c = readArray("data/small/c.txt");
+    double* x_L = readArray("data/small/x_L.txt");
+    double* x_U = readArray("data/small/x_U.txt");
 
     ClpModel out;
 

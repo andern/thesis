@@ -30,6 +30,6 @@ slp_CPPFLAGS = -Iinclude\
                -Wvla -Wno-missing-braces -Wstack-protector
 
 #slp_LDFLAGS = -Llib -Wl,--rpath -Wl,lib
-slp_LDFLAGS = -Llib -lz -lbz2 -llapack -Wl,--rpath -Wl,lib
+slp_LDFLAGS = -Llib -lz -lbz2 -llapack -Wl,--rpath -Wl,lib -fopenmp
 
 slp_LDADD = ${slp_LIBS} -lClp -lCoinUtils
