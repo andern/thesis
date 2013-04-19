@@ -1,5 +1,5 @@
 \begin{algorithm}[H]
-\caption{$construct(\mathcal{Q}, b)$}
+\caption{\texttt{construct}($\mathcal{Q}$, $b$)}
 \label{alg:construct}
 $V \leftarrow \{v_0\}$ \\
 $E \leftarrow \emptyset$ \\
@@ -7,8 +7,8 @@ $E \leftarrow \emptyset$ \\
 
 \ForEach{modifier $\mathcal{M}_i \in \mathcal{P}(\left\{{1,2,\ldots,n}\right\})
 , |\mathcal{M}_i| \leq b$}{
-    $(a, k) \leftarrow find(\mathcal{M}_i, v_0) = -1$\\
-    \If{a \textrm{is false}}{
+    $(a, k) \leftarrow$ \texttt{mfind}($\mathcal{M}_i$, $v_0$) $= -1$\\
+    \If{$\neg a$}{
         $V \leftarrow V \cup \{v_i\}$ \\
         $E \leftarrow E \cup \{(k, i)\}$ \\
     }
