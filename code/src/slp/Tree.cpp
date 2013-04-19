@@ -35,8 +35,7 @@ bool isSubset(const std::set<uint16_t>& a, const std::set<uint16_t>& b) {
 
 
 
-static struct vertex* finditer2(const std::set<uint16_t>& m, struct vertex* v, bool& found) {
-    struct vertex* ret = 0;
+static struct vertex* finditer2(const std::set<uint16_t>& m, struct vertex* v, bool& found, struct vertex* ret) {
     found = false;
     for (unsigned long i = 0; i < v->children.size(); i++) {
         struct vertex* vi = v->children[i];
@@ -46,7 +45,7 @@ static struct vertex* finditer2(const std::set<uint16_t>& m, struct vertex* v, b
                 found = true;
                 return vi;
             } else {
-                finditer2(m, vi, found);
+                finditer2(m, vi, found, ret);
             }
         }
     }
@@ -62,7 +61,7 @@ struct vertex* find2(const std::set<uint16_t>& m, struct vertex* v, bool& found)
         found = true;
         return v;
     }
-    return finditer2(m, v, found);
+    return finditer2(m, v, found, v);
 }
 
 
