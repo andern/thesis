@@ -8,15 +8,22 @@ we have a closed-form definition for the specific objective function that
 we described in Chapter \ref{ch:qp}. The function prototype for the
 Taylor series expansion reads:
 \begin{verbatim}
-void taylor(double* T, const double* x, const ClpModel& model);
+void taylor(double* T, const double* x, const ClpModel& m);
 \end{verbatim}
 where \texttt{ClpModel} gives us access to both the linear and quadratic
 objective term. The result of the Taylor-series expansion, i.e. the new
 objective function, is put in \texttt{T}.
 
-We find a closed-form definition of the step length $\alpha_k$ by letting
-$m(\alpha) = f((1-\alpha) x_k + \alpha \hat{x}_k)$ and setting
-$m^\prime(\alpha) = 0$ and solving for $\alpha$:
+The next step in the Slp algorithm is to solve the new linear program with the
+new objective function \texttt{T}. This is simply done with a call to Clp.
+
+After solving the linear program, the next step is to find the one-dimensional
+minimizer between our current point and the solution to the new lp.
+The step length $\alpha_k$ tells us where this minimizer lies between the two
+points.
+To implement this line search, we find a closed-form definition of the step
+length $\alpha_k$ by letting $m(\alpha) = f((1-\alpha) x_k + \alpha \hat{x}_k)$
+and setting $m^\prime(\alpha) = 0$ and solving for $\alpha$:
 \[
 \alpha_k = \frac{
                 2x_k^T H x_k
@@ -28,4 +35,46 @@ $m^\prime(\alpha) = 0$ and solving for $\alpha$:
                 + 2x_k^T H x_k
                 }
 \]
+The function prototype for the line search function reads:
+\begin{verbatim}
+double lineSearch(const double* p, const double* q, ClpModel& m);
+\end{verbatim}
+where \texttt{ClpModel} gives us access to both the linear and quadratic
+objective term.
 
+The termination condition of Slp depends on the objective value of the two
+previous iterations. So, in order to terminate, we need a function that can
+compute the objective value. The function prototype for this function reads:
+\begin{verbatim}
+double objVal(const double* p, const ClpModel& m);
+\end{verbatim}
+where \texttt{ClpModel} again gives us access to both the linear and quadratic
+objective term.
+
+These three functions all have an asymptotic running time in the order of the
+number of columns in the problem, because they do a constant number of
+operations while iterating sparsely through matrix $H$ and vector $b$.
+
+Putting it all together in a \texttt{do while} loop, it looks like this:
+\begin{verbatim}
+ClpModel lin = m; // A linear copy of ClpModel m
+do {
+    taylor(T, x, m);
+
+    lin.chgObjCoefficients(T); // Set new linear objective
+    lin.primal(); // Run the primal simplex method
+    
+    const double* xhat = lin.primalColumnSolution(); // Opt. sol
+    double alpha = lineSearch(x, xhat, m);
+
+    double oldval = objVal(x, m);
+
+    for (int i = 0; i < numCols; i++) {
+        x[i] = (1-alpha) * xhat[i];
+    }
+
+    double val = objVal(x, m);
+    stop = (oldval - val);
+    stop /= fabs(oldval);
+} while (stop > tolerance);
+\end{verbatim}

@@ -66,7 +66,7 @@ is needed for passing lots of information. For instance, the function prototype
 in Slp for the function that performs the line search described in Chapter
 \ref{ch:slp} looks like this:
 \begin{verbatim}
-double lineSearch(double* p1, double* p2, ClpModel model);
+double lineSearch(const double* a, const double* b, ClpModel& m);
 \end{verbatim}
 Figure \ref{fig:clpmodel} shows the class hierarchy for \texttt{ClpModel}.
 The subclasses contain the implementation of the algorithms that their class
