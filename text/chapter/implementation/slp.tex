@@ -1,0 +1,16 @@
+\section{Slp}
+We find a closed-form definition of the step length $\alpha_k$ by letting
+$m(\alpha) = f((1-\alpha) x_k + \alpha \hat{x}_k)$ and setting
+$m^\prime(\alpha) = 0$ and solving for $\alpha$:
+\[
+\alpha_k = \frac{
+                2x_k^T H x_k
+                - 2\hat{x}_k^T H x_k
+                + b^T x_k - b^T \hat{x}_k
+                }{
+                  2\hat{x}_k^T H \hat{x}_k
+                - 4\hat{x}_k^T H x_k
+                + 2x_k^T H x_k
+                }
+\]
+

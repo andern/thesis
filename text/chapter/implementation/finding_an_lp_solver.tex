@@ -28,6 +28,8 @@ Lesser General Public License (GNU LGPL). Its license is permissive like the
 CPL. \cite{lpsolve}
 \end{description}
 
+Incidentally, these tree solvers are the only three open source LP solvers
+suggested by the NEOS Optimization Guide~\cite{neos}.
 In addition to those criteria, it is important that the solver is fast.
 Moreover, it needs to be fast on problems that fit the description in
 Section \ref{sec:problem}.
@@ -51,7 +53,7 @@ The running times are the number of seconds in CPU-time after 1000 runs.
 \end{table}
 
 While lp\_solve is the fastest on a smaller LP, it doesn't scale as well as
-with larger problems like Clp does. GoodTech need to solve pro
+with larger problems like Clp does.
 
 GoodTech need to solve problems with more than 200 variables, and
 \textit{small} is almost hitting that lower limit, so a good result on

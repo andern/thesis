@@ -1,6 +1,7 @@
 \section{Constructing a Tree}
 \label{sec:construction}
-We need a slighty modified \texttt{find} that we call \texttt{mfind}.
+Before we can construct a tree similar to the one in Figure \ref{fig:find},
+we need a slighty modified \texttt{find} that we call \texttt{mfind}.
 \texttt{mfind} is modified so that it returns a tuple of a boolean and an
 index.
 The boolean tells us whether we found a solution to our subinstance in the
@@ -23,7 +24,7 @@ solution is distinct.
 Algorithm \ref{alg:construct} describes an algorithm for constructing a tree
 $G$, given some instance $\mathcal{Q}$ and a maximum number of breakdowns $b$.
 Readers are encouraged to try to construct the tree in Figure \ref{fig:find} on
-their own, following Algorithm \ref{alg:construct} using the
-$\mathcal{Z}$-sets above. Note that the tree changes if the order of insertion
-changes. The combinations of modifiers under the construction of the tree in
-Figure \ref{fig:find} were inserted in lexicographical order.
+their own, following Algorithm \ref{alg:construct} and using the
+$\mathcal{Z}$-sets above. Note that the tree might change if the order of
+insertion changes. The combinations of modifiers under the construction of the
+tree in Figure \ref{fig:find} were inserted in lexicographical order.

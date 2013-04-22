@@ -41,30 +41,14 @@ straight line between the points $x_k$ and $\hat{x}_k$:
 \]
 Call $\alpha_k$ the \emph{step length}.
 
-We find a closed-form definition of the step length $\alpha_k$ by letting
-$m(\alpha) = f((1-\alpha) x_k + \alpha \hat{x}_k)$ and setting
-$m^\prime(\alpha) = 0$ and solving for $\alpha$:
-\[
-\alpha_k = \frac{
-                2x_k^T H x_k
-                - 2\hat{x}_k^T H x_k
-                + b^T x_k - b^T \hat{x}_k
-                }{
-                  2\hat{x}_k^T H \hat{x}_k
-                - 4\hat{x}_k^T H x_k
-                + 2x_k^T H x_k
-                }
-\]
-
 We calculate $x_{k+1}$ using the step length $\alpha_k$:
 \[
-x_{k+1} = \alpha_k x_k + (1-\alpha_k)\hat{x}_k
+x_{k+1} = (1-\alpha_k) x_k + \alpha_k\hat{x}_k
 \]
 If, however, the unconstrained minimum lies outside the feasible region
 ($x^* \neq x^\mathcal{U}$), $\alpha_k$ might be less than $0$ and the minimum
 value of $f$ of all the \emph{feasible} points collinearly with $x^*$ and
 $\hat{x}_k$ will be $\hat{x}_k$.
-TODO: Illustrate with a figure?
 
 Increase $k$ by one and repeat the process from the calculation of $T_k$ until
 we reach our termination condition.

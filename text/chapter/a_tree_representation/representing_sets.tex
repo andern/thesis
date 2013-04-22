@@ -47,8 +47,9 @@ answer to the following operations are equal to zero:
 From this we can conclude that $D \subseteq E$ and $F \not\subseteq E$.
 
 We can also store sets in a sparse
-format by only storing the variables that are actually in the set. However,
-this format normally requires at least $16$ bits\nolinebreak
+format by only storing the indices of the variables that are actually in the
+set.
+However, this format normally requires at least $16$ bits\nolinebreak
 \footnote{By storing each variable index as a \texttt{short} integer type.
 The amount of bits needed is platform dependant and implementation specific,
 but in \texttt{C} it is never less than $16$ bits.}
