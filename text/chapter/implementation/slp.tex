@@ -1,4 +1,19 @@
 \section{Slp}
+While implementing an algorithm, it makes sense to start to implement
+sub-functions that are not dependant on other functions. And, why not
+start implementing the first function in Algorithm \ref{alg:iter}?
+
+Implementing the Taylor series expansion is pretty straight forward, as
+we have a closed-form definition for the specific objective function that
+we described in Chapter \ref{ch:qp}. The function prototype for the
+Taylor series expansion reads:
+\begin{verbatim}
+void taylor(double* T, const double* x, const ClpModel& model);
+\end{verbatim}
+where \texttt{ClpModel} gives us access to both the linear and quadratic
+objective term. The result of the Taylor-series expansion, i.e. the new
+objective function, is put in \texttt{T}.
+
 We find a closed-form definition of the step length $\alpha_k$ by letting
 $m(\alpha) = f((1-\alpha) x_k + \alpha \hat{x}_k)$ and setting
 $m^\prime(\alpha) = 0$ and solving for $\alpha$:
