@@ -55,7 +55,14 @@ These three functions all have an asymptotic running time in the order of the
 number of columns in the problem, because they do a constant number of
 operations while iterating sparsely through matrix $H$ and vector $b$.
 
-Putting it all together in a \texttt{do while} loop, it looks like this:
+When it comes to decisions to be made around data types and storage formats,
+there is not really too much to be said, because the choices are quite limited.
+It is pretty much dependant on the linear programming solver that is used.
+As mentioned earlier, Clp stores matrices in a sparse format, and all the sub
+functions only operate on non-zero elements, so there is not really room for
+much overhead.
+
+An implementation of Algorithm \ref{alg:iter} in \texttt{C++} looks like this:
 \begin{verbatim}
 ClpModel lin = m; // A linear copy of ClpModel m
 do {
@@ -66,14 +73,15 @@ do {
     
     const double* xhat = lin.primalColumnSolution(); // Opt. sol
     double alpha = lineSearch(x, xhat, m);
+    if      (alpha > 1) alpha = 1;
+    else if (alpha < 0) alpha = 0;
 
     double oldval = objVal(x, m);
-
     for (int i = 0; i < numCols; i++) {
         x[i] = (1-alpha) * xhat[i];
     }
-
     double val = objVal(x, m);
+
     stop = (oldval - val);
     stop /= fabs(oldval);
 } while (stop > tolerance);
