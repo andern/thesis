@@ -1,7 +1,7 @@
 \section{Solving Subinstances}
 In this section, we discuss the different approaches to solving several
 subinstances. As mentioned in the beginning of the chapter, the two
-main approaches is to solve a limited amount of subinstances, bounded
+main approaches are to solve a limited amount of subinstances, bounded
 by some $s$, or to implement a discrete event simulator that only stores
 the current state of the network. First we will discuss the implementation
 of the tree structure, before we move on to the two main approaches.
@@ -18,15 +18,90 @@ struct vertex {
     std::set<uint16_t> z;
     double* sol;
     std::vector<struct vertex*> children;
-}
+};
 \end{verbatim}
-A reader that is familiar with \texttt{C++} might notice that
-\texttt{std::set} is used instead of using a bit set as we discussed
-in Chapter \ref{ch:tree}, and we will come back to that later. Note that
-the sets consist of indices of \texttt{uint16\_t}, which is short for
-\texttt{unsigned short int}. That means that the sets are limited to
+A reader familiar with \texttt{C++} might notice that we use
+\texttt{std::set} instead of using a bit set as we discussed
+in Chapter \ref{ch:tree}, and we will come to that later. Note that
+the sets consist of indices of primitive type \texttt{uint16\_t}, which is
+short for \texttt{unsigned short int}. That means that the sets are limited to
 $2^{16} = 65536$ elements, and therefore also putting a limit to the size
 of the QP problems that can be solved. This seems like a reasonable limit
 as GoodTech wants to solve problems with $200 - 2000$ variables.
 If they need to solve larger problems in the future, it is possible to change
 the primitive data type.
+
+As soon as a vertex is defined, we are ready to implement \texttt{mfind}.
+Remember that \texttt{mfind} is a modified version of \texttt{find} that tells
+us which vertex should be the parent of our potentially new vertex in case it
+has a distinct solution.
+\texttt{mfind} is defined in two parts. The first part is a ''helper'' function
+for starting the algorithm on some vertex. The second part is the actual
+recursively defined algorithm. These two parts are called \texttt{mfind} and
+\texttt{mfindrec}, respectively. We define \texttt{mfind} as follows:
+\newpage
+\begin{verbatim}
+struct vertex* mfind(const std::set<uint16_t>&m,
+const struct vertex* v, bool& found) {
+    found = true;
+    if (isSubset(v->m, m) && isSubset(m, v->z)) return v;
+    found = false;
+    return mfindrec(m, v, found, v);
+}
+\end{verbatim}
+The parameters for \texttt{mfind} are a modifier, a vertex where the search
+will begin and a boolean value that will contain tell us whether we found a
+solution or not.
+In order to search the whole tree, one would use the root vertex as parameter
+\texttt{v} here. The function returns a pointer to a vertex of our interest.
+Note that this is a pointer, and not an index like in Algorithm
+\ref{alg:mfind}. The function makes a call to \texttt{mfindrec}:
+\begin{verbatim}
+struct vertex* mfindrec(const std::set<uint16_t>& m,
+const struct vertex* v, bool& found, struct vertex* ret) {
+    for (struct vertex* vi : v->children) {
+        if (isSubset(vi->m, m) {
+            ret = vi;
+            if (isSubset(m, vi->z)) {
+                found = true;
+                return vi;
+            } else mfindrec(m, vi, found, ret);
+        }
+    }
+    return ret;
+}
+\end{verbatim}
+TODO: Begin to talk about bitset and std::set performance. Show benchmark
+results.
+
+
+
+
+
+
+
+
+\newpage
+\begin{comment}
+struct vertex* findrec(const std::set<uint16_t>& m, struct vertex* v) {
+    for (int i = 0; i < v->children.size(); i++) {
+        struct vertex* child = v->children[i];
+        if (isSubset(child->m, m) {
+            if (isSubset(m, child->z))
+                return child;
+            else
+                findrec(m, child);
+        }
+    }
+    return 0;
+}
+The function \texttt{isSubset} is just a one-line function that calls
+\texttt{std::includes(...)}. One might notice that we do not check if the input
+vertex contains the solution to the input modifier. However, we \emph{do} check
+this in \texttt{find}:
+struct vertex* find(const std::set<uint16_t>& m, struct vertex* v) {
+    if (v == 0) return 0;
+    if (isSubset(v->m, m) && isSubset(m, v->z) return v;
+    return findrec(m, v);
+}
+\end{comment}
