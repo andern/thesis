@@ -1,7 +1,6 @@
 \section{Slp}
 While implementing an algorithm, it makes sense to start to implement
-sub-functions that are not dependant on other functions. And, why not
-start implementing the first function in Algorithm \ref{alg:iter}?
+sub-functions that are not dependant on other functions. 
 
 Implementing the Taylor series expansion is pretty straight forward, as
 we have a closed-form definition for the specific objective function that
@@ -18,7 +17,8 @@ The next step in the Slp algorithm is to solve the new linear program with the
 new objective function \texttt{T}. This is simply done with a call to Clp.
 
 After solving the linear program, the next step is to find the one-dimensional
-minimizer between our current point and the solution to the new lp.
+minimizer between our current point and the solution to the linear program we
+just solved.
 The step length $\alpha_k$ tells us where this minimizer lies between the two
 points.
 To implement this line search, we find a closed-form definition of the step
