@@ -40,7 +40,6 @@ has a distinct solution.
 for starting the algorithm on some vertex. The second part is the actual
 recursively defined algorithm. These two parts are called \texttt{mfind} and
 \texttt{mfindrec}, respectively. We define \texttt{mfind} as follows:
-\newpage
 \begin{verbatim}
 struct vertex* mfind(const std::set<uint16_t>&m,
 const struct vertex* v, bool& found) {
@@ -101,24 +100,7 @@ over memory used by sets of sparsely stored indices where $n = 200$ and
 $5 \leq b \leq 30$.
 \begin{figure}[h!]
 \begin{center}
-\begin{tikzpicture}
-    \begin{axis}[
-        legend pos=north east,
-        xlabel=$b$,
-        ylabel=Ratio of bit vector over sparse set]
-
-        \addplot[green] plot coordinates {
-            (5,  2.51302)
-            (10, 1.25686)
-            (15, 0.838169)
-            (20, 0.628847)
-            (25, 0.503276)
-            (30, 0.419585)
-        };
-
-        \legend{ratio}
-    \end{axis}
-\end{tikzpicture}
+\input{include/setmem}
 \end{center}
 \caption{Difference in memory use with bit vectors and sparse sets.}
 \label{fig:bmem}
@@ -133,29 +115,55 @@ With sets of sparsely stored indices, we only need to check the variables
 that are actually in the sets in order to determine if a set is a subset
 of some set. However, with bit vectors, we need to check $n$ bits---where $n$
 is the number of variables in the universe---in order to determine the same.
+This means that the \texttt{isSubset} routine will most likely have a different
+running time with the two implementations. One way to find out which of the two
+are most suited for our need is to perform a benchmark of the two. By
+setting the universe to some size $n$, and generating sets of random sparsity,
+we can test how fast \texttt{isSubset} will run. Figure \ref{fig:setspeed}
+shows the running time of the two implementations in seconds. Both
+implementations were tested on $3000^2$ \texttt{isSubset}-executions, while
+increasing the size of the universe.
+Codes for the benchmark can be found in Appendix \ref{app:setbench}.
+\begin{figure}[h!]
+\begin{center}
+\input{include/setspeed}
+\end{center}
+\caption{Seconds used to solve $3000^2$ \texttt{isSubset} on random sets.}
+\label{fig:setspeed}
+\end{figure}
+We see that the bit vector implementation is much faster than the sparse
+implementation on smaller universes. However, the sparse implementation
+scales much better than the bit vector implementation when the size of
+the universe increases. When it comes to memory, the situation is the same,
+except reversed. The sets of sparsely stored indices obviously uses less
+memory when $b$ is small, i.e. the modifiers are more sparse. However, they
+do not scale as nicely as the bit vectors. So the choice relies on what is
+most important: memory or speed. Since the nature of this thesis is to
+implement a \emph{fast} solver, we give speed a higher priority than memory 
+efficiency, so we choose to implement the sets of sparsely stored
+indices. That is, in \texttt{C++}, \texttt{std::set}.
 
+\subsection{Tree Construction}
+Because we do not need to store any information about edges in the tree,
+we do not need to implement edges as an object of its own. We defined
+a vertex \texttt{struct} earlier, having a \texttt{std::vector} of child
+vertices. That means that for each vertex we have, we can reach all children
+vertices, children's children vertices and so on, from that vertex.
+So, if we have a pointer to the root of a tree, we can reach all vertices
+in the tree. Although we earlier defined a tree as an ordered pair
+$(V, E)$ of a set of vertices $V$ and a set of edges $E$, we only need a
+pointer \texttt{struct vertex*} to our root.
 
-\newpage
-\begin{comment}
-struct vertex* findrec(const std::set<uint16_t>& m, struct vertex* v) {
-    for (int i = 0; i < v->children.size(); i++) {
-        struct vertex* child = v->children[i];
-        if (isSubset(child->m, m) {
-            if (isSubset(m, child->z))
-                return child;
-            else
-                findrec(m, child);
-        }
-    }
-    return 0;
-}
-The function \texttt{isSubset} is just a one-line function that calls
-\texttt{std::includes(...)}. One might notice that we do not check if the input
-vertex contains the solution to the input modifier. However, we \emph{do} check
-this in \texttt{find}:
-struct vertex* find(const std::set<uint16_t>& m, struct vertex* v) {
-    if (v == 0) return 0;
-    if (isSubset(v->m, m) && isSubset(m, v->z) return v;
-    return findrec(m, v);
-}
-\end{comment}
+The biggest operations in Algorithm \ref{alg:construct} is iterating the power
+set of ${1,2,\ldots,n}$. There are lots of combination generators available, so
+instead of re-inventing the wheel, we choose a generator that suits our needs.
+We need one that is easy to use, and is capable of generating combinations of
+a given cardinality. One implementation, similar in use to
+\texttt{next\_permutation} in the standard \texttt{C++ STL}, was
+achieved from~\cite{codeproject}.
+Codes for the implementation can be found in Appendix
+\ref{app:nextcombination}.
+
+The remaining parts of the \texttt{construct}-routine is just running
+\texttt{mfind} on each generated modifier, and adding it to the tree
+if necessary. Then at the end, return the pointer to the root vertex.

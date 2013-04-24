@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        legend pos=north east,
+        xlabel=$b$,
+        ylabel=Ratio of bit vector over sparse set]
+
+        \addplot[black, smooth] plot coordinates {
+            (5,  2.51302)
+            (10, 1.25686)
+            (15, 0.838169)
+            (20, 0.628847)
+            (25, 0.503276)
+            (30, 0.419585)
+        };
+
+        \legend{ratio}
+    \end{axis}
+\end{tikzpicture}
