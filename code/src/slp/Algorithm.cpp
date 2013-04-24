@@ -64,6 +64,7 @@ double solve(const ClpModel& quad, ClpSimplex& lin, double* x,
 {
     std::cout.precision(12);
     double objval = 0;
+    double oldval = 0;
     double stop = 0;
     int k = 0;
     do {
@@ -83,17 +84,17 @@ double solve(const ClpModel& quad, ClpSimplex& lin, double* x,
         if      (alpha < 0) alpha = 0;
         else if (alpha > 1) alpha = 1;
 
+        oldval = value(x, quad);
+
         /* x_{k+1} = a * x_k + (1-a) * xhat_k */
         for (int i = 0; i < numCols; i++) {
-            x_old[i] = x[i];
-            x[i] = x_old[i]*alpha + (1-alpha)*xhat[i];
+            x[i] = x[i]*alpha + (1-alpha)*xhat[i];
         }
 
         objval = value(x, quad);
 
         stop = (value(x_old, quad) - objval);
         stop /= fabs(value(x_old, quad));
-        if (k < 3) stop = tolerance + 1;
     } while(k++ < maxIters && stop > tolerance);
 
     return (objval);

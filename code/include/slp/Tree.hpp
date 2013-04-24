@@ -21,6 +21,7 @@
 
 #include <vector>
 #include <set>
+#include <bitset>
 
 #include "coin/ClpModel.hpp"
 #include "coin/ClpSimplex.hpp"
@@ -76,6 +77,14 @@ void construct_all_clp(ClpModel& model, uint16_t breakdowns, int maxIters, doubl
 std::vector<uint16_t> complement(const std::set<uint16_t>& z, uint16_t n);
 std::set<uint16_t> toZSet(const double* arr, uint16_t len, double epsilon);
 bool isSubset(const std::set<uint16_t>& a, const std::set<uint16_t>& b);
+
+template <size_t N>
+bool isSubset_bit(const std::bitset<N>& a, const std::bitset<N>& notb) {
+    std::bitset<N> res(a);
+    res &= notb;
+    return (res.count() == 0);
+//    return (res.to_ulong() == 0);
+}
 
 template <class BidIt>
 inline bool next_combination(BidIt n_begin, BidIt n_end, BidIt r_begin, BidIt r_end)

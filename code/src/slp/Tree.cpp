@@ -16,6 +16,7 @@
 #include <algorithm>
 #include <vector>
 #include <set>
+#include <bitset>
 #include <queue>
 #include <iostream>
 

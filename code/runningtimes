@@ -1,13 +1,9 @@
 All running times in seconds.
 
-- small -
-struct vertex* root = construct_new(model, 3, 10000, 1e-7);
-Solved all cases in 7393.0402642179979011 seconds.
+- small. breakdowns = 1, 2 and 3. total subinstances: 2 247 078 -
 
-7393.0402642179979011 / ((238 choose 1) + (238 choose 2) + (238 choose 3)) = 0.0032900698392703044448855112664141015194405888182736
-
-((238 choose 1) + (238 choose 2) + (238 choose 3)) / 7393.0402642179979011 = 303.94491571698285103830206014538164500662062680335098
-
+tolerance: 10^(-7)
+clp with tree:    7393.04
 
 - small, breakdowns = 1 and 2. total subinstances: 28 441 -
 
@@ -30,15 +26,25 @@ clp without tree: 75.60
 slp without tree: 85.28
 
 tolerance: 10^(-4)
+clp with tree:    52.46
+slp with tree:    73.79
+clp without tree: 77.83
 slp without tree: 107.39
 
 tolerance: 10^(-5)
+clp with tree:    54.48
+slp with tree:    232.53
+clp without tree: 81.16
 slp without tree: 355.47
 
 tolerance: 10^(-6)
+clp with tree:    65.42
+clp without tree: 93.29
+slp with tree:    1363.46
 slp without tree: 2022.25
 
 tolerance: 10^(-7)
 clp with tree:    70.78
 clp without tree: 100.85
 slp with tree:    6522.91
+slp without tree: 9395.92
