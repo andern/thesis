@@ -1,4 +1,4 @@
-\documentclass[notitlepage, a4paper, twocolumn, twoside]{article}
+\documentclass[notitlepage, a4paper, twocolumn, twoside, revtex4]{article}
 
 \usepackage{caption}
 \usepackage{subcaption}
@@ -14,7 +14,7 @@
                 decorations.pathreplacing,spy,automata}
 
 \usepackage{pgfplots}
-%\pgfplotsset{compat=1.7}
+\pgfplotsset{compat=1.7}
 
 \usepackage{cite}
 
@@ -101,13 +101,17 @@ The aim is to develop a solver for effectively solving problems with
 \section{Introduction}
 Introduction here.
 
-\let\clearpage\relax
+%\let\clearpage\relax
+%\let\cleardoublepage\relax
 \include{chapter/a_qp_problem/main}
 \include{chapter/an_iterative_method/main}
 \include{chapter/a_tree_representation/main}
 \include{chapter/implementation/main}
 \include{chapter/computational_experiments/main}
+
+\onecolumn
 \include{appendix}
+\twocolumn
 
 \bibliography{thesis}{}
 \bibliographystyle{ieeetr}

@@ -6,7 +6,7 @@ by some $s$, or to implement a discrete event simulator that only stores
 the current state of the network. First we will discuss the implementation
 of the tree structure, before we move on to the two main approaches.
 
-\subsection{Tree Structure}
+\subsubsection{Tree Structure}
 All trees consists of vertices, and in our specific case, each vertex contains
 two sets $\mathcal{M}$ and $\mathcal{Z}$, a solution $x^*$, and a number of
 child vertices. To keep vertices as simple as possible, we implement them as
@@ -14,15 +14,15 @@ simple \texttt{structs}. Each vertex \texttt{struct} looks like
 this:
 \begin{verbatim}
 struct vertex {
-    std::set<uint16_t> m;
-    std::set<uint16_t> z;
-    double* sol;
-    std::vector<struct vertex*> children;
+  set<uint16_t> m;
+  set<uint16_t> z;
+  double* sol;
+  vector<struct vertex*> children;
 };
 \end{verbatim}
 A reader familiar with \texttt{C++} might notice that we use
-\texttt{std::set} instead of using a bit vector as we discussed
-in Chapter \ref{ch:tree}, and we will come to that later. Note that
+\texttt{set} instead of using a bit vector as we discussed
+in Section \ref{ch:tree}, and we will come to that later. Note that
 the sets consist of indices of primitive type \texttt{uint16\_t}, which is
 short for \texttt{unsigned short int}. That means that the sets are limited to
 $2^{16} = 65536$ elements, and therefore also putting a limit to the size
@@ -40,12 +40,16 @@ for starting the algorithm on some vertex. The second part is the actual
 recursively defined algorithm. These two parts are called \texttt{mfind} and
 \texttt{mfindrec}, respectively. We define \texttt{mfind} as follows:
 \begin{verbatim}
-struct vertex* mfind(const std::set<uint16_t>&m,
-const struct vertex* v, bool& found) {
-    found = true;
-    if (isSubset(v->m, m) && isSubset(m, v->z)) return v;
-    found = false;
-    return mfindrec(m, v, found, v);
+struct vertex* mfind(
+const set<uint16_t>& m,
+const struct vertex* v, bool& found)
+{
+  found = true;
+  if (isSubset(v->m, m)
+  &&  isSubset(m, v->z))
+    return v;
+  found = false;
+  return mfindrec(m, v, found, v);
 }
 \end{verbatim}
 The parameters for \texttt{mfind} are a modifier, a vertex where the search
@@ -56,18 +60,21 @@ In order to search the whole tree, one would use the root vertex as parameter
 Note that this is a pointer, and not an index like in Algorithm
 \ref{alg:mfind}. The function makes a call to \texttt{mfindrec}:
 \begin{verbatim}
-struct vertex* mfindrec(const std::set<uint16_t>& m,
-const struct vertex* v, bool& found, struct vertex* ret) {
-    for (struct vertex* vi : v->children) {
-        if (isSubset(vi->m, m) {
-            ret = vi;
-            if (isSubset(m, vi->z)) {
-                found = true;
-                return vi;
-            } else mfindrec(m, vi, found, ret);
-        }
+struct vertex* mfindrec(
+const set<uint16_t>& m,
+const struct vertex* v, bool& found,
+struct vertex* ret)
+{
+  for (struct vertex* vi : v->children) {
+    if (isSubset(vi->m, m) {
+      ret = vi;
+      if (isSubset(m, vi->z)) {
+        found = true;
+        return vi;
+      } else mfindrec(m, vi, found, ret);
     }
-    return ret;
+  }
+  return ret;
 }
 \end{verbatim}
 It is quite evident from the code that the performance of the \texttt{isSubset}
@@ -87,7 +94,7 @@ here is quite clear: If a set contains less than one sixteenth of $n$, then
 the sparse format uses less memory. This might actually be the case in a lot
 of sets, especially when solving all possible subinstances where the number
 of breakdowns are limited by some $b$. Consider a very small case where
-$n = 200$ and we solve all sub instances $s = \sum_{j=0}^{3} {200 \choose j}$.
+$n = 200$ and we solve all sub instances $s = \sum_{j=0}^{3} {\binom{200}{j}}$.
 With a total number of $s$ sets stored as bit vectors, the memory use for
 storing the modifiers is $200s~\textrm{bits} \approx 32~\textrm{megabytes}$.
 Whereas, with $s$ sets of sparsely stored indices, the memory use for storing
@@ -97,11 +104,13 @@ as $b$ becomes greater than 12, bit vectors will use less memory to store all
 modifiers. Figure \ref{fig:bmem} shows the ratio of memory used by bit vectors
 over memory used by sets of sparsely stored indices where $n = 200$ and
 $5 \leq b \leq 30$.
-\begin{figure}[h!]
-\begin{center}
+\begin{figure}[ht!]
+\centering
 \input{include/setmem}
-\end{center}
-\caption{Difference in memory use with bit vectors and sparse sets.}
+\caption{Difference in memory use with bit vectors and sparse sets.
+         The x-axis represents the value of $b$, while the y-axis represents
+         the ratio of memory use of an implementation with bit vectors over
+         an implementation with sets of sparsely stored indices.}
 \label{fig:bmem}
 \end{figure}
 Aside from the modifier set, we also have to store the set of variables that
@@ -115,21 +124,32 @@ that are actually in the sets in order to determine if a set is a subset
 of some set. However, with bit vectors, we need to check $n$ bits---where $n$
 is the number of variables in the universe---in order to determine the same.
 This means that the \texttt{isSubset} routine will most likely have a different
-running time with the two implementations. One way to find out which of the two
-are most suited for our need is to perform a benchmark of the two. By
-setting the universe to some size $n$, and generating sets of random sparsity,
-we can test how fast \texttt{isSubset} will run. Figure \ref{fig:setspeed}
+running time with the two implementations.
+
+One way to find out which of the two are most suited for our need is to perform
+a benchmark of the two.
+By setting the universe to some size $n$, and generating sets of
+random sparsity less than or equal to $n$, we can test how fast
+\texttt{isSubset} will run.
+We generate random sets as \texttt{bitsets} in \texttt{C++}, storing copies
+of these sets in the sparse representation, then testing the performance 
+of both implementations of \texttt{isSubset}.
+Figure \ref{fig:setspeed}
 shows the running time of the two implementations in seconds. Both
 implementations were tested on $3000^2$ \texttt{isSubset}-executions, while
-increasing the size of the universe.
+increasing $n$.
 Codes for the benchmark can be found in Appendix \ref{app:setbench}.
-\begin{figure}[h!]
-\begin{center}
+\begin{figure}[ht!]
+\centering
 \input{include/setspeed}
-\end{center}
-\caption{Seconds used to solve $3000^2$ \texttt{isSubset} on random sets.}
+\caption{Seconds used to solve $3000^2$ \texttt{isSubset} on randomly
+         generated sets with random sparsity. The x-axis represent 
+         the value of $n$, i.e. the size of the universe. The y-axis
+         represent the number of seconds the benchmark took with each
+         implementation.}
 \label{fig:setspeed}
 \end{figure}
+
 We see that the bit vector implementation is much faster than the sparse
 implementation on smaller universes. However, the sparse implementation
 scales much better than the bit vector implementation when the size of
@@ -140,12 +160,12 @@ do not scale as nicely as the bit vectors. So the choice relies on what is
 most important: memory or speed. Since the nature of this thesis is to
 implement a \emph{fast} solver, we give speed a higher priority than memory 
 efficiency, so we choose to implement the sets of sparsely stored
-indices. That is, in \texttt{C++}, \texttt{std::set}.
+indices. That is, in \texttt{C++}, \texttt{set}.
 
 \subsection{Tree Construction}
 Because we do not need to store any information about edges in the tree,
 we do not need to implement edges as an object of its own. We defined
-a vertex \texttt{struct} earlier, having a \texttt{std::vector} of child
+a vertex \texttt{struct} earlier, having a \texttt{vector} of child
 vertices. That means that for each vertex we have, we can reach all children
 vertices, children's children vertices and so on, from that vertex.
 So, if we have a pointer to the root of a tree, we can reach all vertices

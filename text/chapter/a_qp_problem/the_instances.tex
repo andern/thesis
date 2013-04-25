@@ -13,7 +13,7 @@ Figure \ref{fig:histH} shows the value distribution of non-zero elements in $H$
 in the three instances. Note that among all the diagonal elements of H, more
 than 50 percent of them are zero, and among the non-zero elements, most of them
 are less than $10^{-2}$.
-\begin{figure}[h!]
+\begin{figure}[ht!]
 \begin{center}
 \input{include/newhistH}
 \end{center}
@@ -26,7 +26,7 @@ Note that no non-zero elements in the linear term in any of the instances
 has absolute value less than 20. We see that the values in the linear term
 are generally of much higher magnitude than the values in the quadratic term.
 
-\begin{table}[h!]
+\begin{table}[ht!]
     \centering
     \caption{Problem size of each instance}
     \begin{tabular}{lrrr}
@@ -44,7 +44,7 @@ Table \ref{table:sizes} shows the problem size of each instance.
 Table \ref{table:maxmin} shows some statistics about the non-zero elements in
 the objective function for $i = 1,2,\ldots,n$ where $n$ is the number of
 columns.
-\begin{table}[h!]
+\begin{table}[ht!]
     \centering
     \caption{Statistics on the Non-zero values in the objective function of
 each instance.}
@@ -75,5 +75,5 @@ This means that for each of the three instances described in this chapter,
 they ideally want to solve a total of $2^n - 1$ subinstances. While this is
 unrealistic, it is unlikely that all edges in the network breaks down.
 A more realistic approach is to try to solve all subinstances with no more than
-$b$ breakdowns, i.e. we solve $s = \sum_{j=0}^b {n \choose j}$ subinstances
+$b$ breakdowns, i.e. we solve $s = \sum_{j=0}^b {\binom{n}{j}}$ subinstances
 with less than or equal to $b$ breakdowns.

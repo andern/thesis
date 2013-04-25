@@ -48,7 +48,8 @@ The termination condition of Slp depends on the objective value of the two
 previous iterations. So, in order to terminate, we need a function that can
 compute the objective value. The function prototype for this function reads:
 \begin{verbatim}
-double objVal(const double* p, const ClpModel& m);
+double objVal(const double* p,
+              const ClpModel& m);
 \end{verbatim}
 where \texttt{ClpModel} again gives us access to both the linear and quadratic
 objective term.
@@ -66,25 +67,26 @@ much overhead.
 
 An implementation of Algorithm \ref{alg:iter} in \texttt{C++} looks like this:
 \begin{verbatim}
-ClpModel lin = m; // A linear copy of ClpModel m
+ClpModel lin = m; // A linear copy of m
 do {
-    taylor(T, x, m);
+  taylor(T, x, m);
+  // Set new linear objective
+  lin.chgObjCoefficients(T);
+  // Run the primal simplex method
+  lin.primal();
 
-    lin.chgObjCoefficients(T); // Set new linear objective
-    lin.primal(); // Run the primal simplex method
-    
-    const double* xhat = lin.primalColumnSolution(); // Opt. sol
-    double alpha = lineSearch(x, xhat, m);
-    if      (alpha > 1) alpha = 1;
-    else if (alpha < 0) alpha = 0;
+  const double* xhat = 
+          lin.primalColumnSolution();
+  double alpha = lineSearch(x, xhat, m);
+  if (alpha > 1) alpha = 1;
 
-    double oldval = objVal(x, m);
-    for (int i = 0; i < numCols; i++) {
-        x[i] = (1-alpha) * xhat[i];
-    }
-    double val = objVal(x, m);
+  double oldval = objVal(x, m);
+  for (int i = 0; i < numCols; i++) {
+      x[i] = (1-alpha) * xhat[i];
+  }
+  double val = objVal(x, m);
 
-    stop = (oldval - val);
-    stop /= fabs(oldval);
+  stop = (oldval - val);
+  stop /= fabs(oldval);
 } while (stop > tolerance);
 \end{verbatim}
