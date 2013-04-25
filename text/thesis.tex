@@ -1,4 +1,4 @@
-\documentclass[notitlepage, a4paper, twocolumn, twoside, revtex4]{article}
+\documentclass[a4paper, twocolumn, twoside]{article}
 
 \usepackage{caption}
 \usepackage{subcaption}
@@ -14,7 +14,7 @@
                 decorations.pathreplacing,spy,automata}
 
 \usepackage{pgfplots}
-\pgfplotsset{compat=1.7}
+%\pgfplotsset{compat=1.7}
 
 \usepackage{cite}
 
@@ -80,13 +80,14 @@ problems.
 Because the number of possible error cases increases rapidly as the size of the
 network increases, it is crucial that every error case is analyzed very
 quickly.
-The aim is to develop a solver for effectively solving problems with
+The aim is to develop a solver for effectively solving problems
 \begin{inparaenum}
-  \item a problem size of 100 to 2000 variables, but with the possibility of
-        reducing the problem size through variable elimination;
-  \item sparse matrices;
-  \item positive-semidefinite quadratic terms in the objective function; and
-  \item the where QP problem shall be solved many times (in the order of
+  \item with a problem size of 100 to 2000 variables, but with the possibility
+        of reducing the problem size through variable elimination;
+  \item with sparse matrices;
+  \item with positive-semidefinite quadratic terms in the objective function;
+        and
+  \item where the QP problem shall be solved many times (in the order of
         thousands) with small variations in the constraints.
 \end{inparaenum}
 \end{abstract}
@@ -99,15 +100,37 @@ The aim is to develop a solver for effectively solving problems with
 }
 
 \section{Introduction}
-Introduction here.
-
-%\let\clearpage\relax
-%\let\cleardoublepage\relax
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Donec a diam lectus.
+Sed sit amet ipsum mauris.
+Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit.
+Donec et mollis dolor.
+Praesent et diam eget libero egestas mattis sit amet vitae augue.
+Nam tincidunt congue enim, ut porta lorem lacinia consectetur.
+Donec ut libero sed arcu vehicula ultricies a non tortor.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Aenean ut gravida lorem.
+Ut turpis felis, pulvinar a semper sed, adipiscing id dolor.
+Pellentesque auctor nisi id magna consequat sagittis.
+Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet.
+Ut convallis libero in urna ultrices accumsan.
+Donec sed odio eros.
+Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus.
+Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
+ridiculus mus.
+In rutrum accumsan ultricies.
+Mauris vitae nisi at sem facilisis semper ac in est.
+Vivamus fermentum semper porta.
+Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio.
+Maecenas convallis ullamcorper ultricies.
+\begingroup
+\let\clearpage\relax
 \include{chapter/a_qp_problem/main}
 \include{chapter/an_iterative_method/main}
 \include{chapter/a_tree_representation/main}
 \include{chapter/implementation/main}
 \include{chapter/computational_experiments/main}
+\endgroup
 
 \onecolumn
 \include{appendix}

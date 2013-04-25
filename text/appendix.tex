@@ -1,59 +1,59 @@
 \appendix
 \section{Codes}
-\subsection{\texttt{std::bitset} vs \texttt{std::set}}
+\subsection{\texttt{bitset} vs \texttt{set}}
 \label{app:setbench}
 \begin{verbatim}
 
 #define N 65
 #define SIZE 32*N
 
-static std::set<uint16_t>* copy(const std::bitset<SIZE>* a) {
-    std::set<uint16_t>* res = new std::set<uint16_t>;
-    for (uint16_t i = 0; i < SIZE; i++) {
-        if (a->test(i)) res->insert(i);
-    }
-    return res;
+static set<uint16_t>* copy(const bitset<SIZE>* a) {
+  set<uint16_t>* res = new set<uint16_t>;
+  for (uint16_t i = 0; i < SIZE; i++) {
+    if (a->test(i)) res->insert(i);
+  }
+  return res;
 }
 
 int main() {
-    srand((unsigned int)time(NULL));
+  srand((unsigned int)time(NULL));
 
-    std::vector<std::bitset<SIZE>*> bitsets;
+  vector<bitset<SIZE>*> bitsets;
 
-    for (int i = 0; i < 3000; i++) {
-        std::stringstream ss;
-        for (int j = 0; j < N; j++) {
-            std::bitset<32> bs(rand());
-            ss << bs.to_string();
-        }
-        bitsets.push_back(new std::bitset<SIZE>(ss.str()));
+  for (int i = 0; i < 3000; i++) {
+    stringstream ss;
+    for (int j = 0; j < N; j++) {
+      bitset<32> bs(rand());
+      ss << bs.to_string();
     }
+    bitsets.push_back(new bitset<SIZE>(ss.str()));
+  }
 
-    std::vector<std::set<uint16_t>*> sets;
-    for (int i = 0; i < 3000; i++) {
-        sets.push_back(copy(bitsets[i]));
+  vector<set<uint16_t>*> sets;
+  for (int i = 0; i < 3000; i++) {
+    sets.push_back(copy(bitsets[i]));
+  }
+
+  bool fool;
+
+  double t1 = omp_get_wtime();
+  for (uint16_t i = 0; i < sets.size(); i++) {
+    for (uint16_t j = 0; j < sets.size(); j++) {
+      fool = isSubset(*sets[i], *sets[j]);
     }
+  }
+  double t2 = omp_get_wtime();
 
-    bool fool;
-
-    double t1 = omp_get_wtime();
-    for (uint16_t i = 0; i < sets.size(); i++) {
-        for (uint16_t j = 0; j < sets.size(); j++) {
-            fool = isSubset(*sets[i], *sets[j]);
-        }
+  for (uint16_t i = 0; i < bitsets.size(); i++) {
+    bitset<SIZE> notb = ~(*bitsets[i]);
+    for (uint16_t j = 0; j < bitsets.size(); j++) {
+      fool = isSubset_bit(notb, *bitsets[j]);
     }
-    double t2 = omp_get_wtime();
+  }
+  double t3 = omp_get_wtime();
 
-    for (uint16_t i = 0; i < bitsets.size(); i++) {
-        std::bitset<SIZE> notb = ~(*bitsets[i]);
-        for (uint16_t j = 0; j < bitsets.size(); j++) {
-            fool = isSubset_bit(notb, *bitsets[j]);
-        }
-    }
-    double t3 = omp_get_wtime();
-
-    std::cout << "(" << SIZE << ", " << (t2-t1) << ")\n";
-    std::cout << "(" << SIZE << ", " << (t3-t2) << ")\n";
+  cout << "(" << SIZE << ", " << (t2-t1) << ")\n";
+  cout << "(" << SIZE << ", " << (t3-t2) << ")\n";
 }
 
 \end{verbatim}
@@ -62,59 +62,68 @@ int main() {
 \label{app:nextcombination}
 \begin{verbatim}
 template <class BidIt>
-inline bool next_combination(BidIt n_begin, BidIt n_end, BidIt r_begin, BidIt r_end)
+inline bool next_combination(
+BidIt n_begin, BidIt n_end,
+BidIt r_begin, BidIt r_end)
 {
-    bool boolmarked=false;
-    BidIt r_marked;
+  bool boolmarked=false;
+  BidIt r_marked;
 
-    BidIt n_it1=n_end;
-    --n_it1;
+  BidIt n_it1=n_end;
+  --n_it1;
 
 
-    BidIt tmp_r_end=r_end;
-    --tmp_r_end;
+  BidIt tmp_r_end=r_end;
+  --tmp_r_end;
 
-    for(BidIt r_it1=tmp_r_end; r_it1!=r_begin || r_it1==r_begin; --r_it1,--n_it1)
+  for(BidIt r_it1=tmp_r_end;
+  r_it1!=r_begin || r_it1==r_begin;
+  --r_it1,--n_it1)
+  {
+    if(*r_it1==*n_it1 )
+    { 
+      if(r_it1!=r_begin)
+      {
+        boolmarked=true;
+        r_marked=(--r_it1);
+        ++r_it1;
+        continue;
+      }
+      else
+        return false;    
+    }
+    else
     {
-        if(*r_it1==*n_it1 )
+      if(boolmarked==true)
+      {
+        BidIt n_marked;
+        for (BidIt n_it2=n_begin;
+        n_it2!=n_end;++n_it2)
         {
-            if(r_it1!=r_begin) //to ensure not at the start of r sequence
-            {
-                boolmarked=true;
-                r_marked=(--r_it1);
-                ++r_it1;//add it back again 
-                continue;
-            }
-            else // it means it is at the start the sequence, so return false
-                return false;      
+          if(*r_marked==*n_it2) {
+            n_marked=n_it2;break;
+          }
         }
-        else //if(*r_it1!=*n_it1 )
+
+
+        BidIt n_it3=++n_marked;  
+        for  (BidIt r_it2=r_marked;
+        r_it2!=r_end;++r_it2,++n_it3)
         {
-            //marked code
-            if(boolmarked==true)
-            {
-                //for loop to find which marked is in the first sequence
-                BidIt n_marked;//mark in first sequence
-                for (BidIt n_it2=n_begin;n_it2!=n_end;++n_it2)
-                    if(*r_marked==*n_it2) {n_marked=n_it2;break;}
-
-
-                BidIt n_it3=++n_marked;    
-                for  (BidIt r_it2=r_marked;r_it2!=r_end;++r_it2,++n_it3)
-                {
-                    *r_it2=*n_it3;
-                }
-                return true;
-            }
-            for(BidIt n_it4=n_begin; n_it4!=n_end; ++n_it4)
-                if(*r_it1==*n_it4)
-                {
-                    *r_it1=*(++n_it4);
-                    return true;           
-                }
+          *r_it2=*n_it3;
         }
-    }  
+        return true;
+      }
+      for(BidIt n_it4=n_begin;
+      n_it4!=n_end; ++n_it4)
+        if(*r_it1==*n_it4)
+        {
+          *r_it1=*(++n_it4);
+          return true;       
+        }
+    }
+  }  
 
-    return true;//will never reach here    
+  return true;//will never reach
 }
 \end{verbatim}
