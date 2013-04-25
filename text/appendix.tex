@@ -1,6 +1,7 @@
 \appendix
-\chapter{Codes}
-\section{\texttt{std::bitset} vs \texttt{std::set}}
+\onecolumn
+\section{Codes}
+\subsection{\texttt{std::bitset} vs \texttt{std::set}}
 \label{app:setbench}
 \begin{verbatim}
 
@@ -58,7 +59,7 @@ int main() {
 
 \end{verbatim}
 
-\section{next\_combination}
+\subsection{next\_combination}
 \label{app:nextcombination}
 \begin{verbatim}
 template <class BidIt>
@@ -119,6 +120,8 @@ inline bool next_combination(BidIt n_begin, BidIt n_end, BidIt r_begin, BidIt r_
 }
 \end{verbatim}
 
+\twocolumn
+
 \begin{comment}
 \chapter{Example Tree of Some $\mathcal{Q}$}
 \label{app:tree}
@@ -163,8 +166,6 @@ double lineSearch(double* p1, double* p2, const ClpModel model);
  */
 double solve(ClpModel quad, double* x, int maxIters, double tol);
 \end{verbatim}
-
-\newpage
 
 \begin{verbatim}
 /**

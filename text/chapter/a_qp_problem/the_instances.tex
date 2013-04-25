@@ -1,13 +1,3 @@
-\begin{figure}[h!]
-\begin{center}
-\input{include/newhistH}
-\end{center}
-\caption{Value distribution of non-zero elements in $H$}
-\label{fig:histH}
-\end{figure}
-
-\section{The Instances}
-\label{sec:instances}
 The instances have a lot in common, but most importantly they all:
 \begin{enumerate}
 \item Have very large coefficients in the linear term compared to the
@@ -23,11 +13,20 @@ Figure \ref{fig:histH} shows the value distribution of non-zero elements in $H$
 in the three instances. Note that among all the diagonal elements of H, more
 than 50 percent of them are zero, and among the non-zero elements, most of them
 are less than $10^{-2}$.
-Observing that no non-zero element in the linear term in any of the instances
-has absolute value less than 20 reinforces our earlier motivation and
-cause to look into SLP.
+\begin{figure}[h!]
+\begin{center}
+\input{include/newhistH}
+\end{center}
+\caption{Value distribution of non-zero elements in $H$. The y-axis represent
+the value of each element, while the x-axis represent which column index the
+element was found.}
+\label{fig:histH}
+\end{figure}
+Note that no non-zero elements in the linear term in any of the instances
+has absolute value less than 20. We see that the linear terms are generally
+of much higher magnitude than those in the quadratic term.
 
-\begin{table}
+\begin{table}[h!]
     \centering
     \caption{Problem size of each instance}
     \begin{tabular}{lrrr}
@@ -45,16 +44,18 @@ Table \ref{table:sizes} shows the problem size of each instance.
 Table \ref{table:maxmin} shows some statistics about the non-zero elements in
 the objective function for $i = 1,2,\ldots,n$ where $n$ is the number of
 columns.
-\begin{table}
+\begin{table}[h!]
     \centering
-    \caption{Non-zero values in the objective function of each instance}
-    \begin{tabular}{lrrr}
-                        & \textit{small}          & \textit{large}          & \textit{vlarge} \\\hline
-    $\max(h_{ii})$      & $2.9614 \times 10^{-2}$ & $2.9614 \times 10^{-2}$ & $4.9011 \times 10^{-2}$ \\
-    $\min(h_{ii})$      & $4.9290 \times 10^{-5}$ & $4.9290 \times 10^{-5}$ & $1.1026 \times 10^{-5}$ \\
-$\textrm{mean}(h_{ii})$ & $5.2864 \times 10^{-3}$ & $5.2864 \times 10^{-3}$ & $5.8984 \times 10^{-3}$ \\
-    $\max(b_{i})$       & 20                      & 20                      & 20 \\
-    $\min(b_{i})$       & -70                     & -70                     & -50 \\
+    \caption{Statistics on the Non-zero values in the objective function of
+each instance.}
+
+    \begin{tabular}{lrr}
+      & \textit{small} and \textit{large}         & \textit{vlarge} \\\hline
+    $\max(h_{ii})$      & $2.9614 \times 10^{-2}$ & $4.9011 \times 10^{-2}$ \\
+    $\min(h_{ii})$      & $4.9290 \times 10^{-5}$ & $1.1026 \times 10^{-5}$ \\
+$\textrm{mean}(h_{ii})$ & $5.2864 \times 10^{-3}$ & $5.8984 \times 10^{-3}$ \\
+    $\max(b_{i})$       & 20                      & 20 \\
+    $\min(b_{i})$       & -70                     & -50 \\
     \end{tabular}
     \label{table:maxmin}
 \end{table}
@@ -64,11 +65,11 @@ much alike.
 That is entirely justified as \textit{large} is four \textit{small}-networks
 connected forming one large network.
 
-For each of these instances, GoodTech AS wants to solve several versions
+For each of these instances, Goodtech wants to solve several versions
 with slight variations in the input.
 If one or more variables in an instance is forced to zero, it forms a new
 instance that we refer to as a $\emph{subinstance}$ of the original instance.
-GoodTech AS wants to simulate that all combinations of edges in the network
+Goodtech wants to simulate that all combinations of edges in the network
 fail, by forcing their corresponding variables to zero.
 This means that for each of the three instances described in this chapter,
 they ideally want to solve a total of $2^n - 1$ subinstances. While this is

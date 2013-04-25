@@ -1,8 +1,7 @@
-\section{Motivation}
 One interesting property shared by several practical applications is that the
 coefficients in the linear term of the objective function is of a much higher
 magnitude than those in the quadratic term.
-From this one might think that the quadratic term is close to negligible.
+From this, one might think that the quadratic term is close to negligible.
 By removing the quadratic term from the objective function, leaving only the
 linear term, the QP transforms into an LP.
 Linearizing the objective function using a first-order Taylor series expansion
@@ -18,11 +17,13 @@ A linear approximation of function (\ref{eq:obj}) becomes
 \[
 T_a(x) = a^THa + b^Ta + (2a^TH + b^T)(x - a) \\
 \]
-Removing cancelling terms, the approximation becomes
+There are a number of terms that cancel each other out. Cancelling them,
+the approximation becomes
 \begin{equation}
 \label{eq:texp}
 T_a(x) = - a^THa + 2a^THx + b^Tx
 \end{equation}
+
 Now, if $a = 0$ in (\ref{eq:texp}) we are left with
 \[
 T_0(x) = b^Tx

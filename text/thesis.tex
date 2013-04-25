@@ -1,4 +1,4 @@
-\documentclass[a4paper]{report}
+\documentclass[notitlepage, a4paper, ukenglish, twocolumn, twoside]{article}
 
 \usepackage{caption}
 \usepackage{subcaption}
@@ -8,6 +8,8 @@
 
 \usepackage{amsmath}
 \usepackage{amsfonts}
+
+\usepackage{lipsum}
 
 \usepackage{tikz}
 \usetikzlibrary{intersections,positioning,calc,arrows,shapes,
@@ -29,7 +31,7 @@
 %\counterwithin{figure}{section}
 %\counterwithin{equation}{section}
 %\counterwithin{table}{section}
-\counterwithin{algocf}{chapter}
+\counterwithin{algocf}{section}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 
@@ -58,27 +60,56 @@ insert path={
 }
 
 \title{Fast Solver of a Quadratic Programming (QP) Problem}
-\author{Andreas Halle}
+\author{Andreas Halle\thanks{}}
 
-\maketitle
 
 %\pagenumbering{roman}
-\tableofcontents
+%\tableofcontents
 %\listoffigures
 %\listoftables
 
+\twocolumn[
+\begin{@twocolumnfalse}
+\maketitle
+\begin{abstract}
+Goodtech and MathConsult have developed tools to compute the reliability of
+delivery in a masked network where every link has an error rate.
+This method is based on reliability theory to find actual error cases for
+further analysis, and optimization theory to compute an optimal delivery
+through the network for every error case.
+The optimization problems are formulated as Quadratic Programming (QP)
+problems.
+Because the number of possible error cases increases rapidly as the size of the
+network increases, it is crucial that every error case is analyzed very
+quickly.
+The aim is to develop a solver for effectively solving problems with
+\begin{inparaenum}
+  \item a problem size of 100 to 2000 variables, but with the possibility of
+        reducing the problem size through variable elimination;
+  \item sparse matrices;
+  \item positive-semidefinite quadratic terms in the objective function; and
+  \item the where QP problem shall be solved many times (in the order of
+        thousands) with small variations in the constraints.
+\end{inparaenum}
+\end{abstract}
+\end{@twocolumnfalse}
+]
+{
+  \renewcommand{\thefootnote}%
+    {\fnsymbol{footnote}}
+  \footnotetext[1]{University of Bergen, Department of Informatics, P.O.Box 7803, N-5020 Bergen, Norway}
+}
+
+\section{Introduction}
+\lipsum[1-2]
+
+\let\clearpage\relax
 \include{chapter/a_qp_problem/main}
-
 \include{chapter/an_iterative_method/main}
-
 \include{chapter/a_tree_representation/main}
-
 \include{chapter/implementation/main}
-
 \include{chapter/computational_experiments/main}
-
 \include{appendix}
-
 
 \bibliography{thesis}{}
 \bibliographystyle{ieeetr}
