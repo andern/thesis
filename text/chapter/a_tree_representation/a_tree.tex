@@ -1,4 +1,3 @@
-\section{A Tree}
 In this section we discuss how to represent all subinstances of some arbitrary
 instance $\mathcal{Q}$. We also discuss how to identify 
 subinstances to which we do not already know the solution.
@@ -73,8 +72,6 @@ an extension of the modifier of its parent.
 The root $v_0$, which does not have a parent, has a modifier that is equal
 to the empty set, i.e. $\mathcal{M}_0 = \emptyset$.
 
-\input{include/find_algo}
-
 Algorithm \ref{alg:find} describes an algorithm for finding the index
 $i \in \mathbb{U}$ for a given modifier $\mathcal{M}_l$ such that
 $x_l^* = x_i^*$.
@@ -82,6 +79,12 @@ Note that the return value
 on the last line of the algorithm is implementation specific, but it should be
 a value that somehow tells us that we have not previously found the solution to
 $\mathcal{Q}_l$.
+
+\begin{algorithm}[ht!]
+\caption{\texttt{find($\mathcal{M}_l$, $v_k$)}}
+\label{alg:find}
+\input{include/find_algo}
+\end{algorithm}
 
 Consider a tree $G$ with a vertex set
 $
@@ -110,6 +113,8 @@ and the following values:
         \mathcal{M}_8    = \left\{{4}\right\}          & \mathcal{Z}_8    = \left\{{1,4,5}\right\} \\
         \mathcal{M}_{10} = \left\{{2,4}\right\}        & \mathcal{Z}_{10} = \left\{{2,3,4,5}\right\}
     \end{array}
+\]
+\[
     \begin{array}{ll}
         \mathcal{M}_{12} = \left\{{3,4}\right\}        & \mathcal{Z}_{12} = \left\{{4,3,1}\right\} \\
         \mathcal{M}_{15} = \left\{{1,2,3,4}\right\}    & \mathcal{Z}_{15} = \left\{{1,2,3,4}\right\} \\
@@ -122,9 +127,9 @@ The tree $G$ is a tree representation of a set $\mathbb{U}$ of some
 $\mathcal{Q}$ with $5$ variables.
 Figure \ref{fig:find} shows how Algorithm \ref{alg:find} would work with input
 $(\mathcal{M}_{14} = \left\{{2,3,4}\right\}, v_0)$.
-The left side of the figure shows the tree specified above.
+The left side of the figure shows the tree G.
 
-\begin{figure}[ht!]
+\begin{figure*}[ht!]
     \centering
     \begin{tabular}[t]{|c|l|}\hline
     \begin{subfigure}[b]{0.35\textwidth}
@@ -166,6 +171,7 @@ The left side of the figure shows the tree specified above.
         \\
         \\
         \\
+        \\
     \end{subfigure}
     \\ \hline
     \begin{subfigure}[b]{0.35\textwidth}
@@ -184,6 +190,7 @@ The left side of the figure shows the tree specified above.
         We see that $\mathcal{M}_{10} \subseteq \mathcal{M}_{14}$ and that
         $\mathcal{M}_{12} \subseteq \mathcal{M}_{14}$, so we continue
         searching from the vertices $v_{10}$ and $v_{12}$. 
+        \\
         \\
         \\
     \end{subfigure}
@@ -206,10 +213,11 @@ The left side of the figure shows the tree specified above.
         \\
         \\
         \\
+        \\
     \end{subfigure}
     \\ \hline
     \end{tabular}
     \caption{\texttt{find} being executed on $G$ where
              $\mathcal{M}_{14} = \left\{{2,3,4}\right\}$.}
     \label{fig:find}
-\end{figure}
+\end{figure*}

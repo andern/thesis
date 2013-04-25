@@ -1,5 +1,3 @@
-\section{Constructing a Tree}
-\label{sec:construction}
 Before we can construct a tree similar to the one in Figure \ref{fig:find},
 we need a slighty modified \texttt{find} that we call \texttt{mfind}.
 \texttt{mfind} is modified so that it returns a tuple of a boolean and an
@@ -12,7 +10,11 @@ If the boolean is false, then the index is the index of the vertex that will
 become the parent of our subinstance that will be added to the tree.
 Algorithm \ref{alg:mfind} shows how \texttt{mfind} works.
 
+\begin{algorithm}[ht!]
+\caption{\texttt{mfind($\mathcal{M}_l$, $v_k$)}}
+\label{alg:mfind}
 \input{include/mfind_algo}
+\end{algorithm}
 To construct a tree such as the one seen in Figure \ref{fig:find}, we start
 with some instance $\mathcal{Q}$, a modifier $\mathcal{M}_0 = \{ {} \}$ and
 a root $v_0$.
@@ -20,7 +22,11 @@ Then, for each possible subinstance $\mathcal{Q}_i$ of $\mathcal{Q}$ such that
 $|\mathcal{M}_i| \leq b$, we run \texttt{mfind} and add it to the tree if its
 solution is distinct.
 
+\begin{algorithm}[ht!]
+\caption{\texttt{construct}($\mathcal{Q}$, $b$)}
+\label{alg:construct}
 \input{include/construct_algo}
+\end{algorithm}
 Algorithm \ref{alg:construct} describes an algorithm for constructing a tree
 $G$, given some instance $\mathcal{Q}$ and a maximum number of breakdowns $b$.
 Readers are encouraged to try to construct the tree in Figure \ref{fig:find} on

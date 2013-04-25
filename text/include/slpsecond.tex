@@ -1,16 +1,4 @@
 \begin{tikzpicture}
-    \tikzset{
-        position label/.style={
-            below = 3pt,
-            text height = 1.5ex,
-            text depth = 1ex
-        },
-        brace/.style={
-            decoration={brace, mirror},
-            decorate
-        }
-    }
-
     % grid and axes
     \draw[->,name path=xaxis] (-0.2,0) -- (2.2,0) node[right] {$x$};
     \draw[->,name path=yaxis] (0,-0.2) -- (0,2.2) node[above] {$y$};
@@ -51,7 +39,7 @@
     \draw[fill] (qopt) circle [radius=0.02];
     \draw[fill] (alpha) circle [radius=0.03];
 
-    \draw [red,brace] (d) -- (alpha);
+    \draw [red, decorate,decoration={brace,mirror}] (d) -- (alpha);
 
     % draw the big polygon
     \fill[very thick,fill=blue,fill opacity=0.3] (a.center) -- (b.center)

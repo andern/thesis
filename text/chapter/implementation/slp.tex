@@ -1,4 +1,3 @@
-\section{Slp}
 While implementing an algorithm, it makes sense to start to implement
 sub-functions that are not dependant on other functions. 
 
@@ -7,7 +6,8 @@ we have a closed-form definition for the specific objective function that
 we described in Chapter \ref{ch:qp}. The function prototype for the
 Taylor series expansion reads:
 \begin{verbatim}
-void taylor(double* T, const double* x, const ClpModel& m);
+void taylor(double* T, const double* x,
+            const ClpModel& m);
 \end{verbatim}
 where \texttt{ClpModel} gives us access to both the linear and quadratic
 objective term. The result of the Taylor-series expansion, i.e. the new
@@ -37,7 +37,9 @@ and setting $m^\prime(\alpha) = 0$ and solving for $\alpha$:
 \]
 The function prototype for the line search function reads:
 \begin{verbatim}
-double lineSearch(const double* p, const double* q, ClpModel& m);
+double lineSearch(const double* p,
+                  const double* q,
+                  ClpModel& m);
 \end{verbatim}
 where \texttt{ClpModel} gives us access to both the linear and quadratic
 objective term.

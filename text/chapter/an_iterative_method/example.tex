@@ -35,7 +35,7 @@ $\mathcal{Q}$ are equal for all $k$, as the constraints never change during the
 iterations of the algorithm. Also note that $\mathcal{L}_0$ has multiple
 optimal solutions, so $\hat{x}_0$ may differ between implementations.
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
     \centering
     \input{include/slpfirst}
     \caption{A visual representation of $\mathcal{L}_0$ and $\mathcal{Q}$.
@@ -57,7 +57,7 @@ f((1-\alpha) x_0 + \alpha \hat{x}_0) = 5\alpha^2 - 6\alpha = m(\alpha)
 To find the minimum of this one-dimensional convex parabola we set
 $m^\prime(\alpha) = 0$ and solve for $\alpha$ to achieve $\alpha = 0.6$
 (see Figure \ref{fig:steplength}).
-\begin{figure}[h!]
+\begin{figure}[ht!]
     \centering
     \input{include/slpsecond}
     \caption{Line search between $x_0$ and $\hat{x}_0$. The optimal point
@@ -148,7 +148,7 @@ The linear program of $\mathcal{L}_1$ in standard form, reads:
 We solve $\mathcal{L}_1$ and achieve an optimal solution $\hat{x}_1$
 (see Figure \ref{fig:lp2}).
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
 \centering
 \input{include/slpthird}
 \caption{A visual representation of $\mathcal{L}_1$ and $\mathcal{Q}$.
@@ -175,7 +175,7 @@ The linear program of $\mathcal{L}_2$ in standard form, reads:
 \]
 We solve $\mathcal{L}_2$ and achieve an optimal solution $\hat{x}_2
 = (1.25, 1.75)$ (see Figure \ref{fig:lp3}).
-\begin{figure}[h!]
+\begin{figure}[ht!]
 \centering
 \input{include/slpfourth}
 \caption{A visual representation of $\mathcal{L}_2$ and $\mathcal{Q}$.}
