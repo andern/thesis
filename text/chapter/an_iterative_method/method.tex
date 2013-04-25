@@ -1,16 +1,18 @@
-Consider the quadratic programming problem presented in Section
-\ref{sec:problem}:
-\[
-\min_{x \in \mathbb{R}^n} f(x) = x^T H x + b^T x
-\quad \textrm{subject to}
-~
-Ax = 0
-~
-\textrm{and}
-~
-l \le x \le u
-\]
-and call the objective function $f$.
+Consider the quadratic programming problem in (\ref{eq:obj}) and
+(\ref{eq:thesisqp}).
+%Consider the quadratic programming problem presented in Section
+%\ref{sec:problem}:
+%\[
+%\min_{x \in \mathbb{R}^n} f(x) = x^T H x + b^T x
+%\quad \textrm{subject to}
+%~
+%Ax = 0
+%~
+%\textrm{and}
+%~
+%l \le x \le u
+%\]
+%and call the objective function $f$.
 The constraints are all linear, so by only linearizing the objective function
 we end up with a linear program.
 Let $T_k$ denote the Taylor series expansion at point $x_k$ of $f$.
@@ -44,16 +46,18 @@ We calculate $x_{k+1}$ using the step length $\alpha_k$:
 x_{k+1} = (1-\alpha_k) x_k + \alpha_k\hat{x}_k
 \]
 If, however, the unconstrained minimum lies outside the feasible region
-($x^* \neq x^\mathcal{U}$), $\alpha_k$ might be less than $0$ and the minimum
-value of $f$ of all the \emph{feasible} points collinearly with $x^*$ and
-$\hat{x}_k$ will be $\hat{x}_k$.
+($x^* \neq x^\mathcal{U}$), $\alpha_k$ might be greater than $1$, and the
+minimum value of $f$ of all the \emph{feasible} points collinearly with $x^*$
+and $\hat{x}_k$ will be $\hat{x}_k$.
 
-Increase $k$ by one and repeat the process from the calculation of $T_k$ until
-we reach our termination condition.
-We terminate when we are as close to $x^*$ as we want.
-Given some $\epsilon$, we terminate when
+We Increase $k$ by one and repeat the process from the calculation of $T_k$
+until we reach our termination condition.
+We terminate when the relative difference in objective value of the two last
+iterations is less than some $\epsilon$. We terminate when
 \[
 \frac{f(x_{k-1}) - f(x_k)}{|f(x_{k-1})|} \leq \epsilon
 \]
+Algorithm \ref{alg:iter} describes an algorithm for these steps, given some
+starting point $x_0$ and a tolerance $\epsilon$.
 
 \input{include/slp_algo}

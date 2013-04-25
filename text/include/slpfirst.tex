@@ -1,7 +1,3 @@
-\begin{figure}[htbp]
-\scalebox{1}{
-\begin{minipage}{0.4\linewidth}
-\centering
 \begin{tikzpicture}
     % grid and axes
     \draw[->,name path=xaxis] (-0.2,0) -- (2.2,0) node[right] {$x$};
@@ -89,22 +85,3 @@
         splot f(x,y);
     };
 \end{tikzpicture}
-\end{minipage}
-}
-\scalebox{0.9}{
-\begin{minipage}{0.6\linewidth}
-\centering
-\[
-\begin{array}{lcrcrl}
-    \textrm{Maximize}   &-&   x &+& 2 y \\
-    \textrm{subject to} & &   x &+&   y & \leq 3 \\
-    \textrm{and}        & &   x &-&   y & \leq 1 \\
-    \textrm{and}        &-&   x &+& 3 y & \leq 0 \\
-    \textrm{and}        & &   x &,&   y & \geq 0
-\end{array}
-\]
-\end{minipage}
-}
-\caption{$\mathcal{L}_0$: Initial guess $x_0 = (0,0)$.}
-\label{fig:lp1}
-\end{figure}

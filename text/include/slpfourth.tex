@@ -1,7 +1,3 @@
-\begin{figure}[htbp]
-\scalebox{1}{
-\begin{minipage}{0.4\linewidth}
-\centering
 \begin{tikzpicture}
     % grid and axes
     \draw[->,name path=xaxis] (-0.2,0) -- (2.2,0) node[right] {$x$};
@@ -94,22 +90,3 @@
         splot f(x,y);
     };
 \end{tikzpicture}
-\end{minipage}
-}
-\scalebox{0.9}{
-\begin{minipage}{0.6\linewidth}
-\centering
-\[
-\begin{array}{lcrcrl}
-    \textrm{Maximize}   & & 0.25 x &+& 0.4 y \\
-    \textrm{subject to} & &      x &+&     y & \leq 3 \\
-    \textrm{and}        & &      x &-&     y & \leq 1 \\
-    \textrm{and}        &-&      x &+&   3 y & \leq 4 \\
-    \textrm{and}        & &      x &,&     y & \geq 0
-\end{array}
-\]
-\end{minipage}
-}
-\caption{$\mathcal{L}_2$}
-\label{fig:lp3}
-\end{figure}

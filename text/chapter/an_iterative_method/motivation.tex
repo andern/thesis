@@ -29,7 +29,8 @@ Now, if $a = 0$ in (\ref{eq:texp}) we are left with
 T_0(x) = b^Tx
 \]
 
-Using $g(x) = T_0(x) = b^Tx$, we formulate a new LP that we call $\mathcal{L}$:
+We introduce a new function $g(x) = T_0(x)$, and we formulate a new LP
+that we call $\mathcal{L}$:
 \[
 \min_{x \in \mathbb{R}^n} g(x)
 \quad \textrm{subject to}
@@ -51,7 +52,7 @@ $\mathcal{L}$'s solution with respect to $\mathcal{Q}$ by substituting
 $\hat{x}$ into (\ref{eq:obj}) and checking how much the numerical value
 deviates from the optimal objective value of $\mathcal{Q}$.
 For any QP and its linearized LP, we denote this deviation by $\Delta$.
-More specifically, using (\ref{eq:obj}):
+More specifically:
 \[
 \Delta = \left|\frac{f(\hat{x}) - f(x^*)}{f(x^*)}\right|
 \]
@@ -73,5 +74,7 @@ stops at 75\% because $\Delta$ started reaching values above 1.
 
 $\mathcal{L}$ was always solved more than 85\% faster than $\mathcal{Q}$.
 (TODO: Test against CPLEX)
+(TODO: Discuss these results more, Talk more about the deviation, and how fast
+is solved.)
 These results give us an incentive to look into solution methods that are based
 upon linear programming, such as Successive Linear Programming (SLP).

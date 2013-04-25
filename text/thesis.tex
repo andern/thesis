@@ -1,4 +1,4 @@
-\documentclass[notitlepage, a4paper, ukenglish, twocolumn, twoside]{article}
+\documentclass[notitlepage, a4paper, twocolumn, twoside]{article}
 
 \usepackage{caption}
 \usepackage{subcaption}
@@ -8,8 +8,6 @@
 
 \usepackage{amsmath}
 \usepackage{amsfonts}
-
-\usepackage{lipsum}
 
 \usepackage{tikz}
 \usetikzlibrary{intersections,positioning,calc,arrows,shapes,
@@ -28,9 +26,9 @@
 
 \usepackage{verbatim}
 \usepackage{chngcntr}
-%\counterwithin{figure}{section}
-%\counterwithin{equation}{section}
-%\counterwithin{table}{section}
+\counterwithin{figure}{section}
+\counterwithin{equation}{section}
+\counterwithin{table}{section}
 \counterwithin{algocf}{section}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
@@ -101,7 +99,7 @@ The aim is to develop a solver for effectively solving problems with
 }
 
 \section{Introduction}
-\lipsum[1-2]
+Introduction here.
 
 \let\clearpage\relax
 \include{chapter/a_qp_problem/main}

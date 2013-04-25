@@ -15,7 +15,6 @@ We have that
 where $\mathcal{B}$ denotes the collection of indices corresponding to the
 basic variables and $\mathcal{N}$ denotes the indices corresponding to the
 nonbasic variables.
-
 Vector $x^*$ is some \emph{primal} optimal solution and $z^*$ is some
 \emph{dual} optimal solution.
 The matrix $B$ denotes the matrix corresponding to the basic rows and $N$
@@ -40,13 +39,29 @@ changes.
 %    \end{array}
 %\]
 %Imagine that the third constraint changes from $-x + 3y \leq 4$ to
-To illustrate this, imagine that the third constraint in $\mathcal{L}_2$ from Section \ref{sec:example} changes from $-x + 3y \leq 4$ to
-$-x + 3y \leq 0$. Figure \ref{fig:prac1} illustrates the new feasible region.
+To illustrate this, imagine that the third constraint in $\mathcal{L}_2$ from
+Section \ref{sec:example} changes from $-x + 3y \leq 4$ to
+$-x + 3y \leq 0$. The new linear program then reads:
+\[
+\begin{array}{lcrcrl}
+    \textrm{Maximize}   & & 0.25 x &+& 0.4 y & \\
+    \textrm{subject to} & &      x &+&     y & \leq 3 \\
+    \textrm{and}        & &      x &-&     y & \leq 1 \\
+    \textrm{and}        &-&      x &+&   3 y & \leq 0 \\
+    \textrm{and}        & &      x &,&     y & \geq 0
+\end{array}
+\]
+Figure \ref{fig:prac1} illustrates the new feasible region.
 Readers are encouraged to compare Figure \ref{fig:lp3} and Figure
 \ref{fig:prac1} to note how the feasible region has changed and made the
 unconstrained minimum infeasible.
 
+\begin{figure}[h!]
+\centering
 \input{include/slppractical1}
+\caption{A visual representation of the linearized version of the new QP.}
+\label{fig:prac1}
+\end{figure}
 
 Although we do not need to recompute $z_{\mathcal{N}}^*$, we do however,
 need to recompute $x_{\mathcal{B}}^*$ and $\zeta^*$.
@@ -109,23 +124,22 @@ This leaves us with the following optimal dictionary:
     \end{array}
 \]
 From here we start a new iteration of the algorithm described in Section
-\ref{sec:method} and \ref{sec:example} while preserving the old classification
+\ref{sec:problem} and \ref{sec:example} while preserving the old classification
 of basic and nonbasic variables and using our current primal solution as an
 initial guess $x_0$. We get that
 \[
     T_0 = -2.5 + x - y,
 \]
 which gives us the objective function in Figure \ref{fig:prac1}. Solving that
-LP we end up with a basic solution $\hat{x}_0 = (0,0)$. Since $x_0$ and
-$\hat{x}_0$ are two adjacent vertices of the feasible region, the entire line
-search takes place on the edge between those points.
+linear program, we end up with a basic solution $\hat{x}_0 = (0,0)$.
+Since $x_0$ and $\hat{x}_0$ are two adjacent vertices of the feasible region,
+the entire line search takes place on the edge between those points.
 Since the unconstrained minimum $x^u$ is infeasible, the solution $x^*$ must
 lie on the boundary of the feasible region.
 It follows from Figure \ref{fig:prac1} that $x^*$ lies on the edge joining 
 $x_0$ and $\hat{x}_0$.
 This means that a line search will find $x^*$ and the algorithm will terminate.
-We perform the line search and find that $\alpha = 0.8$.
-Continuing we find that
+We perform the line search and find that $\alpha = 0.2$ and that
 \[
     x_1 = 0.8 x_0 + 0.2 \hat{x}_0 = (1.2, 0.4) = x^*.
 \]

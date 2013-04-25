@@ -1,42 +1,71 @@
 Consider the quadratic program $\mathcal{Q}$:
 \[
-\begin{array}{lcrcrcrcrcl}
-\textrm{Minimize}   & & x^2 &+& y^2 &-& 2 x &-& 2 y \\
-\textrm{subject to} & &     & &     & &   x &+&   y &\leq& 3 \\
-\textrm{and}        & &     & &     & &   x &-&   y &\leq& 1 \\
-\textrm{and}        & &     & &     &-&   x &+& 3 y &\leq& 4 \\
-\textrm{and}        & &     & &     & &   x &,&   y &\geq& 0
+\begin{array}{lcrcrcr}
+\textrm{Minimize}           & & (x-1)^2 x &+& (y-1)^2 y & - &  2 \\
+\textrm{subject to}         & &         x &+&         y &\leq& 3 \\
+\textrm{and}                & &         x &-&         y &\leq& 1 \\
+\textrm{and}                & &         x &+&       3 y &\leq& 4 \\
+\textrm{and}                & &           & &       x,y &\geq& 0
 \end{array}
 \]
 and let $x^*$ denote one of its optimal points and let $f$ denote its objective
 function.
 
-Let $x_0 = (0,0)$ such that $T_0 = -2x - 2y$.
-Figure \ref{fig:lp1} shows the feasible region of $\mathcal{L}_0$ and
-$\mathcal{Q}$\footnote{
-    The feasible region of $\mathcal{L}_k$ and $\mathcal{Q}$ are equal for all
-    $k$ as the constraints never change during the iterations of the algorithm.
-}
-, along with $T_0$ evaluated at $x_0$ (line in red), the optimal solution
-$\hat{x}_0$ of $\mathcal{L}_0$\footnote{
-    $\mathcal{L}_0$ has multiple optimal solutions so $\hat{x}_0$ may differ
-    between LP implementations
-}
-, the optimal solution $x^*$ of $\mathcal{Q}$ and the contours of $f$.
-On the right it also shows $\mathcal{L}_0$ in standard form (note that the
-objective has been negated.)
+We will solve $\mathcal{Q}$ using the method described in the previous
+section. While we solve it, we will look at a visual representation of the
+method, along with the linear program in standard form.
 
-\input{include/slpfirst}
+Let $x_0 = (0,0)$ such that $T_0 = -2x - 2y$. The linear program
+$\mathcal{L}_0$ in standard form reads:
+\[
+\begin{array}{lcrcrl}
+    \textrm{Maximize}   &-&   x &+& 2 y \\
+    \textrm{subject to} & &   x &+&   y & \leq 3 \\
+    \textrm{and}        & &   x &-&   y & \leq 1 \\
+    \textrm{and}        &-&   x &+& 3 y & \leq 4 \\
+    \textrm{and}        & &   x &,&   y & \geq 0
+\end{array}
+\]
+Note that the objective function has been negated because we are maximizing
+instead of minimizing.
+Figure \ref{fig:lp1} shows a visual representation of $\mathcal{L}_0$ and
+$\mathcal{Q}$, among some other things.
+Note that the feasible region of $\mathcal{L}_k$ and
+$\mathcal{Q}$ are equal for all $k$, as the constraints never change during the
+iterations of the algorithm. Also note that $\mathcal{L}_0$ has multiple
+optimal solutions, so $\hat{x}_0$ may differ between implementations.
+
+\begin{figure}[h!]
+    \centering
+    \input{include/slpfirst}
+    \caption{A visual representation of $\mathcal{L}_0$ and $\mathcal{Q}$.
+             The figure depicts an initial state
+             of Slp, where you can see the initial guess $x_0$. It also
+             depicts the unconstrained minimum $x^u$, which in this case
+             happens to be the same as $x^*$, the optimal solution to
+             $\mathcal{Q}$. An optimal solution $\hat{x}^*$ to $\mathcal{L}_0$
+             is also depicted. The striped circles is the contours of $f$.}
+    \label{fig:lp1}
+\end{figure}
 
 We perform a line search between the points $x_0$ and $\hat{x}_0$.
 We find a function $m$ of $\alpha$ that range all points collinear with $x_0$
 and $\hat{x}_0$:
 \[
-f(\alpha x_0 + (1-\alpha)x_0^*) = 5\alpha^2 - 4\alpha -1 = m(\alpha)
+f((1-\alpha) x_0 + \alpha \hat{x}_0) = 5\alpha^2 - 6\alpha = m(\alpha)
 \]
 To find the minimum of this one-dimensional convex parabola we set
-$m^\prime(\alpha) = 0$ and solve for $\alpha$ to achieve $\alpha = 0.4$
+$m^\prime(\alpha) = 0$ and solve for $\alpha$ to achieve $\alpha = 0.6$
 (see Figure \ref{fig:steplength}).
+\begin{figure}[h!]
+    \centering
+    \input{include/slpsecond}
+    \caption{Line search between $x_0$ and $\hat{x}_0$. The optimal point
+             between $x_0$ and $\hat{x}_0$ becomes $x_1$, our starting point
+             for the next iteration.}
+    \label{fig:steplength}
+\end{figure}
+
 Note that $\alpha \in [0, 1]$ because the unconstrained minimum of $f$ is
 inside the feasible region.
 Now let
@@ -45,6 +74,10 @@ x_1 = 0.4x_0 + 0.6\hat{x}_0 = (1.2, 0.6)
 \]
 and let us apply Equation (\ref{eq:texp}) to calculate a Taylor series
 expansion at $x_1$:
+\[
+    T_1 = 0.4x - 0.8y - 1.8
+\]
+\begin{comment}
 \[
 \begin{array}{rcl}
 T_1 &=& -\left[
@@ -98,26 +131,60 @@ T_1 &=& -\left[
     &=& \displaystyle 0.4x - 0.8y - 1.8
 \end{array}
 \]
-
-\input{include/slpsecond}
+\end{comment}
 
 Now, we minimize $T_1$ subject to the original constraints and call the LP for
 $\mathcal{L}_1$.
-Assume $\mathcal{L}_1$ has optimal solution $\hat{x}_1$
-(See Figure \ref{fig:lp2}).
+The linear program of $\mathcal{L}_1$ in standard form, reads:
+\[
+\begin{array}{lcrcrl}
+    \textrm{Maximize}   &-& 0.4 x &+& 0.8 y \\
+    \textrm{subject to} & &     x &+&     y & \leq 3 \\
+    \textrm{and}        & &     x &-&     y & \leq 1 \\
+    \textrm{and}        &-&     x &+&   3 y & \leq 4 \\
+    \textrm{and}        & &     x &,&     y & \geq 0
+\end{array}
+\]
+We solve $\mathcal{L}_1$ and achieve an optimal solution $\hat{x}_1$
+(see Figure \ref{fig:lp2}).
 
+\begin{figure}[h!]
+\centering
 \input{include/slpthird}
+\caption{A visual representation of $\mathcal{L}_1$ and $\mathcal{Q}$.
+         Note that $x_1$ now has a red line going through it. That is
+         the objective function of $\mathcal{L}_1$.}
+\label{fig:lp2}
+\end{figure}
 
 Again we perform a line search, but this time between the points $x_1$ and
 $\hat{x}_1$ and find that $\alpha = 0.73$, $x_2 = (0.88, 0.8)$ and
 $T_2 = -0.25x -0.4y -0.4$.
+
 Minimize $T_2$ subject to the original constraints and call the LP for
 $\mathcal{L}_2$.
-The optimal solution $\hat{x}_2$ of $\mathcal{L}_2$ is $(1.25, 1.75)$.
+The linear program of $\mathcal{L}_2$ in standard form, reads:
+\[
+\begin{array}{lcrcrl}
+    \textrm{Maximize}   & & 0.25 x &+& 0.4 y & \\
+    \textrm{subject to} & &      x &+&     y & \leq 3 \\
+    \textrm{and}        & &      x &-&     y & \leq 1 \\
+    \textrm{and}        &-&      x &+&   3 y & \leq 4 \\
+    \textrm{and}        & &      x &,&     y & \geq 0
+\end{array}
+\]
+We solve $\mathcal{L}_2$ and achieve an optimal solution $\hat{x}_2
+= (1.25, 1.75)$ (see Figure \ref{fig:lp3}).
+\begin{figure}[h!]
+\centering
+\input{include/slpfourth}
+\caption{A visual representation of $\mathcal{L}_2$ and $\mathcal{Q}$.}
+\label{fig:lp3}
+\end{figure}
+
 Performing line search between $x_2$ and $\hat{x}_2$ we get that
 $\alpha = 0.77$ and that $x_3 = (0.96, 1.02)$.
 
-\input{include/slpfourth}
 
 Assume $\epsilon = 0.5$, which imples that
 $\frac{f(x_2) - f(x_3)}{|f(x_2)|} \leq \epsilon$, so we stop and return $x_3$
