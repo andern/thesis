@@ -34,6 +34,33 @@ bool isSubset(const std::set<uint16_t>& a, const std::set<uint16_t>& b) {
     return std::includes(b.begin(), b.end(), a.begin(), a.end());
 }
 
+struct vertex* dfind(const std::set<uint16_t>& m, struct vertex* v) {
+    if (isSubset(m, v->z)) return v;
+    for (struct vertex* vi : v->children) {
+        if (isSubset(vi->m, m)) {
+            struct vertex* temp = dfind(m, vi);
+            if (temp != 0) return temp;
+        }
+    }
+    return 0;
+}
+
+
+static bool mfindrec(const std::set<uint16_t>& m, struct vertex* v, struct vertex*& ret) {
+    if (isSubset(m, v->z)) return true;
+    for (struct vertex* vi : v->children) {
+        if (isSubset(vi->m, m)) {
+            ret = vi;
+            bool temp = mfind(m, vi, ret);
+            if (temp) return true;
+        }
+    }
+    return false;
+}
+bool mfind(const std::set<uint16_t>& m, struct vertex* v, struct vertex*& ret) {
+    ret = v;
+    return mfindrec(m, v, ret);
+}
 
 
 static struct vertex* finditer2(const std::set<uint16_t>& m, struct vertex* v, bool& found, struct vertex* ret) {
@@ -46,7 +73,7 @@ static struct vertex* finditer2(const std::set<uint16_t>& m, struct vertex* v, b
                 found = true;
                 return vi;
             } else {
-                finditer2(m, vi, found, ret);
+                return finditer2(m, vi, found, ret);
             }
         }
     }
@@ -375,17 +402,16 @@ int maxIters, double tolerance)
     for (uint16_t i = 0; i < cols; i++) n.push_back(i);
     uint16_t breaks = std::min((uint16_t)n.size(), breakdowns);
 
-    bool found = false;
+    struct vertex* ret;
     std::cout.precision(20);
     for (int i = 0; i < breaks; i++) {
         std::vector<uint16_t> f(n.begin(), n.begin()+(i+1));
         do {
             std::set<uint16_t> fset(f.begin(), f.end());
-            struct vertex* found_v = find2(fset, v0, found);
-            if (found_v == 0) found_v = v0;
+            bool found = mfind(fset, v0, ret);
             if (!found) {
                 struct vertex* nv = new struct vertex;
-                found_v->children.push_back(nv);
+                ret->children.push_back(nv);
 
                 nv->m = fset;
                 nv->sol = (double*) malloc(cols*sizeof(double));
@@ -396,7 +422,10 @@ int maxIters, double tolerance)
                 print(f.begin(), f.end());
                 std::cout << std::endl; */
 
-            } 
+            } else {
+                print(fset.begin(), fset.end());
+                std::cout << std::endl;
+            }
         } while(next_combination(n.begin(), n.end(), f.begin(), f.end()));
     }
 

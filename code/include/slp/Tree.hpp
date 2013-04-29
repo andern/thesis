@@ -59,6 +59,8 @@ struct vertex {
  */
 struct vertex* find(const std::set<uint16_t>& m, struct vertex* v);
 struct vertex* find2(const std::set<uint16_t>& m, struct vertex* v, bool& found);
+struct vertex* dfind(const std::set<uint16_t>& m, struct vertex* v);
+bool mfind(const std::set<uint16_t>& m, struct vertex* v, struct vertex*& ret);
 
 /**
  * Return a vector of vertices linked together in a tree structure such that

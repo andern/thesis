@@ -1,15 +1,15 @@
 %\KwIn{($\mathcal{M}_l$, $\mathcal{Q}_k$)}
 \SetAlgoVlined
-\ForEach{child vertex $v_i$ of $v_k$}{
-  \If{$\mathcal{M}_i \subseteq \mathcal{M}_l$}{
-    $a \leftarrow i$\\
-    \eIf{$\mathcal{M}_l \subseteq \mathcal{Z}_i$}{
-      \textbf{return} (\texttt{true}, $i$)
-%      \KwRet{$i$}
-    }{
-      \texttt{mfind($\mathcal{M}_l$, $v_i$)}
-%      \KwRet{find($\mathcal{M}_l$, $v_i$)}
-    }
-  }
+\If{$\mathcal{M}_l \subseteq \mathcal{Z}_k$}{
+    \KwRet{true}
 }
-\textbf{return} (\texttt{false}, $a$)
+\ForEach{child vertex $v_i$ of $v_k$}{
+    \If{$\mathcal{M}_i \subseteq \mathcal{M}_l$}{
+        $v_* \leftarrow v_i$ \\
+        $a \leftarrow$ \texttt{mfind}($\mathcal{M}_l$, $v_i$, $v_*$) \\
+        \If{$a$}{
+            \KwRet{true}
+        }
+    }
+}
+\KwRet{false}
