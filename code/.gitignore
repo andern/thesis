@@ -11,3 +11,4 @@ install-sh
 missing
 .deps/
 .dirstamp
+*.dylib
