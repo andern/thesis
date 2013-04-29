@@ -35,46 +35,37 @@ As soon as a vertex is defined, we are ready to implement \texttt{mfind}.
 Remember that \texttt{mfind} is a modified version of \texttt{find} that tells
 us which vertex should be the parent of our potentially new vertex in case it
 has a distinct solution.
-\texttt{mfind} is defined in two parts. The first part is a ''helper'' function
+\texttt{mfind} is defined in two parts. The first part is a driver function
 for starting the algorithm on some vertex. The second part is the actual
 recursively defined algorithm. These two parts are called \texttt{mfind} and
 \texttt{mfindrec}, respectively. We define \texttt{mfind} as follows:
 \begin{verbatim}
-struct vertex* mfind(
-const set<uint16_t>& m,
-const struct vertex* v, bool& found)
+bool mfind(const set<uint16_t>& m,
+struct vertex* v, struct vertex*& ret)
 {
-  found = true;
-  if (isSubset(v->m, m)
-  &&  isSubset(m, v->z))
-    return v;
-  found = false;
-  return mfindrec(m, v, found, v);
+  ret = v;
+  return mfindrec(m, v, ret);
 }
 \end{verbatim}
 The parameters for \texttt{mfind} are a modifier, a vertex where the search
-will begin and a boolean value that will tell us whether we found a
-solution or not.
+will begin and an output vertex.
 In order to search the whole tree, one would use the root vertex as parameter
-\texttt{v}. The function returns a pointer to a vertex of our interest.
-Note that this is a pointer, and not an index like in Algorithm
-\ref{alg:mfind}. The function makes a call to \texttt{mfindrec}:
+\texttt{v}.
+The function returns a boolean that changes the meaning of the output vertex.
+The function makes a call to \texttt{mfindrec}:
 \begin{verbatim}
-struct vertex* mfindrec(
-const set<uint16_t>& m,
-const struct vertex* v, bool& found,
-struct vertex* ret)
+bool mfindrec(const std::set<uint16_t>& m,
+struct vertex* v, struct vertex*& ret)
 {
+  if (isSubset(m, v->z)) return true;
   for (struct vertex* vi : v->children) {
-    if (isSubset(vi->m, m) {
-      ret = vi;
-      if (isSubset(m, vi->z)) {
-        found = true;
-        return vi;
-      } else mfindrec(m, vi, found, ret);
-    }
-  }
-  return ret;
+    if (isSubset(vi->m, m)) {
+      ret = vi; 
+      bool temp = mfind(m, vi, ret);
+      if (temp) return true;
+    }   
+  }   
+  return false;
 }
 \end{verbatim}
 It is quite evident from the code that the performance of the \texttt{isSubset}
@@ -142,8 +133,8 @@ Codes for the benchmark can be found in Appendix \ref{app:setbench}.
 \begin{figure}[ht!]
 \centering
 \input{include/setspeed}
-\caption{Seconds used to solve $3000^2$ \texttt{isSubset} on randomly
-         generated sets with random sparsity. The x-axis represent 
+\caption{Seconds used to execute $3000^2$ calls to \texttt{isSubset} on
+         randomly generated sets with random sparsity. The x-axis represent 
          the value of $n$, i.e. the size of the universe. The y-axis
          represent the number of seconds the benchmark took with each
          implementation.}
@@ -174,7 +165,7 @@ $(V, E)$ of a set of vertices $V$ and a set of edges $E$, we only need a
 pointer \texttt{struct vertex*} to our root.
 
 The biggest operations in Algorithm \ref{alg:construct} is iterating the power
-set of ${1,2,\ldots,n}$. There are lots of combination generators available, so
+set of $\left\{1,2,\ldots,n\right\}$. There are lots of combination generators available, so
 instead of re-inventing the wheel, we choose a generator that suits our needs.
 We need one that is easy to use, and is capable of generating combinations of
 a given cardinality. One implementation, similar in use to

@@ -1,1 +1,21 @@
-What do we want to find out?
+Now that we are finished with implementation, an obvious question about the
+implementation is how it performs. Normally, we want to compare the performance
+of our implementation to the performance of some other implementations.
+An obvious performance test is how \emph{fast} our implementation is, but also
+its memory consumption.
+
+We want to test our implementation on the specific problems described in
+Section \ref{sec:instances}, to see how it performs on problems that follow
+the exact characteristics that the methods were developed for.
+Testing the performance of our implementation on specific problems will tell us
+how it performs on those specific problems, but not how it performs in general.
+While the methods developed in this thesis are specified for problems with
+specific properties, the methods do not \emph{require} these properties.
+To test the performance of our implementation in general, we need to test it
+on random problems.
+These random problems should be limited by some parameters, so that we can test
+our implementation on random problems with those specific parameters.
+Generating random problems of some specific size, we can see how our
+implementation performs on specific problem sizes. Running the same
+tests on problems with increasing size, we can see how well our implementation
+\emph{scales}. In the next section, we describe experiments in detail.

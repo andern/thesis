@@ -6,8 +6,8 @@
 \ForEach{child vertex $v_i$ of $v_k$}{
     \If{$\mathcal{M}_i \subseteq \mathcal{M}_l$}{
         $v_* \leftarrow v_i$ \\
-        $a \leftarrow$ \texttt{mfind}($\mathcal{M}_l$, $v_i$, $v_*$) \\
-        \If{$a$}{
+        $P \leftarrow$ \texttt{mfind}($\mathcal{M}_l$, $v_i$, $v_*$) \\
+        \If{$P$}{
             \KwRet{true}
         }
     }

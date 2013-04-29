@@ -1,15 +1,14 @@
 Before we can construct a tree similar to the one in Figure \ref{fig:find},
 we need a slighty modified \texttt{find} that we call \texttt{mfind}.
-\texttt{mfind} is modified to take an output argument that holds an index for
-a vertex we want to return, while the function returns a boolean.
-The returned boolean tells us whether the output index is the index of a
-solution or not. If the returned boolean is true, then the output argument is
-an index of a solution vertex, i.e. the same vertex that would be returned
-by \texttt{find}.
-If the boolean is false, then the output argument is an index of a vertex
-that would be the parent vertex if we were to insert the modifier we were
-looking for. While this can sound confusing, Algorithm \ref{alg:mfind} shows
-in detail how \texttt{mfind} works.
+\texttt{mfind} is modified to take an output argument that holds a vertex,
+while the function returns a boolean.
+The returned boolean tells us whether the output vertex is the solution or not.
+If the returned boolean is true, then the output argument is the solution
+vertex, i.e. the vertex of the index that would be returned by \texttt{find}.
+If the boolean is false, then the output argument is a vertex that would be the
+parent vertex if we were to insert the modifier we were looking for.
+While this can sound confusing, Algorithm \ref{alg:mfind} shows in detail how
+\texttt{mfind} works.
 
 \begin{algorithm}[ht!]
 \caption{\texttt{mfind($\mathcal{M}_l$, $v_k$, $v_*$)}}
