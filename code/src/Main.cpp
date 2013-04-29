@@ -137,7 +137,7 @@ static struct vertex* tree() {
 
 
 int main() {
-
+/*
     ClpModel model = clpFromTxt();
 
     double t1 = omp_get_wtime();
@@ -149,7 +149,10 @@ int main() {
     std::cout << "Solved all cases in " << (t2-t1) << " seconds." << std::endl;
 
     delete root;
-    
+ */
+
+    CoinPackedMatrix cpm = randomNetwork(10, 20);
+
 /*    std::set<uint16_t> lookFor;
     lookFor.insert(2);
     lookFor.insert(3);

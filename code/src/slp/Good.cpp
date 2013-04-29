@@ -230,3 +230,24 @@ struct good_qp readTxt() {
 
     return good;
 }
+CoinPackedMatrix randomNetwork(int vertices, int edges) {
+    srand((uint16_t)time(NULL));
+    double** m = (double**) malloc(vertices*sizeof(double*));
+    for (int i = 0; i < vertices; i++)
+        m[i] = (double*) malloc(edges*sizeof(double));
+
+    int row = 0;
+    for (int i = 0; i < edges; i++) {
+        m[row][i] = 1;
+        int r = row;
+        while (r == row) row = rand() % vertices;
+        m[row][i] = -1;
+    }
+    CoinPackedMatrix cpm = packMatrix(m, vertices, edges);
+
+    for (int i = 0; i < vertices; i++)
+        free(m[i]);
+    free(m);
+
+    return cpm;
+}
