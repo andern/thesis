@@ -72,5 +72,6 @@ ClpSimplex clpfromqp(struct good_qp& qp);
 ClpModel clpFromTxt();
 
 struct good_qp readTxt();
+ClpModel randomInstance(int vertices, int edges, double Hzero, double bzero);
 
 #endif

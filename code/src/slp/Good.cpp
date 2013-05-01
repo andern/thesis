@@ -230,11 +230,25 @@ struct good_qp readTxt() {
 
     return good;
 }
-CoinPackedMatrix randomNetwork(int vertices, int edges) {
+
+
+static double g_randd(double min, double max) {
+    double num = (double) rand() / RAND_MAX;
+    return (min + (num * (max - min)));
+}
+
+static int g_randi(int min, int max) {
+    return (rand() % (max-min) + min);
+}
+
+
+ClpModel randomInstance(int vertices, int edges, double Hzero, double bzero) {
     srand((uint16_t)time(NULL));
+
+    /* Matrix A */
     double** m = (double**) malloc(vertices*sizeof(double*));
     for (int i = 0; i < vertices; i++)
-        m[i] = (double*) malloc(edges*sizeof(double));
+        m[i] = (double*) calloc(edges,sizeof(double));
 
     int row = 0;
     for (int i = 0; i < edges; i++) {
@@ -243,11 +257,67 @@ CoinPackedMatrix randomNetwork(int vertices, int edges) {
         while (r == row) row = rand() % vertices;
         m[row][i] = -1;
     }
-    CoinPackedMatrix cpm = packMatrix(m, vertices, edges);
+    CoinPackedMatrix A = packMatrix(m, vertices, edges);
 
     for (int i = 0; i < vertices; i++)
         free(m[i]);
     free(m);
 
-    return cpm;
+    /* Matrix H */
+    std::vector<int> row_ind_vec;
+    std::vector<int> col_ind_vec;
+    std::vector<double> ele_vec;
+    int numels = 0;
+
+    for (int i = 0; i < edges; i++) {
+        /* If not 0 */
+        if (((double)rand() / RAND_MAX) >= Hzero) {
+            double num = g_randd(0.00001, 0.01);
+            row_ind_vec.push_back(i);
+            col_ind_vec.push_back(i);
+            ele_vec.push_back(num);
+            numels++;
+        }
+    }
+    const int *rowIndices = &row_ind_vec[0];
+    const int *colIndices = &col_ind_vec[0];
+    const double *elements = &ele_vec[0];
+
+    CoinPackedMatrix H(false, rowIndices, colIndices, elements, numels);
+    H.setDimensions(edges, edges);
+
+    /* Vector b */
+    double* b = (double*) calloc(edges,sizeof(double));
+
+    for (int i = 0; i < edges; i++) {
+        /* If not 0 */
+        if (((double)rand() / RAND_MAX) >= bzero) {
+            double num = g_randi(10, 70);
+            if (num >= 30) num = -num;
+            b[i] = num;
+        }
+    }
+
+    /* Vector lb */
+    double* lb = (double*) malloc(edges*sizeof(double));
+    for (int i = 0; i < edges; i++) {
+        lb[i] = -g_randd(0.0, 1000.0);
+    }
+
+    /* Vector ub */
+    double* ub = (double*) malloc(edges*sizeof(double));
+    for (int i = 0; i < edges; i++) {
+        ub[i] = g_randd(0.0, 1000.0);
+    }
+
+    ClpSimplex model;
+
+    model.loadProblem(A, lb, ub, b, 0, 0);
+    model.loadQuadraticObjective(H);
+
+    free(b);
+    free(lb);
+    free(ub);
+
+    return model;
 }

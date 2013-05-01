@@ -135,10 +135,47 @@ static struct vertex* tree() {
     return v0;
 }
 
+double bestSpeed(ClpModel model, int b, int times) {
+    double best = DBL_MAX;
+    for (int i = 0; i < times; i++) {
+        double t1 = omp_get_wtime();
+        struct vertex* root = construct_clp(model, b, 10000, 1e-7);
+        double t2 = omp_get_wtime();
+        delete root;
+        double t = (t2 - t1);
+        if (t < best) best = t;
+    }
+    return best;
+}
+
+void benchSpeed(int vertices, int edges, int b, int times) {
+    double tot = 0;
+    for (int i = 0; i < times; i++) {
+        ClpModel model = randomInstance(vertices, edges, 0.5, 0.5);
+        model.setLogLevel(0);
+
+        double t1 = omp_get_wtime();
+        struct vertex* root = construct_clp(model, b, 10000, 1e-7);
+//        construct_all_clp(model, b, 10000, 1e-7);
+        double t2 = omp_get_wtime();
+        tot += (t2-t1);
+        delete root;
+    }
+    printf("(%d, %f)\n", edges, (tot / times));
+}
+
 
 int main() {
+    for (int i = 6; i < 50; i++) {
+        int edges = 100*i;
+        int vertices = (int) (0.35*edges);
+        int b = 1;
+        benchSpeed(vertices, edges, b, 10);
+    }
 /*
-    ClpModel model = clpFromTxt();
+//    ClpModel model = clpFromTxt();
+    ClpModel model = randomInstance(82, 238, 0.5,  0.5);
+    model.setLogLevel(0);
 
     double t1 = omp_get_wtime();
     struct vertex* root = construct_clp(model, 2, 10000, 1e-7);
@@ -149,10 +186,7 @@ int main() {
     std::cout << "Solved all cases in " << (t2-t1) << " seconds." << std::endl;
 
     delete root;
- */
-
-    CoinPackedMatrix cpm = randomNetwork(10, 20);
-
+*/
 /*    std::set<uint16_t> lookFor;
     lookFor.insert(2);
     lookFor.insert(3);

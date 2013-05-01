@@ -266,25 +266,25 @@ int maxIters, double tolerance)
     for (uint16_t i = 0; i < cols; i++) n.push_back(i);
     uint16_t breaks = std::min((uint16_t)n.size(), breakdowns);
 
-    bool found = false;
+    struct vertex* ret;
     for (int i = 0; i < breaks; i++) {
         std::vector<uint16_t> f(n.begin(), n.begin()+(i+1));
         do {
             std::set<uint16_t> fset(f.begin(), f.end());
-            struct vertex* found_v = find2(fset, v0, found);
-            if (found_v == 0) found_v = v0;
+            bool found = mfind(fset, v0, ret);
             if (!found) {
                 struct vertex* nv = new struct vertex;
-                found_v->children.push_back(nv);
+                ret->children.push_back(nv);
 
                 nv->m = fset;
                 nv->sol = (double*) malloc(cols*sizeof(double));
                 mod_solve(model, lin, nv->m, lower, upper, nlower, nupper, nv->sol, x_old, T, maxIters, tolerance, cols);
                 nv->z = toZSet(nv->sol, cols, tolerance);
-
-/*                std::cout << value(nv->sol, model) << ": ";
+/*
+                std::cout << value(nv->sol, model) << ": ";
                 print(f.begin(), f.end());
-                std::cout << std::endl; */
+                std::cout << std::endl;
+                */
             } 
         } while(next_combination(n.begin(), n.end(), f.begin(), f.end()));
     }
@@ -403,7 +403,6 @@ int maxIters, double tolerance)
     uint16_t breaks = std::min((uint16_t)n.size(), breakdowns);
 
     struct vertex* ret;
-    std::cout.precision(20);
     for (int i = 0; i < breaks; i++) {
         std::vector<uint16_t> f(n.begin(), n.begin()+(i+1));
         do {
@@ -422,9 +421,9 @@ int maxIters, double tolerance)
                 print(f.begin(), f.end());
                 std::cout << std::endl; */
 
-            } else {
-                print(fset.begin(), fset.end());
-                std::cout << std::endl;
+//            } else {
+//                print(fset.begin(), fset.end());
+//                std::cout << std::endl;
             }
         } while(next_combination(n.begin(), n.end(), f.begin(), f.end()));
     }
