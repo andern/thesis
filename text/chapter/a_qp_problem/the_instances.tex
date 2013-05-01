@@ -75,5 +75,6 @@ This means that for each of the three instances described in this chapter,
 they ideally want to solve a total of $2^n - 1$ subinstances. While this is
 unrealistic, it is unlikely that all edges in the network breaks down.
 A more realistic approach is to try to solve all subinstances with no more than
-$b$ breakdowns, i.e. we solve $s = \sum_{j=0}^b {\binom{n}{j}}$ subinstances
-with less than or equal to $b$ breakdowns.
+$b$ breakdowns. That is, for some given $b$ and a problem size $n$, we solve
+$s(b, n) = \sum_{j=0}^b {\binom{n}{j}}$ subinstances with less than or equal to
+$b$ breakdowns.

@@ -2,9 +2,10 @@ In this section, we discuss the implementation of the different approaches to
 solving several subinstances.
 As mentioned in the beginning of the chapter, the two
 main approaches are to solve a limited amount of subinstances, bounded
-by some $s$, or to implement a discrete event simulator that only stores
-the current state of the network. First we will discuss the implementation
-of the tree structure, before we move on to the two main approaches.
+by $s(b, n)$ for some $b$ and a problem size $n$, or to implement a discrete
+event simulator that only stores the current state of the network.
+First we will discuss the implementation of the tree structure, before we
+move on to the two main approaches.
 
 \subsubsection{Tree Structure}
 All trees consists of vertices, and in our specific case, each vertex contains
@@ -85,11 +86,12 @@ here is quite clear: If a set contains less than one sixteenth of $n$, then
 the sparse format uses less memory. This might actually be the case in a lot
 of sets, especially when solving all possible subinstances where the number
 of breakdowns are limited by some $b$. Consider a very small case where
-$n = 200$ and we solve all sub instances $s = \sum_{j=0}^{3} {\binom{200}{j}}$.
-With a total number of $s$ sets stored as bit vectors, the memory use for
+$n = 200$ and we solve all subinstances
+$s(3, 200) = \sum_{j=0}^{3} {\binom{200}{j}} = S$.
+With a total number of $S$ sets stored as bit vectors, the memory use for
 storing the modifiers is $200s~\textrm{bits} \approx 32~\textrm{megabytes}$.
-Whereas, with $s$ sets of sparsely stored indices, the memory use for storing
-the modifiers is approximately $8$ megabytes. However, the more $b$ increases,
+Whereas, with $S$ sets of sparsely stored indices, the memory use for storing
+the modifiers is approximately $8$ megabytes. However, as $b$ increases,
 the greater the benefits of storing sets in bit vectors become evident. As soon
 as $b$ becomes greater than 12, bit vectors will use less memory to store all
 modifiers. Figure \ref{fig:bmem} shows the ratio of memory used by bit vectors
@@ -107,8 +109,8 @@ $5 \leq b \leq 30$.
 Aside from the modifier set, we also have to store the set of variables that
 are equal to zero in the optimal solutions of each subinstance. These sets
 are more difficult to analyze in terms of memory use, simply because the
-cardinality is unknown. However, we do know that $|\mathcal{Z}_i| \geq
-|\mathcal{M}_i|$ for $i=1,2,\ldots,n$.
+cardinality is unknown. However, we do know that $|\mathcal{Z}_k| \geq
+|\mathcal{M}_k|$.
 
 With sets of sparsely stored indices, we only need to check the variables
 that are actually in the sets in order to determine if a set is a subset
@@ -153,7 +155,7 @@ implement a \emph{fast} solver, we give speed a higher priority than memory
 efficiency, so we choose to implement the sets of sparsely stored
 indices. That is, in \texttt{C++}, \texttt{set}.
 
-\subsection{Tree Construction}
+\subsubsection{Tree Construction}
 Because we do not need to store any information about edges in the tree,
 we do not need to implement edges as an object of its own. We defined
 a vertex \texttt{struct} earlier, having a \texttt{vector} of child
@@ -162,18 +164,19 @@ vertices, children's children vertices and so on, from that vertex.
 So, if we have a pointer to the root of a tree, we can reach all vertices
 in the tree. Although we earlier defined a tree as an ordered pair
 $(V, E)$ of a set of vertices $V$ and a set of edges $E$, we only need a
-pointer \texttt{struct vertex*} to our root.
+pointer \texttt{struct vertex*} to our root to access our tree.
 
 The biggest operations in Algorithm \ref{alg:construct} is iterating the power
 set of $\left\{1,2,\ldots,n\right\}$. There are lots of combination generators available, so
 instead of re-inventing the wheel, we choose a generator that suits our needs.
 We need one that is easy to use, and is capable of generating combinations of
 a given cardinality. One implementation, similar in use to
-\texttt{next\_permutation} in the standard \texttt{C++ STL}, was
-achieved from~\cite{codeproject}.
-Codes for the implementation can be found in Appendix
+\texttt{next\_permutation} in the standard \texttt{C++ STL}, is presented
+in~\cite{codeproject}.
+Codes from \cite{codeproject} can be found in Appendix
 \ref{app:nextcombination}.
 
 The remaining parts of the \texttt{construct}-routine is just running
 \texttt{mfind} on each generated modifier, and adding it to the tree
 if necessary. Then at the end, return the pointer to the root vertex.
+

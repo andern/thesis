@@ -1,7 +1,7 @@
 For one or more given variables, their lower and upper bounds are set to zero,
 i.e. forcing the variables to zero.
 Let us denote the set of variables that are to be forced to zero by
-$\mathcal{M}_k$ for some $0 \leq k \leq s - 1$.
+$\mathcal{M}_k$ for some $0 \leq k \leq s(n, n) - 1$.
 Forcing these variables to zero in some instance $\mathcal{Q}$ forms
 a subinstance $\mathcal{Q}_k$. We refer to $\mathcal{M}_k$ as a
 \emph{modifier} of $\mathcal{Q}$.
@@ -24,13 +24,13 @@ we must solve $\mathcal{Q}_k$ to achieve its solution $x_k^*$ along with the
 set $\mathcal{Z}_k$.
 
 Generally, for each $\mathcal{Q}_k$ and its modifier $\mathcal{M}_k$ we
-have that $x_l^* = x_k^*$ for each $l=1,2,\ldots,k-1$ such that
+have that $x_l^* = x_k^*$ for each $l=1,2,\ldots,s(n, n)-1$ such that
 $\mathcal{M}_l = S \cup \mathcal{M}_k$ for some $S \subseteq \mathcal{Z}_k$.
 That is, instances $\mathcal{Q}_k$ and $\mathcal{Q}_l$ have identical optimal
 solutions if $\mathcal{M}_l$ is obtained by extending $\mathcal{M}_k$ only with
 variables that are zero in the optimal solution to $\mathcal{Q}_k$.
 Additionally, for each $\mathcal{Q}_k$ and its modifier $\mathcal{M}_k$ we
-have that $x_l^* \neq x_k^*$ for all $l=1,2,\ldots,k-1$ if
+have that $x_l^* \neq x_k^*$ for all $l=1,2,\ldots,s(n, n)-1$ if
 $\mathcal{M}_l = S \cup \mathcal{M}_k$ for some $S\not\subseteq \mathcal{Z}_k$.
 That is, subinstances $\mathcal{Q}_k$ and $\mathcal{Q}_l$ have different
 optimal solutions if $\mathcal{M}_l$ is obtained by extending $\mathcal{M}_k$

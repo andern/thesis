@@ -5,10 +5,10 @@ We construct a \emph{tree} of all subinstances with distinct optimal solutions.
 This tree enables us to efficiently check whether some modifier forms a
 subinstance with an unknown solution.
 
-If we were to try to solve all $s$ possible subinstances of an
+If we were to try to solve all $s(n, n)$ possible subinstances of an
 instance, we would most likely end up solving a huge amount of subinstances
 with the same optimal solutions. This is evident in some of the real
-instances; when we solve the unmodified instance \texttt{vlarge}, if $b = n$,
+instances; when we solve the unmodified instance \texttt{vlarge},
 we already have the solution to $2^{1749}$ of its possible subinstances, i.e.
 $|\mathcal{Z}_0| = 1749$.
 Just trying to unnecessarily solve all these subinstances---let alone store the
@@ -30,7 +30,7 @@ $\mathcal{M}_k \not \subset \mathcal{Z}_l$
 for \emph{all} $l=1,2,\ldots,s-1$.
 \end{comment}
 
-Consider a set $\mathbb{U}\subseteq \left\{{1,2,\ldots,s-1}\right\}$ of indices
+Consider a set $\mathbb{U}\subseteq \left\{{1,2,\ldots,s(b, n)-1}\right\}$ of indices
 such that if $i,j \in \mathbb{U}$, and $i \neq j$, then $x_i^* \neq x_j^*$.
 With such a set; given an arbitrary modifier $\mathcal{M}_k$, we can check
 if there exists an index $l \in \mathbb{U}$ such that $x_k^* = x_l^*$. By
@@ -67,7 +67,7 @@ vertices together with a set $E$ of edges.
 Let each vertex $v_k \in V$ represent an index $k \in \mathbb{U}$.
 For each vertex $v_k$ and its parent $v_l$, $\mathcal{M}_l$ must
 be a subset of $\mathcal{M}_k$.
-Put differently, each vertex and its corresponding modifier in the tree must be
+Put differently, each vertex and its corresponding modifier must be
 an extension of the modifier of its parent.
 The root $v_0$, which does not have a parent, has a modifier that is equal
 to the empty set, i.e. $\mathcal{M}_0 = \emptyset$.

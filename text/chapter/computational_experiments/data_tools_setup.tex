@@ -1,4 +1,16 @@
-\textbf{Experiment 1} 
+\textbf{Experiment 1} is an experiment to indicate how fast our
+our implementation of the tree structure is. We compare implementations where
+we only solve subinstances with distinct solutions, with implementations where
+subinstances are solved regardless if they are distinct or not. Testing these
+implementations on problems of increasing size indicates how well they scale,
+in addition to indicating their speed.
+In order to generate networks that are roughly as sparse as those
+presented in Section \ref{sec:instances}, we let $m = \frac{7}{20}n$, while
+increasing $n$. As $n$ reaches high values, anything besides $b = 1$ is
+unrealistic, so we let $b = 1$.
+
+For a given problem size $n$, we generate $10$ random instances. Then,
+for each generated instance, we solve $s(1, n)$ subinstances.
 
 For running experiments, we are using a machine running 64 bit Gentoo Linux
 with version 3.6.11 of the linux kernel. The machine has the following
