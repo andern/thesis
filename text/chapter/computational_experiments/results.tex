@@ -1,21 +1,36 @@
-\subsection{Experiment 1}
-Figure \ref{fig:constructb1} shows the number of seconds used to solve problems
+\subsubsection{Experiment 1}
+Table \ref{table:expone} shows an excerpt of the test results.
+We see that, as the problem size grows, the \texttt{construct} implementation
+becomes faster and faster in comparison with \texttt{all}.
+This is likely due to the fact that we save more time for each problem we do
+\emph{not} need to solve, as $n$ grows.
+
+A table with results for all $n=100,200,\ldots,2000$ can found in Appendix
+\ref{app:exp1}.
+
+\begin{table}[ht!]
+    \centering
+    \caption{An excerpt of test results from experiment 1.}
+\begin{tabular}{lrrr}
+    $n$ & \texttt{construct} & \texttt{all} & Percent Faster \\ \hline
+    500 & 4.9                & 5.9          & 16.9\% \\
+   1000 & 42.1               & 53.0         & 20.6\% \\
+   1500 & 181.5              & 234.5        & 22.6\% \\
+   2000 & 547.1              & 710.2        & 23.0\%
+\end{tabular}
+\label{table:expone}
+\end{table}
+
+Figure \ref{fig:constructbone} shows the number of seconds used to solve problems
 of different sizes $n$, with two different implementations.
 The figure shows a plot of 
-\begin{tabular}
-\begin{table}
-    
-\end{table}
-\end{tabular}
-
-Results. Nice looking tables and charts of results.
 \begin{figure}[ht!]
     \centering
     \input{include/construct_b1}
-    \label{fig:constructb1}
     \caption{Seconds used to solve all $s(1, n)$ subinstances of randomly
              generated problems of size $n$. The x-axis represents $n$, the
              number of edges in the network, i.e. the number of
              variables/columns in the QP problem. The y-axis represents the
              number of seconds used.}
+    \label{fig:constructbone}
 \end{figure}
