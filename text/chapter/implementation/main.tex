@@ -24,3 +24,29 @@ implementation of the two approaches of solving several subinstances.
 
 \subsection{Solving Subinstances}
 \input{chapter/implementation/subinstances}
+
+\subsection{A Quick Overview}
+To avoid confusion, we present a quick overview of the different
+implementations.
+
+Although Clp is written primarily for solving linear
+programs, it comes with a QP solver. This QP solver uses an implementation
+of a primal-dual predictor-corrector interior point method. In addition
+to Clp's QP solver, we also have the QP solver presented in Section
+\ref{ch:slp}.
+
+There are four different implementations, named
+\texttt{construct\_clp}, \texttt{construct\_slp}, \texttt{naive\_clp} and
+\texttt{naive\_slp}. The implementations with names ending with
+\texttt{\_clp} and \texttt{\_slp} uses Clp's QP solver and Slp, respectively,
+whenever a QP needs to be solved.
+We also introduce shorter names for the implementations, namely cClp, cSlp, nClp
+and nSlp to be short names for \texttt{construct\_clp}, \texttt{construct\_slp},
+\texttt{naive\_clp} and \texttt{naive\_slp}, respectively.
+The \texttt{construct} implementations uses the tree structured presented
+in Section \ref{ch:tree} for storing subinstances with distinct solutions.
+The \texttt{naive} implementations, however, solves subinstances regardless of
+whether they have distinct solutions or not.
+
+In the next section, we present several experiments to perform on our
+implementations.

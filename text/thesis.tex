@@ -1,6 +1,6 @@
 \documentclass[a4paper, twocolumn]{article}
 
-\usepackage{caption}
+%\usepackage{caption}
 \usepackage{subcaption}
 
 \newcommand*{\tabbox}[2][t]{%
@@ -82,8 +82,7 @@ network increases, it is crucial that every error case is analyzed very
 quickly.
 The aim is to develop a solver for effectively solving problems
 \begin{inparaenum}
-  \item with a problem size of 100 to 2000 variables, but with the possibility
-        of reducing the problem size through variable elimination;
+  \item with a problem size of 100 to 2000 variables;
   \item with sparse matrices;
   \item with positive-semidefinite quadratic terms in the objective function;
         and
@@ -124,18 +123,18 @@ Vivamus fermentum semper porta.
 Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio.
 Maecenas convallis ullamcorper ultricies.
 
-\begingroup
-\let\clearpage\relax
+%\begingroup
+%\let\clearpage\relax
 \include{chapter/a_qp_problem/main}
 \include{chapter/an_iterative_method/main}
 \include{chapter/a_tree_representation/main}
 \include{chapter/implementation/main}
 \include{chapter/computational_experiments/main}
-\endgroup
+%\endgroup
 
-\onecolumn
-\newpage
-\twocolumn
+%\onecolumn
+%\newpage
+%\twocolumn
 
 \bibliography{thesis}{}
 \bibliographystyle{ieeetr}

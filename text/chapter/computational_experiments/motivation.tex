@@ -4,15 +4,6 @@ How the implementations compare with each other is also an interesting topic.
 Performance can be measured in different ways, and in the next section we
 discuss what kind of experiments we want to run in order to assess performance.
 
-
-
-Now that we are finished with implementations, an obvious question about the
-implementations is how they perform. How the implementations compare with
-each other is interesting. Normally, we want to compare the performance
-of our implementation with the performance of some other implementations.
-An obvious performance test is how \emph{fast} our implementation is, but also
-its memory consumption.
-
 We want to test our implementation on the specific problems described in
 Section \ref{sec:instances}, to see how it performs on problems that follow
 the exact characteristics that the methods were developed for.
@@ -22,9 +13,29 @@ While the methods developed in this thesis are specified for problems with
 specific properties, the methods do not \emph{require} these properties.
 To test the performance of our implementation in general, we need to test it
 on random problems.
-These random problems should be limited by some parameters, so that we can test
-our implementation on random problems with those specific parameters.
-Generating random problems of some specific size, we can see how our
-implementation performs on specific problem sizes. Running the same
-tests on problems with increasing size, we can see how well our implementation
-\emph{scales}. In the next section, we describe experiments in detail.
+
+In several experiments, we will test our implementations on randomly generated
+instances.
+Unless specified otherwise, all randomly generated instances have
+the following properties:
+\begin{itemize}
+\item We let $m = \frac{7}{20}n$ in order to make our random instances roughly as
+      sparse as those presented in Section \ref{sec:instances}.
+\item For each element $b_i$ in vector $b$, $b_i$ has a 50 percent chance of being 0.
+\item For each diagonal element $h_{ii}$ in matrix $H$, $h_{ii}$ has a 50 percent
+      chance of being 0.
+\item If the elements in the two last points are \emph{not} 0, then the values lies in
+      the intervals specified in Section \ref{ch:qp}.
+\end{itemize}
+
+Also, unless specified otherwise, we present all running times in experiments where
+we use randomly generated instances, as the \emph{average} running time of
+$10$ runs of each test. The reason for using the average number of seconds, and
+not the number of seconds used on the \emph{best} run, is because we do not want
+one generated instance that happens to converge really fast with our algorithm,
+to represent the running time in the general case.
+
+All implementations are executed with a tolerance of $10^{-7}$, i.e.
+$\epsilon = 10^{-7}$, unless specified otherwise.
+
+In the next section, we describe experiments we will perform, in detail.

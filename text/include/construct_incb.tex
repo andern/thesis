@@ -1,0 +1,23 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        legend pos=south west]
+
+        \addplot[black] plot coordinates {
+(1, 0.0006)
+(2, 0.000501961)
+(3, 0.000338204)
+(4, 0.000308908)
+(5, 0.000247492)
+        };
+
+        \addplot[red] plot coordinates {
+(1, 0.0008)
+(2, 0.000737255)
+(3, 0.000761677)
+(4, 0.000751787)
+(5, 0.00074189)
+        };
+
+        \legend{\texttt{construct\_clp}, \texttt{naive\_clp}}
+    \end{axis}
+\end{tikzpicture}
