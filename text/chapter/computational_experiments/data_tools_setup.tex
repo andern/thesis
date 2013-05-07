@@ -1,4 +1,17 @@
-\textbf{Experiment 1} is an experiment to indicate how fast our
+\textbf{Experiment 1} is an experiment we perform in order to assess
+how performance relates to specific tolerances. We test the different
+implementations on the instance \textit{small} with varying tolerance.
+For each specific tolerance, we solve $s(2, 238)$ subinstances, three times,
+and record the lowest of the three running times.
+
+\textbf{Experiment 2} is an experiment where we test our implementation of the
+tree structure on the instances introduced in Section \ref{sec:instances}.
+The experiment will work as an indicator to how well the implementations work
+on real problems that Goodtech have faced, rather than randomly generated one.
+We run each implementation on each of the instances three times, and record
+the best out of the three runs.
+
+\textbf{Experiment 4} is an experiment to indicate how fast our
 our implementation of the tree structure is. We compare the
 \texttt{construct\_clp} implementations where we only solve subinstances
 with distinct solutions, with the \texttt{naive\_clp} implementations where
@@ -15,19 +28,6 @@ see how the two implementations scale as $b$ increases. Since the number
 of subinstances increases rapidly as $b$ increases, this experiment is only
 feasible for small values of $n$. We consider the experiment infeasible for
 any $n > 50$, so we let $n = 50$.
-
-\textbf{Experiment 3} is an experiment where we test our implementation of the
-tree structure on the instances introduced in Section \ref{sec:instances}.
-The experiment will work as an indicator to how well the implementations work
-on real problems that Goodtech have faced, rather than randomly generated one.
-We run each implementation on each of the instances three times, and record
-the best out of the three runs.
-
-\textbf{Experiment 4} is an experiment we perform in order to assess
-how performance relates to specific tolerances. We test the different
-implementations on the instance \textit{small} with varying tolerance.
-For each specific tolerance, we solve $s(2, 238)$ subinstances, three times,
-and record the lowest of the three running times.
 
 All experiments are completed on a machine running 64 bit Gentoo Linux
 with version 3.6.11 of the linux kernel. The machine has the following
