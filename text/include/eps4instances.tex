@@ -1,0 +1,32 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        legend pos=north west,
+        xticklabels={\textit{small},\textit{large},\textit{vlarge}},xtick={1,...,3}]
+
+        \addplot[black,mark=star] plot coordinates {
+            (1, 0.52)
+            (2, 9.55)
+            (3, 76.18)
+        };
+
+        \addplot[red,mark=star] plot coordinates {
+            (1, 0.71)
+            (2, 32.88)
+%            (3, 586.60)
+        };
+
+        \addplot[green,mark=star] plot coordinates {
+            (1, 0.65)
+            (2, 11.68) 
+            (3, 157.53)
+        };
+
+        \addplot[blue,mark=star] plot coordinates {
+            (1, 0.89)
+            (2, 39.87) 
+%            (3, 1173.74)
+        };
+
+        \legend{\texttt{cClp}, \texttt{cSlp}, \texttt{nClp}, \texttt{nSlp}}
+    \end{axis}
+\end{tikzpicture}

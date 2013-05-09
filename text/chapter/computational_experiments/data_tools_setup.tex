@@ -11,28 +11,39 @@ on real problems that Goodtech have faced, rather than randomly generated one.
 We run each implementation on each of the instances three times, and record
 the best out of the three runs.
 
-\textbf{Experiment 4} is an experiment to indicate how fast our
-our implementation of the tree structure is. We compare the
-\texttt{construct\_clp} implementations where we only solve subinstances
-with distinct solutions, with the \texttt{naive\_clp} implementations where
-subinstances are solved regardless if they are distinct or not. Testing these
-implementations on problems of increasing size indicates how well they scale,
-in addition to indicating their speed. 
-As $n$ reaches high values, anything besides $b = 1$ is unrealistic, so we
+\textbf{Experiment 3} is an experiment to indicate how fast our
+our tree structure method is. We compare the
+\texttt{cClp} implementation where we only solve subinstances
+with distinct solutions, with the \texttt{nClp} implementation where
+subinstances are solved regardless whether they are distinct or not.
+Testing these implementations on problems of increasing size indicates how well
+they scale, in addition to indicating their speed. 
+As $n$ reaches high values, anything besides $b \leq 1$ is unrealistic, so we
 let $b = 1$.
 
-\textbf{Experiment 2} is an experiment similar to Experiment 1. We continue
-to compare the implementation of the tree structure with naively solving all
-subinstances regardless if they are distinct or not. In this experiment, we
+\textbf{Experiment 4} is an experiment similar to Experiment 1. We continue
+to compare the tree structure method with naively solving all
+subinstances regardless whether they are distinct or not. In this experiment, we
 see how the two implementations scale as $b$ increases. Since the number
 of subinstances increases rapidly as $b$ increases, this experiment is only
 feasible for small values of $n$. We consider the experiment infeasible for
 any $n > 50$, so we let $n = 50$.
 
-All experiments are completed on a machine running 64 bit Gentoo Linux
+All experiments are performed on a machine running 64 bit Gentoo Linux
 with version 3.6.11 of the linux kernel. The machine has the following
 relevant hardware specifications:
 \begin{itemize}
     \item Intel(R) Core(TM) i7 CPU 930 @ 2.80GHz
-    \item Corsair XMS3 DDR3 1600MHz 12GB CL9
+    \item Corsair XMS3 DDR3 1600MHz 12GB CL9.
+    \item Socket LGA 1366
 \end{itemize}
+The CPU has 4 cores and has the following multi-level cache specifications:
+~\cite{intel}
+\begin{itemize}
+    \item 32KB L1 data cache and 32KB L1 instruction cache per core
+    \item 256KB L2 data cache per core
+    \item 8MB L3 data cache shared by all cores
+\end{itemize}
+
+All codes are compiled with GCC version 4.6.3 with \texttt{-O3}
+optimization flag enabled.

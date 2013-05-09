@@ -16,9 +16,9 @@ of the values in Table \ref{table:expone}.
 
 \begin{table}[ht!]
 \centering
-\caption{Test results from experiment 4.}
+\caption{Results from experiment 1.}
 \begin{tabular}{rrrrr}
-$\epsilon$ & \texttt{tClp} & \texttt{tSlp} & \texttt{nClp} & \texttt{nSlp} \\ \hline
+$\epsilon$ & \texttt{cClp} & \texttt{cSlp} & \texttt{nClp} & \texttt{nSlp} \\ \hline
 $10^{-1}$ & 45.51 & 55.61 & 72.32 & 85.51 \\
 $10^{-2}$ & 46.34 & 55.89 & 73.11 & 85.51 \\
 $10^{-3}$ & 51.12 & 59.04 & 75.60 & 85.28 \\
@@ -36,8 +36,8 @@ because of the low tolerance value.
 \begin{figure}[ht!]
     \centering
     \input{include/small_tolerance}
-    \caption{Seconds used to solve all \textit{small} with different
-             tolerances.
+    \caption{Seconds used to solve \textit{small} and $s(2, 238)$ of its
+             subinstances with different tolerances.
              The x-axis represents the tolerance $\epsilon$.
              The y-axis represents the number of seconds used.}
     \label{fig:smalltolerance}
@@ -47,8 +47,8 @@ given some tolerance. By solving randomly generated problems where $n = 50$,
 with Slp, we note the average number of iterations among ten solved
 problems. Table \ref{table:expiters} shows the results from this, and we see
 that the average number of iterations increases rapidly as the tolerance
-becomes smaller than $10^{-4}$. This fits our earlier prediction about why
-\texttt{cClp} and \texttt{nClp} becomes much slower at lower tolerances.
+becomes smaller than $10^{-4}$. This fits our prediction about why
+\texttt{cSlp} and \texttt{nSlp} becomes much slower at lower tolerances.
 
 \begin{table}[ht!]
 \centering
@@ -70,13 +70,26 @@ $10^{-9}$  & 752.6
 \end{table}
 
 \subsubsection{Experiment 2}
-Table of \textit{small}, \textit{large} and \textit{vlarge}.
-Graph of the results for several methods, and maybe different $b$.
-% b = 1 cClp
-% small = 0.666335
-% vlarge = 
+In this experiment we let $\epsilon = 10^{-4}$, so that the implementations
+of Slp may keep up. Table \ref{table:eps4instances} shows the results from
+this experiment.
+Unfortunately, we see that even with a high tolerance, Slp can not keep up as
+$n$ increases.
 
-\subsubsection{Experiment 4}
+\begin{table}
+\centering
+\caption{Results from Experiment 2.}
+\label{table:eps4instances}
+\begin{tabular}{crrr}
+\textrm{Implementation} & \textit{small} & \textit{large} & \textit{vlarge} \\ \hline
+\texttt{cClp}           & 0.52           & 9.55           & 76.18 \\
+\texttt{cSlp}           & 0.71           & 32.88          & 585.60 \\
+\texttt{nClp}           & 0.65           & 11.68          & 157.53 \\
+\texttt{nSlp}           & 0.89           & 39.87          & 1173.74
+\end{tabular}
+\end{table}
+
+\subsubsection{Experiment 3}
 Table \ref{table:expfour} shows an excerpt of the test results.
 A table with results for all $n=100,200,\ldots,2000$ can found in Appendix
 \ref{app:exp1}.
@@ -91,11 +104,11 @@ $n$ grows, making room for more subinstances that we might not have to solve.
 
 \begin{table}[ht!]
     \centering
-    \caption{An excerpt of test results from Experiment 4.
+    \caption{An excerpt of test results from Experiment 3.
              The values in the \texttt{cClp} and \texttt{nClp} columns are the
              average running times in seconds for solving instances with
              $s(1, n)$ subinstances, ten times.
-             The faster column represents how much faster, in percent,
+             The rightmost column represents how much faster, in percent,
              \texttt{cClp} is compared with \texttt{nClp}.}
     \label{table:expfour}
 \begin{tabular}{rrrc}
@@ -107,7 +120,7 @@ $n$ grows, making room for more subinstances that we might not have to solve.
 \end{tabular}
 \end{table}
 
-\subsubsection{Experiment 2}
+\subsubsection{Experiment 4}
 Table \ref{table:exptwo} shows the test results from this experiment. We see
 that, as $b$ increases, the \texttt{cClp} implementation becomes
 faster and faster in comparison with \texttt{nClp}.
@@ -120,7 +133,7 @@ $b$ equal to $1,2,3,4$ and $5$, respectively. This helps us clarify the reason
 why \texttt{cClp} becomes faster and faster in comparison with \texttt{nClp}.
 \begin{table}[ht!]
 \centering
-\caption{Test results from experiment 2.
+\caption{Results from experiment 4.
          The values in the \texttt{cClp} and \texttt{nClp} columns are the
          average running times in seconds for solving instances where $n = 50$,
          with $s(b, 50)$ subinstances, ten times.
@@ -140,7 +153,7 @@ why \texttt{cClp} becomes faster and faster in comparison with \texttt{nClp}.
 \label{table:exptwo}
 \end{table}
 
-Figur \ref{fig:constructincb} shows a plot of the number of seconds used to
+Figure \ref{fig:constructincb} shows a plot of the number of seconds used to
 solve, on average, one subinstance, as $b$ increases.
 We see that as $b$ increases, the number of
 seconds to solve one subinstance decreases with \texttt{cClp},
@@ -158,3 +171,22 @@ experiment.
              to solve one subinstance.}
     \label{fig:constructincb}
 \end{figure}
+
+%\subsubsection{Experiment 5}
+\begin{table}[ht!]
+\centering
+\caption{Ignore this table at the moment. Unfinished possible experiment.}
+\begin{tabular}{rrrr}
+    $b$ & \texttt{cClp} & \texttt{cSlp} & Skipped \\ \hline
+     1  & 0.01          &               & 6.2 \\
+     2  & 0.08          &               & 131.5 \\
+     3  & 0.48          &               & 1237.3 \\
+     4  & 2.16          &               & 9579.5 \\
+     5  & 6.23          &               & 50825.9 \\
+     6  & 18.52         &               & 201651.9 \\
+     7  & 70.16         &               & 567071.6 \\
+     8  & 202.11        &               & 1462074.6 \\
+     9  & 379.84        &               & 3351206.6 \\
+     10 & 807.85        &               & 6468142.0
+\end{tabular}
+\end{table}

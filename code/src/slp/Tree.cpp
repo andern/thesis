@@ -403,6 +403,7 @@ int maxIters, double tolerance)
     uint16_t breaks = std::min((uint16_t)n.size(), breakdowns);
 
     struct vertex* ret;
+    int numNotNeededSolved = 0;
     for (int i = 0; i < breaks; i++) {
         std::vector<uint16_t> f(n.begin(), n.begin()+(i+1));
         do {
@@ -421,12 +422,15 @@ int maxIters, double tolerance)
                 print(f.begin(), f.end());
                 std::cout << std::endl; */
 
-//            } else {
+            } else {
+                numNotNeededSolved++;
 //                print(fset.begin(), fset.end());
 //                std::cout << std::endl;
             }
         } while(next_combination(n.begin(), n.end(), f.begin(), f.end()));
     }
+//    std::cout << "We skipped solving: " << numNotNeededSolved << std::endl;
+    printf("%d +", numNotNeededSolved);
 
     free(lower);
     free(upper);

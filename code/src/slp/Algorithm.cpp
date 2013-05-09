@@ -93,8 +93,10 @@ double solve(const ClpModel& quad, ClpSimplex& lin, double* x,
 
         objval = value(x, quad);
 
-        stop = (value(x_old, quad) - objval);
-        stop /= fabs(value(x_old, quad));
+        stop = (oldval - objval);
+        stop /= fabs(oldval);
+//        stop = (value(x_old, quad) - objval);
+//        stop /= fabs(value(x_old, quad));
     } while(k++ < maxIters && stop > tolerance);
 
     return (objval);

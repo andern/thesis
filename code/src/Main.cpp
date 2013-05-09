@@ -139,19 +139,21 @@ double bestSpeed(ClpModel model, int b, int times) {
     double best = DBL_MAX;
     for (int i = 0; i < times; i++) {
         double t1 = omp_get_wtime();
-        struct vertex* root = construct_clp(model, b, 10000, 1e-7);
+//        struct vertex* root = construct(model, b, 10000, 1e-4);
+        construct_all(model, b, 10000, 1e-4);
         double t2 = omp_get_wtime();
-        delete root;
+        //delete root;
         double t = (t2 - t1);
         if (t < best) best = t;
     }
     return best;
 }
 
-void benchSpeed(int vertices, int edges, int b, int times) {
+void avgSpeed(int vertices, int edges, int b, int times) {
     double tot = 0;
     for (int i = 0; i < times; i++) {
         ClpModel model = randomInstance(vertices, edges, 0.5, 0.5);
+        sleep(1);
         model.setLogLevel(0);
 
         double t1 = omp_get_wtime();
@@ -161,17 +163,24 @@ void benchSpeed(int vertices, int edges, int b, int times) {
         tot += (t2-t1);
         delete root;
     }
-    printf("(%d, %f)\n", edges, (tot / times));
+    printf("\n(%d, %f)\n", b, (tot / times));
 }
 
 
 int main() {
-    for (int i = 6; i < 50; i++) {
-        int edges = 100*i;
+    srand((unsigned)time(NULL));
+    for (int i = 11; i < 26; i++) {
+        int edges = 25;
         int vertices = (int) (0.35*edges);
-        int b = 1;
-        benchSpeed(vertices, edges, b, 10);
-    }
+        int b = i;
+        avgSpeed(vertices, edges, i, 10);
+    } 
+
+/*    ClpModel model = clpFromTxt();
+    for (int b = 1; b < 2; b++) {
+        double best = bestSpeed(model, b, 3);
+        printf("(%d, %f)\n", b, best);
+    } */
 /*
 //    ClpModel model = clpFromTxt();
     ClpModel model = randomInstance(82, 238, 0.5,  0.5);

@@ -163,17 +163,17 @@ ClpModel clpFromTxt() {
 
 struct good_qp readTxt() {
     struct good_qp good;
-    std::ifstream fin("data/vlarge/A.txt");
+    std::ifstream fin("data/small/A.txt");
     fin >> good.rows;
     fin >> good.cols;
     fin.close();
 
-    double** A = readMatrix("data/vlarge/A.txt");
-    double** F = readMatrix("data/vlarge/F.txt");
+    double** A = readMatrix("data/small/A.txt");
+    double** F = readMatrix("data/small/F.txt");
 
-    double* c = readArray("data/vlarge/c.txt");
-    double* x_low = readArray("data/vlarge/x_L.txt");
-    double* x_up = readArray("data/vlarge/x_U.txt");
+    double* c = readArray("data/small/c.txt");
+    double* x_low = readArray("data/small/x_L.txt");
+    double* x_up = readArray("data/small/x_U.txt");
 /*
     double** A = (double**) malloc((good.rows+1)*sizeof(double*));
     for (int i = 0; i < good.cols; i++)
@@ -243,7 +243,7 @@ static int g_randi(int min, int max) {
 
 
 ClpModel randomInstance(int vertices, int edges, double Hzero, double bzero) {
-    srand((uint16_t)time(NULL));
+//    srand((uint16_t)time(NULL));
 
     /* Matrix A */
     double** m = (double**) malloc(vertices*sizeof(double*));

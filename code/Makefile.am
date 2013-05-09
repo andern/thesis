@@ -14,11 +14,11 @@ bin_PROGRAMS = slp
 
 slp_SOURCES = src/Main.cpp src/slp/Tree.cpp src/slp/Algorithm.cpp\
               src/slp/Good.cpp
-#-Werror 
+#-Werror -g3
 slp_CPPFLAGS = -Iinclude\
                -std=c++0x\
                -pedantic\
-               -O0 -g3\
+               -O3\
                -Wall -Wextra\
                -Wdouble-promotion -Wformat=2 -Winit-self\
                -Wswitch-default -Wswitch-enum -Wuninitialized\
