@@ -99,30 +99,63 @@ The aim is to develop a solver for effectively solving problems
 }
 
 \section{Introduction}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Donec a diam lectus.
-Sed sit amet ipsum mauris.
-Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit.
-Donec et mollis dolor.
-Praesent et diam eget libero egestas mattis sit amet vitae augue.
-Nam tincidunt congue enim, ut porta lorem lacinia consectetur.
-Donec ut libero sed arcu vehicula ultricies a non tortor.
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Aenean ut gravida lorem.
-Ut turpis felis, pulvinar a semper sed, adipiscing id dolor.
-Pellentesque auctor nisi id magna consequat sagittis.
-Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet.
-Ut convallis libero in urna ultrices accumsan.
-Donec sed odio eros.
-Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus.
-Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
-ridiculus mus.
-In rutrum accumsan ultricies.
-Mauris vitae nisi at sem facilisis semper ac in est.
-Vivamus fermentum semper porta.
-Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio.
-Maecenas convallis ullamcorper ultricies.
+As electrical transmission systems increase in complexity, it becomes
+more difficult to understand how different components in the system interact.
+We often aim to increase the utilization of such systems, and with that comes
+the need for good planning and operational tools.
+The Transmission System Operator (TSO) is faced
+with increasing requirements regarding the reliability of load
+delivery, and the cost of not delivering agreed energy can be
+substantial\cite{digernes}.
+The need for tools to assist the TSO in analyses that can help prevent
+unreliable networks is important.
+In \cite{digernes}, the authors state:
+\begin{quote}
+It is of utmost importance for the TSO to be able to perform detailed and
+accurate reliability analyses; for the daily operation as well as for
+future planning (comparison of reinforcement alternatives etc.). By
+including power flow considerations in the calculations, the operator is
+able to plan where to locate the spinning reserves to maximize the load
+delivery reliability. Reliability analyses are also important for system
+planning, for analyzing different alternatives for network reinforcement's
+[sic] etc.\cite{digernes}
+\end{quote}
 
+Goodtech and MathConsult have developed a tool called PROMAPS
+(Probability Methods Applied to Power Systems). It calculates the power
+delivery as a function of demand, and the probability for undelivered
+energy for each load branch in the system, and in the system as a whole
+\cite{trond}. A typical calculation sequence in PROMAPS includes the
+following main functions\cite{trond}:
+\begin{enumerate}
+\item Creation of branch reliability models based on unit Markov models and
+      composition and aggregation of states.
+\item Selection of a subset of states containing all grid reliability states
+      with a significant reliability.
+\item Calculation of maximum power delivery capacity for each of the
+      significant grid reliability states based on an object function with
+      constraints.
+\item Calculation of expected power shortage and creation of delivery
+      reliability models based on the operations composition and aggregation.
+\item Calculation of delivery probability, mean visiting duration and visiting
+      frequency for functioning and failed delivery states.
+\item Post calculation of various auxiliary variables including economic data.
+\end{enumerate}
+Among these six functions, the third main function was identified as the most
+time-consuming, or more specifically, a call to a QP solver.
+
+The maximum power
+supply can be calculated by an objective function that represents the power
+delivery profit. A typical objective function is
+\[
+J = -C_G - P^T \Phi C_D P + C_L P,
+\]
+where $J$ is the objective function value (E/s), $P$ is the branch power vector
+($W$), $C_G$ is a line vector containing specific power generation cost
+($E/J$), $\Phi$ is a diagonal matrix representing power loss ($1/W$), $C_D$ is
+a diagonal matrix containing specific power transmission cost ($E/J$), and
+$C_L$ is a line vector containing specific power delivery price ($E/J$).
+The symbol $E$ is the economical unit\cite{digernes}.
 %\begingroup
 %\let\clearpage\relax
 \include{chapter/a_qp_problem/main}
