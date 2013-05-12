@@ -1,36 +1,39 @@
 Now that we are finished with implementations, we are interested in knowing
-how they perform.
-How the implementations compare with each other is also an interesting topic.
+how the methods perform.
+How the methods compare with each other is also an interesting topic.
 Performance can be measured in different ways, and in the next section we
-discuss what kind of experiments we want to run in order to assess performance.
+discuss what kind of experiments we run in order to assess performance.
 
-We want to test our implementation on the specific problems described in
-Section \ref{sec:instances}, to see how it performs on problems that follow
+We test our methods on the specific instances described in
+Section \ref{sec:instances}, to see how they perform on instances that follow
 the exact characteristics that the methods were developed for.
-Testing the performance of our implementation on specific problems will tell us
-how it performs on those specific problems, but not how it performs in general.
-While the methods developed in this thesis are specified for problems with
+Testing the performance of our methods on specific instances will tell us
+how it performs on those specific instances, but not how it performs in general.
+While the methods developed in this thesis are specified for instances with
 specific properties, the methods do not \emph{require} these properties.
-To test the performance of our implementation in general, we need to test it
-on random problems.
+To test the performance of our methods in general, we need to test it
+on random instances
 
-In several experiments, we will test our implementations on randomly generated
+In several experiments, we will test our methods on randomly generated
 instances.
 Unless specified otherwise, all randomly generated instances have
 the following properties:
 \begin{itemize}
-\item We let $m = \frac{7}{20}n$ in order to make our random instances roughly as
-      sparse as those presented in Section \ref{sec:instances}.
-\item For each element $b_i$ in vector $b$, $b_i$ has a 50 percent chance of being 0.
+\item We let $m = \lfloor \frac{7}{20}n \rfloor$ in order to make our random
+      instances roughly as sparse as those presented in Section
+      \ref{sec:instances}.
+\item For each element $b_i$ in vector $b$, $b_i$ has a 50 percent probability of being 0.
 \item For each diagonal element $h_{ii}$ in matrix $H$, $h_{ii}$ has a 50 percent
-      chance of being 0.
+      probability of being 0.
 \item If the elements in the two last points are \emph{not} 0, then the values lies in
-      the intervals specified in Section \ref{ch:qp}.
+      the intervals specified in the last paragraph of Section \ref{ch:qp}, before
+      Section \ref{sec:instances}.
 \end{itemize}
 
 Also, unless specified otherwise, we present all running times in experiments where
 we use randomly generated instances, as the \emph{average} running time of
-$10$ runs of each test. The reason for using the average number of seconds, and
+$10$ runs of each test, with a new random instance each run.
+The reason for using the average number of seconds, and
 not the number of seconds used on the \emph{best} run, is because we do not want
 one generated instance that happens to converge really fast with our algorithm,
 to represent the running time in the general case.
@@ -38,4 +41,4 @@ to represent the running time in the general case.
 All implementations are executed with a tolerance of $10^{-7}$, i.e.
 $\epsilon = 10^{-7}$, unless specified otherwise.
 
-In the next section, we describe experiments we will perform, in detail.
+In the next section, we describe the experiments in detail.

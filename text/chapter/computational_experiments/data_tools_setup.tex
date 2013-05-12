@@ -1,48 +1,50 @@
-\textbf{Experiment 1} is an experiment we perform in order to assess
-how performance relates to specific tolerances. We test the different
-implementations on the instance \textit{small} with varying tolerance.
+\textbf{Experiment 1}:
+We test the different
+methods on the instance \textit{small} with varying tolerance.
 For each specific tolerance, we solve $s(2, 238)$ subinstances, three times,
 and record the lowest of the three running times.
+The purpose is to assess how performance relates to specific tolerances.
 
-\textbf{Experiment 2} is an experiment where we test our implementation of the
-tree structure on the instances introduced in Section \ref{sec:instances}.
-The experiment will work as an indicator to how well the implementations work
-on real problems that Goodtech have faced, rather than randomly generated one.
+\textbf{Experiment 2}:
+We test our tree structure methods on the instances introduced in Section
+\ref{sec:instances}.
+The purpose is to indicate how well the methods work
+on real instances that Goodtech have faced.
 We run each implementation on each of the instances three times, and record
 the best out of the three runs.
 
-\textbf{Experiment 3} is an experiment to indicate how fast our
-our tree structure method is. We compare the
-\texttt{cClp} implementation where we only solve subinstances
-with distinct solutions, with the \texttt{nClp} implementation where
-subinstances are solved regardless whether they are distinct or not.
-Testing these implementations on problems of increasing size indicates how well
+\textbf{Experiment 3}:
+We compare \texttt{cClp} where we only solve subinstances with distinct
+solutions, with \texttt{nClp} where subinstances are solved regardless
+whether they are distinct or not.
+The purpose is to indicate how fast our tree structure method is.
+Testing these methods on instances of increasing size indicates how well
 they scale, in addition to indicating their speed. 
-As $n$ reaches high values, anything besides $b \leq 1$ is unrealistic, so we
-let $b = 1$.
+As $n$ reaches high values, anything besides $\beta \leq 1$ is unrealistic,
+so we let $\beta = 1$.
 
-\textbf{Experiment 4} is an experiment similar to Experiment 1. We continue
-to compare the tree structure method with naively solving all
-subinstances regardless whether they are distinct or not. In this experiment, we
-see how the two implementations scale as $b$ increases. Since the number
-of subinstances increases rapidly as $b$ increases, this experiment is only
-feasible for small values of $n$. We consider the experiment infeasible for
+\textbf{Experiment 4}:
+We continue to compare the tree structure method with naively solving all
+subinstances regardless whether they are distinct or not. We
+see how the two methods scale as $\beta$ increases. Since the number
+of subinstances increases rapidly as $\beta$ increases, this approach is only
+feasible for small values of $\beta$. We consider this approach infeasible for
 any $n > 50$, so we let $n = 50$.
 
 All experiments are performed on a machine running 64 bit Gentoo Linux
 with version 3.6.11 of the linux kernel. The machine has the following
 relevant hardware specifications:
 \begin{itemize}
-    \item Intel(R) Core(TM) i7 CPU 930 @ 2.80GHz
-    \item Corsair XMS3 DDR3 1600MHz 12GB CL9.
-    \item Socket LGA 1366
+    \item Intel(R) Core(TM) i7 CPU 930 @ 2.80GHz,
+    \item Corsair XMS3 DDR3 1600MHz 12GB CL9,
+    \item Socket LGA 1366.
 \end{itemize}
-The CPU has 4 cores and has the following multi-level cache specifications:
-~\cite{intel}
+The CPU has 4 cores and has the following multi-level cache specifications
+\cite{intel}:
 \begin{itemize}
-    \item 32KB L1 data cache and 32KB L1 instruction cache per core
-    \item 256KB L2 data cache per core
-    \item 8MB L3 data cache shared by all cores
+    \item 32KB L1 data cache and 32KB L1 instruction cache per core,
+    \item 256KB L2 data cache per core,
+    \item 8MB L3 data cache shared by all cores.
 \end{itemize}
 
 All codes are compiled with GCC version 4.6.3 with \texttt{-O3}

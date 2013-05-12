@@ -29,7 +29,7 @@ $\mathcal{L}_0$ in standard form reads:
 Note that the objective function has been negated because we are maximizing
 instead of minimizing.
 Figure \ref{fig:lp1} shows a visual representation of $\mathcal{L}_0$ and
-$\mathcal{Q}$, among some other things.
+$\mathcal{Q}$.
 Note that the feasible region of $\mathcal{L}_k$ and
 $\mathcal{Q}$ are equal for all $k$, as the constraints never change during the
 iterations of the algorithm. Also note that $\mathcal{L}_0$ has multiple
@@ -52,7 +52,7 @@ We perform a line search between the points $x_0$ and $\hat{x}_0$.
 We find a function $m$ of $\alpha$ that range all points collinear with $x_0$
 and $\hat{x}_0$:
 \[
-f((1-\alpha) x_0 + \alpha \hat{x}_0) = 5\alpha^2 - 6\alpha = m(\alpha)
+f((1-\alpha) x_0 + \alpha \hat{x}_0) = 5\alpha^2 - 6\alpha = m(\alpha).
 \]
 To find the minimum of this one-dimensional convex parabola we set
 $m^\prime(\alpha) = 0$ and solve for $\alpha$ to achieve $\alpha = 0.6$
@@ -70,12 +70,12 @@ Note that $\alpha \in [0, 1]$ because the unconstrained minimum of $f$ is
 inside the feasible region.
 Now let
 \[
-x_1 = 0.4x_0 + 0.6\hat{x}_0 = (1.2, 0.6)
+x_1 = 0.4x_0 + 0.6\hat{x}_0 = (1.2, 0.6),
 \]
 and let us apply Equation (\ref{eq:texp}) to calculate a Taylor series
 expansion at $x_1$:
 \[
-    T_1 = 0.4x - 0.8y - 1.8
+    T_1 = 0.4x - 0.8y - 1.8.
 \]
 \begin{comment}
 \[
@@ -152,7 +152,7 @@ We solve $\mathcal{L}_1$ and achieve an optimal solution $\hat{x}_1$
 \centering
 \input{include/slpthird}
 \caption{A visual representation of $\mathcal{L}_1$ and $\mathcal{Q}$.
-         Note that $x_1$ now has a red line going through it. That is
+         Note that $x_1$ now has a red line going through it. This is
          the objective function of $\mathcal{L}_1$.}
 \label{fig:lp2}
 \end{figure}

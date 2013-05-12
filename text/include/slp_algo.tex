@@ -6,7 +6,7 @@
 %Given $x_0$ and some $\epsilon \ge 0$\;
 Set $k \leftarrow 0$\;
 
-\Repeat{$\frac{f(x_{k-1}) - f(x_k)}{|f(x_{k-1})|} \leq \epsilon$} {
+\Repeat{$\displaystyle \frac{f(x_{k-1}) - f(x_k)}{|f(x_{k-1})|} \leq \epsilon$} {
     $T_k \leftarrow - x_k^THx_k + 2x_k^THx + b^Tx$ \\
     $\hat{x}_k \leftarrow \textrm{optimal solution of } \mathcal{L}_k$ (Solve) \\
     $\alpha_k \in \argmin_{\alpha \leq 1} f((1-\alpha) x_k + \alpha \hat{x}_k)$ \\

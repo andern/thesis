@@ -17,13 +17,13 @@ The constraints are all linear, so by only linearizing the objective function
 we end up with a linear program.
 Let $T_k$ denote the Taylor series expansion at point $x_k$ of $f$.
 Denote the linear program defined by minimization of $T_k$ subject to these
-constraints by $\mathcal{L}_k$.
+constraints, by $\mathcal{L}_k$.
 Let $\hat{x}_k$ denote an optimal solution of $\mathcal{L}_k$.
 
 Let $k = 0$ and our initial guess $x_0$ be given.
 Applying (\ref{eq:texp}) we have that
 \[
-T_k = - x_k^THx_k + 2x_k^THx + b^Tx
+T_k = - x_k^THx_k + 2x_k^THx + b^Tx.
 \]
 Assume the linear program $\mathcal{L}_k$ has an optimal solution $\hat{x}_k$.
 We note that $\mathcal{L}_k$ is minimizing in the direction of
@@ -37,13 +37,13 @@ $x_k$ and $\hat{x}_k$ that is closer to $x^*$ than the two end points.
 We perform a \emph{line search} by finding the minimum value of $f$ on the
 straight line between the points $x_k$ and $\hat{x}_k$:
 \[
-\alpha_k \in \argmin_{\alpha \leq 1} f((1-\alpha) x_k + \alpha \hat{x}_k)
+\alpha_k \in \argmin_{\alpha \leq 1} f((1-\alpha) x_k + \alpha \hat{x}_k).
 \]
 Call $\alpha_k$ the \emph{step length}.
 
 We calculate $x_{k+1}$ using the step length $\alpha_k$:
 \[
-x_{k+1} = (1-\alpha_k) x_k + \alpha_k\hat{x}_k
+x_{k+1} = (1-\alpha_k) x_k + \alpha_k\hat{x}_k.
 \]
 If, however, the unconstrained minimum lies outside the feasible region
 ($x^* \neq x^\mathcal{U}$), $\alpha_k$ might be greater than $1$, and the
@@ -55,7 +55,7 @@ until we reach our termination condition.
 We terminate when the relative difference in objective value of the two last
 iterations is less than some $\epsilon$. We terminate when
 \[
-\frac{f(x_{k-1}) - f(x_k)}{|f(x_{k-1})|} \leq \epsilon
+\frac{f(x_{k-1}) - f(x_k)}{|f(x_{k-1})|} \leq \epsilon.
 \]
 Algorithm \ref{alg:iter} describes an algorithm for these steps, given some
 starting point $x_0$ and a tolerance $\epsilon$.

@@ -1,5 +1,5 @@
 While implementing an algorithm, it makes sense to start to implement
-sub-functions that are not dependant on other functions. 
+sub-functions that are independent of other functions.
 
 Implementing the Taylor series expansion is pretty straight forward, as
 we have a closed-form definition for the specific objective function that
@@ -10,8 +10,8 @@ void taylor(double* T, const double* x,
             const ClpModel& m);
 \end{verbatim}
 where \texttt{ClpModel} gives us access to both the linear and quadratic
-objective term. The result of the Taylor-series expansion, i.e. the new
-objective function, is put in \texttt{T}.
+objective term. The result of the Taylor-series expansion, i.e. the 
+coefficients of the new objective function, is put in \texttt{T}.
 
 The next step in the Slp algorithm is to solve the new linear program with the
 new objective function \texttt{T}. This is simply done with a call to Clp.
@@ -39,7 +39,7 @@ The function prototype for the line search function reads:
 \begin{verbatim}
 double lineSearch(const double* p,
                   const double* q,
-                  ClpModel& m);
+                  const ClpModel& m);
 \end{verbatim}
 where \texttt{ClpModel} gives us access to both the linear and quadratic
 objective term.
@@ -54,16 +54,16 @@ double objVal(const double* p,
 where \texttt{ClpModel} again gives us access to both the linear and quadratic
 objective term.
 
-These three functions all have an asymptotic running time in the order of the
-number of columns in the problem, because they do a constant number of
-operations while iterating sparsely through matrix $H$ and vector $b$.
+These three functions all have a linear running time in the order of the number
+of columns in the problem. The running times are dependent on the $b$ vector,
+which is not stored sparsely.
 
 When it comes to decisions to be made around data types and storage formats,
 there is not really too much to be said, because the choices are quite limited.
 It is pretty much dependant on the linear programming solver that is used.
 As mentioned earlier, Clp stores matrices in a sparse format, and all the sub
-functions only operate on non-zero elements, so there is not really room for
-much overhead.
+functions only operate on non-zero elements in those matrices, so there is not
+really room for much overhead.
 
 An implementation of Algorithm \ref{alg:iter} in \texttt{C++} looks like this:
 \begin{verbatim}

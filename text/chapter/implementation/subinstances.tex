@@ -2,7 +2,7 @@ In this section, we discuss the implementation of the different approaches to
 solving several subinstances.
 As mentioned in the beginning of the chapter, the two
 main approaches are to solve a limited amount of subinstances, bounded
-by $s(b, n)$ for some $b$ and a problem size $n$, or to implement a discrete
+by $s(\beta, n)$ for some $\beta$ and a problem size $n$, or to implement a discrete
 event simulator that only stores the current state of the network.
 First we will discuss the implementation of the tree structure, before we
 move on to the two main approaches.
@@ -28,7 +28,7 @@ the sets consist of indices of primitive type \texttt{uint16\_t}, which is
 short for \texttt{unsigned short int}. That means that the sets are limited to
 $2^{16} = 65536$ elements, and therefore also putting a limit to the size
 of the QP problems that can be solved. This seems like a reasonable limit
-as GoodTech wants to solve problems with $200 - 2000$ variables.
+as Goodtech wants to solve problems with $200 - 2000$ variables.
 If they need to solve larger problems in the future, it is possible to change
 the primitive data type.
 
@@ -62,7 +62,7 @@ struct vertex* v, struct vertex*& ret)
   for (struct vertex* vi : v->children) {
     if (isSubset(vi->m, m)) {
       ret = vi; 
-      bool temp = mfind(m, vi, ret);
+      bool temp = mfindrec(m, vi, ret);
       if (temp) return true;
     }   
   }   
@@ -85,25 +85,23 @@ type \texttt{uint16\_t}, then each index consumes $16$ bits. The trade-off
 here is quite clear: If a set contains less than one sixteenth of $n$, then
 the sparse format uses less memory. This might actually be the case in a lot
 of sets, especially when solving all possible subinstances where the number
-of breakdowns are limited by some $b$. Consider a very small case where
+of breakdowns are limited by some $\beta$. Consider a very small case where
 $n = 200$ and we solve all subinstances
 $s(3, 200) = \sum_{j=0}^{3} {\binom{200}{j}} = S$.
 With a total number of $S$ sets stored as bit vectors, the memory use for
-storing the modifiers is $200s~\textrm{bits} \approx 32~\textrm{megabytes}$.
+storing the modifiers is $200S~\textrm{bits} \approx 32~\textrm{megabytes}$.
 Whereas, with $S$ sets of sparsely stored indices, the memory use for storing
-the modifiers is approximately $8$ megabytes. However, as $b$ increases,
+the modifiers is approximately $8$ megabytes. However, as $\beta$ increases,
 the greater the benefits of storing sets in bit vectors become evident. As soon
-as $b$ becomes greater than 12, bit vectors will use less memory to store all
+as $\beta$ becomes greater than 12, bit vectors will use less memory to store all
 modifiers. Figure \ref{fig:bmem} shows the ratio of memory used by bit vectors
 over memory used by sets of sparsely stored indices where $n = 200$ and
-$5 \leq b \leq 30$.
+$5 \leq \beta \leq 30$.
 \begin{figure}[ht!]
 \centering
 \input{include/setmem}
-\caption{Difference in memory use with bit vectors and sparse sets.
-         The x-axis represents the value of $b$, while the y-axis represents
-         the ratio of memory use of an implementation with bit vectors over
-         an implementation with sets of sparsely stored indices.}
+\caption{The ratio of memory use of \texttt{bitset} over \texttt{set} as a
+         function of $\beta$.}
 \label{fig:bmem}
 \end{figure}
 Aside from the modifier set, we also have to store the set of variables that
@@ -135,11 +133,8 @@ Codes for the benchmark can be found in Appendix \ref{app:setbench}.
 \begin{figure}[ht!]
 \centering
 \input{include/setspeed}
-\caption{Seconds used to execute $3000^2$ calls to \texttt{isSubset} on
-         randomly generated sets with random sparsity. The x-axis represent 
-         the value of $n$, i.e. the size of the universe. The y-axis
-         represent the number of seconds the benchmark took with each
-         implementation.}
+\caption{CPU-seconds used to execute $3000^2$ calls to \texttt{isSubset} on
+         randomly generated sets with random sparsity as a function of $n$.}
 \label{fig:setspeed}
 \end{figure}
 
@@ -148,7 +143,7 @@ implementation on smaller universes. However, the sparse implementation
 scales much better than the bit vector implementation when the size of
 the universe increases. When it comes to memory, the situation is the same,
 except reversed. The sets of sparsely stored indices obviously uses less
-memory when $b$ is small, i.e. the modifiers are more sparse. However, they
+memory when $\beta$ is small, i.e. the modifiers are more sparse. However, they
 do not scale as nicely as the bit vectors. So the choice relies on what is
 most important: memory or speed. Since the nature of this thesis is to
 implement a \emph{fast} solver, we give speed a higher priority than memory 

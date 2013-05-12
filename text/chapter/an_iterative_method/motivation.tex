@@ -7,26 +7,26 @@ linear term, the QP transforms into an LP.
 Linearizing the objective function using a first-order Taylor series expansion
 at 0 would give us the same result.
 
-To see this, consider a first-order (linear) Taylor series expansion of a
+Consider a first-order (linear) Taylor series expansion of a
 general function $f$ at a point $a$:
 \[
-T_a(x) = f(a) + \nabla f(a)^T(x-a)
+T_a(x) = f(a) + \nabla f(a)^T(x-a),
 \]
 where $\nabla f(a)$ is the gradient of $f$ evaluated at $a$~\cite{apostol}.
 A linear approximation of function (\ref{eq:obj}) becomes
 \[
-T_a(x) = a^THa + b^Ta + (2a^TH + b^T)(x - a) \\
+T_a(x) = a^THa + b^Ta + (2a^TH + b^T)(x - a).
 \]
 There are a number of terms that cancel each other out. Cancelling them,
 the approximation becomes
 \begin{equation}
 \label{eq:texp}
-T_a(x) = - a^THa + 2a^THx + b^Tx
+T_a(x) = - a^THa + 2a^THx + b^Tx.
 \end{equation}
 
-Now, if $a = 0$ in (\ref{eq:texp}) we are left with
+Now, if $a = 0$ we are left with
 \[
-T_0(x) = b^Tx
+T_0(x) = b^Tx.
 \]
 
 We introduce a new function $g(x) = T_0(x)$, and we formulate a new LP
@@ -39,11 +39,8 @@ Ax = 0
 ~
 \textrm{and}
 ~
-l \le x \le u
+l \le x \le u.
 \]
-where $H$ is a positive semidefinite diagonal $n \times n$ matrix, $A$ is an
-$m \times n$ oriented incidence matrix of some network, and $b, l, u$ and $x$ are vectors in
-$\mathbb{R}^n$.
 We let $\hat{x}$ denote some optimal solution of $\mathcal{L}$, and let $x^*$
 denote some optimal solution of $\mathcal{Q}$.
 

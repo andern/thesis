@@ -1,14 +1,14 @@
-In this section we will present results from the experiments presented in the
-previous section. Throughout this section, we refer to the implementations
+In this section we present results from the experiments introduced in the
+previous section. Throughout this section, we refer to
 \texttt{construct\_clp}, \texttt{construct\_slp}, \texttt{naive\_clp} and
 \texttt{naive\_slp} as \texttt{cClp}, \texttt{cSlp}, \texttt{nClp} and
 \texttt{nSlp}, respectively.
 
 \subsubsection{Experiment 1}
-Table \ref{table:expone} shows the number of seconds
-used to solve \textit{small}, along with $s(2, 238)$ of its subinstances, for
+Table \ref{table:expone} shows the running time in CPU-seconds required
+to solve \textit{small}, along with $s(2, 238)$ of its subinstances, for
 different tolerances.
-It is very clear that the implementations of Slp can not
+It is very clear that Slp can not
 keep up with Clp's QP solver when the tolerance reaches values equal to
 $10^{-5}$ and lower.
 Figure \ref{fig:smalltolerance} shows plotted graphs on the logarithmic scale
@@ -31,29 +31,27 @@ $10^{-7}$ & 70.78 & 6522.91 & 100.85 & 9395.92
 \end{table}
 
 The reason for Slp being so slow with low-valued tolerances is most likely that
-Slp converges really slow as the termination condition becomes too strict
+Slp converges really slowly as the termination condition becomes too strict
 because of the low tolerance value.
 \begin{figure}[ht!]
     \centering
     \input{include/small_tolerance}
-    \caption{Seconds used to solve \textit{small} and $s(2, 238)$ of its
-             subinstances with different tolerances.
-             The x-axis represents the tolerance $\epsilon$.
-             The y-axis represents the number of seconds used.}
+    \caption{Running time in CPU-seconds required to solve \textit{small}
+             and $s(2, 238)$ of its subinstances, as a function of $\epsilon$.}
     \label{fig:smalltolerance}
 \end{figure}
-We can measure the number of Slp iterations required to solve a given problem
-given some tolerance. By solving randomly generated problems where $n = 50$,
+We can measure the number of Slp iterations required to solve a given instance
+given some tolerance. By solving randomly generated instances where $n = 50$,
 with Slp, we note the average number of iterations among ten solved
-problems. Table \ref{table:expiters} shows the results from this, and we see
+instances. Table \ref{table:expiters} shows the results from this, and we see
 that the average number of iterations increases rapidly as the tolerance
 becomes smaller than $10^{-4}$. This fits our prediction about why
 \texttt{cSlp} and \texttt{nSlp} becomes much slower at lower tolerances.
 
 \begin{table}[ht!]
 \centering
-\caption{Average number of iterations used by Slp with different tolerances,
-         to solve ten randomly generated instances.}
+\caption{Average number of iterations used by Slp with different tolerances
+         over ten randomly generated instances.}
 \label{table:expiters}
 \begin{tabular}{rrrrr}
 $\epsilon$ & Iterations \\ \hline
@@ -70,9 +68,13 @@ $10^{-9}$  & 752.6
 \end{table}
 
 \subsubsection{Experiment 2}
-In this experiment we let $\epsilon = 10^{-4}$, so that the implementations
-of Slp may keep up. Table \ref{table:eps4instances} shows the results from
-this experiment.
+The goal in this experiment is to see how the methods perform on static instances
+of increasing size.
+We learned in the previous experiment that Slp can not keep up as the tolerance
+reaches values lower than $10^{-4}$, so we let $\epsilon = 10^{-4}$ to see if
+Slp may keep up as $n$ increases.
+Table \ref{table:eps4instances} shows the running time in CPU-seconds required
+to solve the three instances.
 Unfortunately, we see that even with a high tolerance, Slp can not keep up as
 $n$ increases.
 
@@ -90,26 +92,26 @@ $n$ increases.
 \end{table}
 
 \subsubsection{Experiment 3}
-Table \ref{table:expfour} shows an excerpt of the test results.
+Since the two previous experiments indicate that Clp performs better, we
+go on to evaluate the tree-structural approach based on this solver.
+Table \ref{table:expfour} shows an excerpt of the test results. The table
+shows the average running time in CPU-seconds required to solve random instances
+of increasing size, along with $s(1, n)$ of its subinstances. The rightmost
+column shows how much faster \texttt{cClp} is in comparison with \texttt{nClp}.
 A table with results for all $n=100,200,\ldots,2000$ can found in Appendix
 \ref{app:exp1}.
-We see that, as the problem size grows, the \texttt{cClp}
+We see that, as the instance size grows, the \texttt{cClp}
 implementation becomes faster and faster in comparison with
 \texttt{nClp}.
-This is due to the fact that we save more time for each problem we do
-\emph{not} need to solve, as $n$ becomes larger, simply because larger problems
+This is due to the fact that we save more time for each instance we do
+\emph{not} need to solve, as $n$ becomes larger, simply because larger instances
 take more time to solve.
-There are also more subinstances as
-$n$ grows, making room for more subinstances that we might not have to solve.
+There are also more subinstances as $n$ grows, making room for more subinstances
+that we might not have to solve.
 
 \begin{table}[ht!]
     \centering
-    \caption{An excerpt of test results from Experiment 3.
-             The values in the \texttt{cClp} and \texttt{nClp} columns are the
-             average running times in seconds for solving instances with
-             $s(1, n)$ subinstances, ten times.
-             The rightmost column represents how much faster, in percent,
-             \texttt{cClp} is compared with \texttt{nClp}.}
+    \caption{An excerpt of test results from Experiment 3.}
     \label{table:expfour}
 \begin{tabular}{rrrc}
     $n$ & \texttt{cClp}  & \texttt{nClp}  & Faster \\ \hline
@@ -121,29 +123,25 @@ $n$ grows, making room for more subinstances that we might not have to solve.
 \end{table}
 
 \subsubsection{Experiment 4}
-Table \ref{table:exptwo} shows the test results from this experiment. We see
-that, as $b$ increases, the \texttt{cClp} implementation becomes
+Table \ref{table:exptwo} shows the test results from this experiment.
+The table shows the average running time in CPU-seconds required to solve
+ten random instances along with $s(\beta, 50)$ of its subinstances.
+The rightmost column represents how many subinstances we did not have to
+solve because their solutions were found in the tree.
+that, as $\beta$ increases, the \texttt{cClp} implementation becomes
 faster and faster in comparison with \texttt{nClp}.
 This is due to the fact that as the tree grows in size, the chance that
 an unsolved subinstance is distinct, decreases. In fact, looking at the
 rightmost column in Table \ref{table:exptwo}, we can calculate the percentage
-of distinct solutions as $b$ increases.
+of distinct solutions as $\beta$ increases.
 There are $74.3\%, 58.3\%, 45.4\%, 32.8\%$ and $24.2\%$ distinct solutions for
-$b$ equal to $1,2,3,4$ and $5$, respectively. This helps us clarify the reason
+$\beta$ equal to $1,2,3,4$ and $5$, respectively. This helps us clarify the reason
 why \texttt{cClp} becomes faster and faster in comparison with \texttt{nClp}.
 \begin{table}[ht!]
 \centering
-\caption{Results from experiment 4.
-         The values in the \texttt{cClp} and \texttt{nClp} columns are the
-         average running times in seconds for solving instances where $n = 50$,
-         with $s(b, 50)$ subinstances, ten times.
-         The Faster column represents how much faster, in percent,
-         \texttt{cClp} is compared with \texttt{nClp}.
-         The Skipped column represents how many subinstances we could skip
-         solving because its solution was found in the tree.
-         }
+\caption{Results from Experiment 4.}
 \begin{tabular}{rrrcr}
-      $b$ & \texttt{cClp} & \texttt{nClp} & Faster & Skipped\\ \hline
+      $\beta$ & \texttt{cClp} & \texttt{nClp} & Faster & Skipped\\ \hline
        1  & 0.03 & 0.04 & 25.0\% & 13.6 \\
        2  & 0.64 & 0.94 & 31.9\% & 531.7 \\
        3  & 7.06 & 15.90 & 55.6\% & 11391.3 \\
@@ -153,22 +151,19 @@ why \texttt{cClp} becomes faster and faster in comparison with \texttt{nClp}.
 \label{table:exptwo}
 \end{table}
 
-Figure \ref{fig:constructincb} shows a plot of the number of seconds used to
-solve, on average, one subinstance, as $b$ increases.
-We see that as $b$ increases, the number of
-seconds to solve one subinstance decreases with \texttt{cClp},
-but with \texttt{nClp}, it does not change much. This behavior is very
+Figure \ref{fig:constructincb} shows a plot of the average number of
+CPU-seconds required to solve one subinstance, as a function of $\beta$.
+We see that as $\beta$ increases, the number of seconds required to solve
+one subinstance decreases in the case of \texttt{cClp},
+but for \texttt{nClp}, it does not change much. This behavior is very
 much expected, especially considering our earlier assessment in this
 experiment.
 
 \begin{figure}[ht!]
     \centering
     \input{include/construct_incb}
-    \caption{Seconds used, on average, to solve one subinstance, as $b$
-             increases.
-             The x-axis represents $b$.
-             The y-axis represents the number of seconds used, on average,
-             to solve one subinstance.}
+    \caption{Average running time in CPU-Seconds required to solve one subinstance,
+             as a function of $\beta$.}
     \label{fig:constructincb}
 \end{figure}
 
@@ -177,7 +172,7 @@ experiment.
 \centering
 \caption{Ignore this table at the moment. Unfinished possible experiment.}
 \begin{tabular}{rrrr}
-    $b$ & \texttt{cClp} & \texttt{cSlp} & Skipped \\ \hline
+    $\beta$ & \texttt{cClp} & \texttt{cSlp} & Skipped \\ \hline
      1  & 0.01          &               & 6.2 \\
      2  & 0.08          &               & 131.5 \\
      3  & 0.48          &               & 1237.3 \\
@@ -187,6 +182,7 @@ experiment.
      7  & 70.16         &               & 567071.6 \\
      8  & 202.11        &               & 1462074.6 \\
      9  & 379.84        &               & 3351206.6 \\
-     10 & 807.85        &               & 6468142.0
+     10 & 807.85        &               & 6468142.0 \\
+     11 & 1997.67       &               & 10606968.5
 \end{tabular}
 \end{table}
