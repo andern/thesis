@@ -32,6 +32,7 @@
 \counterwithin{algocf}{section}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
 
 \makeatletter
 \tikzset{circle split part fill/.style  args={#1,#2}{%
@@ -142,20 +143,54 @@ following main functions\cite{trond}:
 \item Post calculation of various auxiliary variables including economic data.
 \end{enumerate}
 Among these six functions, the third main function was identified as the most
-time-consuming, or more specifically, a call to a QP solver.
+time-consuming, or more specifically in the third main function, a call to a QP
+solver\cite{trond}.
 
 The maximum power
 supply can be calculated by an objective function that represents the power
 delivery profit. A typical objective function is
 \[
-J = -C_G - P^T \Phi C_D P + C_L P,
+f(x) = -g - x^T \Phi D x + c^T x,
 \]
-where $J$ is the objective function value (E/s), $P$ is the branch power vector
-($W$), $C_G$ is a line vector containing specific power generation cost
-($E/J$), $\Phi$ is a diagonal matrix representing power loss ($1/W$), $C_D$ is
-a diagonal matrix containing specific power transmission cost ($E/J$), and
-$C_L$ is a line vector containing specific power delivery price ($E/J$).
+where $f(x)$ is the objective value ($E/s$) as a function of $x$, $x$ is the
+branch power vector ($W$), $g$ is a line vector containing specific power
+generation cost ($E/J$), $\Phi$ is a diagonal matrix representing power loss
+($1/W$), $D$ is a diagonal matrix containing specific power transmission cost
+($E/J$), and $c$ is a line vector containing specific power delivery price
+($E/J$).
 The symbol $E$ is the economical unit\cite{digernes}.
+
+A more general objective function is
+\begin{equation}
+    f(x) = x^T H x + b^T x, \label{eq:obj}
+\end{equation}
+where $H$ is a diagonal matrix that represents quadratic cost terms ($E/s$) and
+$b$ is a vector that represents the linear cost terms with appropriate
+sign\cite{digernes}.
+
+The maximum power delivery capacity can be defined as an optimization problem
+\begin{equation}
+   \max_{l \le x \le u} f(x)\quad\textrm{subject to}~Ax = 0 \label{eq:thesisqp}
+\end{equation}
+where $A$ is the grid configuration matrix or reduced incidence matrix, and
+$l$ and $u$ is the minimum and maximum branch (lower and upper) capacity,
+respectively\cite{digernes}.
+
+If a branch with index $i$ fails, we can model that by letting
+$l_i = u_i = 0$ where $l_i$ and $u_i$ denotes the $i$th element of $l$ and
+$u$, respectively. We refer to a branch failing as a \textit{breakdown}.
+We discuss breakdowns in more detail later in the thesis.
+
+In the next section, we present some background material for the
+main sections. We then move on to present a short data analysis of
+some actual cases that Goodtech have supplied. Afterwards, we present
+an iterative optimization method based on Successive Linear Programming (SLP).
+Next, we present methods for eliminating unnecessary work carried out in the
+third main function of PROMAPS, and thereby improving the speed in which it is
+performed.
+We also present implementations of all the aforementioned methods, along with
+experiments and results.
+
 %\begingroup
 %\let\clearpage\relax
 \include{chapter/a_qp_problem/main}
