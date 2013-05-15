@@ -7,7 +7,7 @@ event simulator that only stores the current state of the network.
 First we will discuss the implementation of the tree structure, before we
 move on to the two main approaches.
 
-\subsubsection{Tree Structure}
+\subsection{Tree Structure}
 All trees consists of vertices, and in our specific case, each vertex contains
 two sets $\mathcal{M}$ and $\mathcal{Z}$, a solution $x^*$, and a number of
 child vertices. To keep vertices as simple as possible, we implement them as
@@ -150,7 +150,7 @@ implement a \emph{fast} solver, we give speed a higher priority than memory
 efficiency, so we choose to implement the sets of sparsely stored
 indices. That is, in \texttt{C++}, \texttt{set}.
 
-\subsubsection{Tree Construction}
+\subsection{Tree Construction}
 Because we do not need to store any information about edges in the tree,
 we do not need to implement edges as an object of its own. We defined
 a vertex \texttt{struct} earlier, having a \texttt{vector} of child

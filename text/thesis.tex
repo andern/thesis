@@ -60,19 +60,14 @@ insert path={
 
 %\title{Fast Solver of a Quadratic Programming (QP) Problem}
 \title{Optimizing Performance of Solving Closely Related Quadratic Programming
-       (QP) Problems.}
+       Problems.}
 
 \author{Andreas Halle}
-
-
-%\pagenumbering{roman}
-%\listoffigures
-%\listoftables
-
-%\twocolumn[
-%\begin{@twocolumnfalse}
 \maketitle
-\tableofcontents
+\thispagestyle{empty}
+\newpage
+
+\thispagestyle{empty}
 \begin{abstract}
 Goodtech and MathConsult have developed tools to compute the reliability of
 delivery in a masked network where every link has an error rate.
@@ -94,6 +89,8 @@ The aim is to develop a solver for effectively solving problems
         in the constraints.
 \end{inparaenum}
 \end{abstract}
+\newpage
+
 %\end{@twocolumnfalse}
 %]
 %{
@@ -101,6 +98,9 @@ The aim is to develop a solver for effectively solving problems
 %    {\fnsymbol{footnote}}
 %  \footnotetext[1]{University of Bergen, Department of Informatics, P.O.Box 7803, N-5020 Bergen, Norway}
 %}
+\setcounter{page}{3}
+\tableofcontents
+\newpage
 
 \chapter{Introduction}
 As electrical transmission systems increase in complexity, it becomes
@@ -196,6 +196,7 @@ experiments and results.
 
 %\begingroup
 %\let\clearpage\relax
+\include{chapter/background/main}
 \include{chapter/a_qp_problem/main}
 \include{chapter/an_iterative_method/main}
 \include{chapter/a_tree_representation/main}
@@ -217,7 +218,7 @@ rapidly as the tolerance decreases, it does stand as an alternative method. A
 method that does not require Goodtech to pay any license fees. It is important
 to point out that the method is entirely independent of specific LP
 implementations. The only requirement for implementing the method is a LP
-solver. Now, there are more available LP solvers than QP solvers in general,
+solver. There are more available LP solvers than QP solvers in general,
 but there are also more free LP solvers than free QP solvers [TODO: Cite 
 Wikipedia?].
 
@@ -229,6 +230,41 @@ average number of CPU-seconds used to solve a subinstance. This method is
 independent of any specific QP solver, and since the method relies on reducing
 workload, and not increasing the speed of the solver, the percentage of speed
 increase by applying the method will most likely remain independent of solver.
+
+\section{Future Work}
+This section presents discussions of possible future work regarding the methods
+described previously in this thesis.
+
+\subsubsection{Parallelization}
+Since we are solving a huge amount of QP problems, running several QP solvers
+at once is of interest. We look at the possibility of parallelizing both
+the naive method of solving all subinstances regardless of whether they are
+distinct or not, and the tree-structural approach. We begin by analyzing
+the parallelization of the naive approach.
+
+If we are to do this parallelization on a distributed computer, we need to
+analyze the amount of communication that is needed between each processor.
+Given some number of breakdowns $\beta$ and an instance $\mathcal{Q}$ of of
+size $m \times n$, we can map each subinstance of $\mathcal{Q}$ to some
+$\mathcal{Q}_i$ for $i=0,1,\ldots,s(\beta, n)$. Each processor needs to
+have a copy of the original instance $\mathcal{Q}$, which is $O(mn)$ in terms
+of memory. Given a number of processors $p$, the main processor needs to
+transmit this problem to each processor, resulting in $O(pmn)$ in terms of
+communication before the calculations are started. Now, each
+processor solves $\frac{s(\beta, n)}{p}$ subinstances, resulting in
+\[
+O(s(\beta, n)n)
+\]
+in terms of communication by sending solutions back to the main processor.
+Sending few, but huge blocks of data is often faster than sending many small
+blocks of data.
+Therefore, an alternative approach is to store all solutions on each processor,
+and then transmitting them all to the main processor.
+This would require
+\[
+O\left(\frac{s(\beta, n)n}{p}\right)
+\]
+in terms of memory for each processor.
 
 %\onecolumn
 %\newpage
