@@ -1,6 +1,6 @@
 \appendix
-\section{Codes}
-\subsection{\texttt{bitset} vs \texttt{set}}
+\chapter{Codes}
+\section{\texttt{bitset} vs \texttt{set}}
 \label{app:setbench}
 \begin{verbatim}
 
@@ -58,7 +58,7 @@ int main() {
 
 \end{verbatim}
 
-\subsection{next\_combination}
+\section{next\_combination}
 \label{app:nextcombination}
 \begin{verbatim}
 template <class BidIt>
@@ -128,7 +128,7 @@ BidIt r_begin, BidIt r_end)
 }
 \end{verbatim}
 
-\subsection{Generate Random Instance}
+\section{Generate Random Instance}
 \label{app:random}
 \begin{verbatim}
 static CoinPackedMatrix packMatrix(double** m, int rows, int cols) {
@@ -249,8 +249,8 @@ ClpModel randomInstance(int vertices, int edges, double Hzero, double bzero) {
 }
 \end{verbatim}
 
-\section{Tables}
-\subsection{Results From Experiment 1}
+\chapter{Tables}
+\section{Results From Experiment 1}
 \label{app:exp1}
 \begin{tabular}{lrr}
      $n$ & cClp               & nClp \\ \hline

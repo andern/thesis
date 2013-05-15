@@ -1,4 +1,4 @@
-\documentclass[a4paper, twocolumn]{article}
+\documentclass[a4paper,12pt]{report}
 
 %\usepackage{caption}
 \usepackage{subcaption}
@@ -26,10 +26,10 @@
 
 \usepackage{verbatim}
 \usepackage{chngcntr}
-\counterwithin{figure}{section}
-\counterwithin{equation}{section}
-\counterwithin{table}{section}
-\counterwithin{algocf}{section}
+\counterwithin{figure}{chapter}
+\counterwithin{equation}{chapter}
+\counterwithin{table}{chapter}
+\counterwithin{algocf}{chapter}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
@@ -62,17 +62,17 @@ insert path={
 \title{Optimizing Performance of Solving Closely Related Quadratic Programming
        (QP) Problems.}
 
-\author{Andreas Halle\thanks{}}
+\author{Andreas Halle}
 
 
 %\pagenumbering{roman}
-%\tableofcontents
 %\listoffigures
 %\listoftables
 
-\twocolumn[
-\begin{@twocolumnfalse}
+%\twocolumn[
+%\begin{@twocolumnfalse}
 \maketitle
+\tableofcontents
 \begin{abstract}
 Goodtech and MathConsult have developed tools to compute the reliability of
 delivery in a masked network where every link has an error rate.
@@ -94,15 +94,15 @@ The aim is to develop a solver for effectively solving problems
         in the constraints.
 \end{inparaenum}
 \end{abstract}
-\end{@twocolumnfalse}
-]
-{
-  \renewcommand{\thefootnote}%
-    {\fnsymbol{footnote}}
-  \footnotetext[1]{University of Bergen, Department of Informatics, P.O.Box 7803, N-5020 Bergen, Norway}
-}
+%\end{@twocolumnfalse}
+%]
+%{
+%  \renewcommand{\thefootnote}%
+%    {\fnsymbol{footnote}}
+%  \footnotetext[1]{University of Bergen, Department of Informatics, P.O.Box 7803, N-5020 Bergen, Norway}
+%}
 
-\section{Introduction}
+\chapter{Introduction}
 As electrical transmission systems increase in complexity, it becomes
 more difficult to understand how different components in the system interact.
 We often aim to increase the utilization of such systems, and with that comes
@@ -184,7 +184,7 @@ $l_i = u_i = 0$ where $l_i$ and $u_i$ denotes the $i$th element of $l$ and
 $u$, respectively. We refer to a branch failing as a \textit{breakdown}.
 We discuss breakdowns in more detail later in the thesis.
 
-In the next section, we present some background material for the
+In the next section, we present background material for the
 main sections. We then move on to present a short data analysis of
 some actual cases that Goodtech have supplied. Afterwards, we present
 an iterative optimization method based on Successive Linear Programming (SLP).
@@ -196,28 +196,39 @@ experiments and results.
 
 %\begingroup
 %\let\clearpage\relax
-\input{chapter/a_qp_problem/main}
-\input{chapter/an_iterative_method/main}
-\input{chapter/a_tree_representation/main}
-\input{chapter/implementation/main}
-\input{chapter/computational_experiments/main}
+\include{chapter/a_qp_problem/main}
+\include{chapter/an_iterative_method/main}
+\include{chapter/a_tree_representation/main}
+\include{chapter/implementation/main}
+\include{chapter/computational_experiments/main}
 %\endgroup
 
-\section{Conclusion}
+\chapter{Conclusion}
 We started out with an initial workload, where the methods for finishing
 that workload was deemed too slow. The bottleneck was pinpointed to a call
-to a QP solver, and the aim was to improve the performance of this the methods
+to a QP solver, and the aim was to improve the performance of the methods
 initiated by this call.
 
 We presented an iterative method based around linear programming, as the data
 analyses suggested that the QP problems were--- in lack of a better
-word---\emph{close} to a linear program.
+word---\emph{close} to linear programs. While this method turned out to be
+quite slow, due to the fact that the number of iterations increase quite
+rapidly as the tolerance decreases, it does stand as an alternative method. A
+method that does not require Goodtech to pay any license fees. It is important
+to point out that the method is entirely independent of specific LP
+implementations. The only requirement for implementing the method is a LP
+solver. Now, there are more available LP solvers than QP solvers in general,
+but there are also more free LP solvers than free QP solvers [TODO: Cite 
+Wikipedia?].
 
 Afterwards, we presented a tree-structural approach for reducing our workload.
 While this approach did not improve the running time of each call to the QP
-solver, it \emph{did} reduce the number of calls to the QP solver by a
+solver, it did reduce the \emph{number of calls} to the QP solver by a
 significant amount. Because of fewer calls to the QP solver, it reduced the
-average number of CPU-seconds used to solve a subinstance.
+average number of CPU-seconds used to solve a subinstance. This method is
+independent of any specific QP solver, and since the method relies on reducing
+workload, and not increasing the speed of the solver, the percentage of speed
+increase by applying the method will most likely remain independent of solver.
 
 %\onecolumn
 %\newpage
