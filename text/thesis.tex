@@ -58,7 +58,10 @@ insert path={
 \pgfmathparse{0.03514598035*#2}\pgfmathprintnumber{\pgfmathresult})%
 }
 
-\title{Fast Solver of a Quadratic Programming (QP) Problem}
+%\title{Fast Solver of a Quadratic Programming (QP) Problem}
+\title{Optimizing Performance of Solving Closely Related Quadratic Programming
+       (QP) Problems.}
+
 \author{Andreas Halle\thanks{}}
 
 
@@ -193,12 +196,28 @@ experiments and results.
 
 %\begingroup
 %\let\clearpage\relax
-\include{chapter/a_qp_problem/main}
-\include{chapter/an_iterative_method/main}
-\include{chapter/a_tree_representation/main}
-\include{chapter/implementation/main}
-\include{chapter/computational_experiments/main}
+\input{chapter/a_qp_problem/main}
+\input{chapter/an_iterative_method/main}
+\input{chapter/a_tree_representation/main}
+\input{chapter/implementation/main}
+\input{chapter/computational_experiments/main}
 %\endgroup
+
+\section{Conclusion}
+We started out with an initial workload, where the methods for finishing
+that workload was deemed too slow. The bottleneck was pinpointed to a call
+to a QP solver, and the aim was to improve the performance of this the methods
+initiated by this call.
+
+We presented an iterative method based around linear programming, as the data
+analyses suggested that the QP problems were--- in lack of a better
+word---\emph{close} to a linear program.
+
+Afterwards, we presented a tree-structural approach for reducing our workload.
+While this approach did not improve the running time of each call to the QP
+solver, it \emph{did} reduce the number of calls to the QP solver by a
+significant amount. Because of fewer calls to the QP solver, it reduced the
+average number of CPU-seconds used to solve a subinstance.
 
 %\onecolumn
 %\newpage
