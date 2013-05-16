@@ -59,7 +59,7 @@ insert path={
 }
 
 %\title{Fast Solver of a Quadratic Programming (QP) Problem}
-\title{Optimizing Performance of Solving Closely Related Quadratic Programming
+\title{Fast Solver of Closely Related Quadratic Programming
        Problems.}
 
 \author{Andreas Halle}
@@ -110,10 +110,11 @@ the need for good planning and operational tools.
 The Transmission System Operator (TSO) is faced
 with increasing requirements regarding the reliability of load
 delivery, and the cost of not delivering agreed energy can be
-substantial\cite{digernes}.
+substantial.
 The need for tools to assist the TSO in analyses that can help prevent
 unreliable networks is important.
-In \cite{digernes}, the authors state:
+Digernes et al. \cite{digernes} state:
+%In \cite{digernes}, the authors state:
 \begin{quote}
 It is of utmost importance for the TSO to be able to perform detailed and
 accurate reliability analyses; for the daily operation as well as for
@@ -128,16 +129,18 @@ planning, for analyzing different alternatives for network reinforcement's
 Goodtech and MathConsult have developed a tool called PROMAPS
 (Probability Methods Applied to Power Systems). It calculates the power
 delivery as a function of demand, and the probability for undelivered
-energy for each load branch in the system, and in the system as a whole
-\cite{trond}. A typical calculation sequence in PROMAPS includes the
-following main functions\cite{trond}:
+energy for each load branch in the system, and in the system as a whole.
+According to Svendsen et al. \cite{trond}, a typical calculation sequence
+in PROMAPS includes the following main functions:
+%A typical calculation sequence in PROMAPS includes the following main
+%functions\cite{trond}:
 \begin{enumerate}
 \item Creation of branch reliability models based on unit Markov models and
       composition and aggregation of states.
 \item Selection of a subset of states containing all grid reliability states
       with a significant reliability.
 \item Calculation of maximum power delivery capacity for each of the
-      significant grid reliability states based on an object function with
+      significant grid reliability states based on an objective function with
       constraints.
 \item Calculation of expected power shortage and creation of delivery
       reliability models based on the operations composition and aggregation.
@@ -146,29 +149,29 @@ following main functions\cite{trond}:
 \item Post calculation of various auxiliary variables including economic data.
 \end{enumerate}
 Among these six functions, the third main function was identified as the most
-time-consuming, or more specifically in the third main function, a call to a QP
+time-consuming. A major part of the third main function is a call to a QP
 solver\cite{trond}.
 
 The maximum power
 supply can be calculated by an objective function that represents the power
 delivery profit. A typical objective function is
-\[
-f(x) = -g - x^T \Phi D x + c^T x,
-\]
+\begin{equation}
+f(x) = -g - x^T \Phi D x + b^T x, \label{eq:goodtech}
+\end{equation}
 where $f(x)$ is the objective value ($E/s$) as a function of $x$, $x$ is the
-branch power vector ($W$), $g$ is a line vector containing specific power
+branch power vector ($W$), $g$ is a vector containing specific power
 generation cost ($E/J$), $\Phi$ is a diagonal matrix representing power loss
 ($1/W$), $D$ is a diagonal matrix containing specific power transmission cost
-($E/J$), and $c$ is a line vector containing specific power delivery price
-($E/J$).
-The symbol $E$ is the economical unit\cite{digernes}.
+($E/J$), and $b$ is a vector containing specific power delivery price
+($E/J$). The symbols in parentheses are units of measurements.
+The symbol $E$ is the monetary unit, $J$ is joule and
+$W$ is watt\cite{digernes}.
 
-A more general objective function is
+We simplify (\ref{eq:goodtech}) to
 \begin{equation}
     f(x) = x^T H x + b^T x, \label{eq:obj}
 \end{equation}
-where $H$ is a diagonal matrix that represents quadratic cost terms ($E/s$) and
-$b$ is a vector that represents the linear cost terms with appropriate
+where $H$ is a diagonal matrix that represents quadratic cost terms ($E/s$).
 sign\cite{digernes}.
 
 The maximum power delivery capacity can be defined as an optimization problem
@@ -176,23 +179,27 @@ The maximum power delivery capacity can be defined as an optimization problem
    \max_{l \le x \le u} f(x)\quad\textrm{subject to}~Ax = 0 \label{eq:thesisqp}
 \end{equation}
 where $A$ is the grid configuration matrix or reduced incidence matrix, and
-$l$ and $u$ is the minimum and maximum branch (lower and upper) capacity,
+$l$ and $u$ are the minimum and maximum branch (lower and upper) capacity,
 respectively\cite{digernes}.
 
 If a branch with index $i$ fails, we can model that by letting
-$l_i = u_i = 0$ where $l_i$ and $u_i$ denotes the $i$th element of $l$ and
+$l_i = u_i = 0$ where $l_i$ and $u_i$ denote the $i$th element of $l$ and
 $u$, respectively. We refer to a branch failing as a \textit{breakdown}.
-We discuss breakdowns in more detail later in the thesis.
+We discuss breakdowns in more detail in Section \ref{sec:instances},
+\ref{sec:subinstances} and Chapter \ref{ch:tree}.
 
-In the next section, we present background material for the
-main sections. We then move on to present a short data analysis of
-some actual cases that Goodtech have supplied. Afterwards, we present
+In the next section, we present a short introduction to linear and quadratic
+programming.
+We then move on to Chapter \ref{ch:qp} where we present some quadratic
+programming problems that Goodtech have supplied
+Afterwards, in Chapter \ref{ch:slp}, we present
 an iterative optimization method based on Successive Linear Programming (SLP).
-Next, we present methods for eliminating unnecessary work carried out in the
-third main function of PROMAPS, and thereby improving the speed in which it is
-performed.
-We also present implementations of all the aforementioned methods, along with
-experiments and results.
+When we move on to Chapter \ref{ch:tree}, we present methods for eliminating
+unnecessary work carried out in the third main function of PROMAPS, and
+thereby improving the speed in which it is performed.
+We also present implementations of all the aforementioned methods in Chapter
+\ref{ch:implementation}, along with
+experiments and results in Chapter \ref{ch:experiments}.
 
 %\begingroup
 %\let\clearpage\relax
@@ -204,49 +211,58 @@ experiments and results.
 \include{chapter/computational_experiments/main}
 %\endgroup
 
-\chapter{Conclusion}
-We started out with an initial workload, where the methods for finishing
-that workload was deemed too slow. The bottleneck was pinpointed to a call
-to a QP solver, and the aim was to improve the performance of the methods
-initiated by this call.
+\chapter{Conclusion and Suggestions to Future Work}
+Goodtech and MathConsult have developed a tool called PROMAPS that calculates
+the power delivery as a function of demand, and the probability for undelivered
+energy for each load branch in the system, and in the system as a whole.
+Among several main functions of PROMAPS, its bottleneck was pinpointed to
+a call to a QP solver. The aim of this thesis was to improve the performance
+of the methods initiated by this call.
 
-We presented an iterative method based around linear programming, as the data
+We presented an iterative method based on linear programming, as the data
 analyses suggested that the QP problems were--- in lack of a better
-word---\emph{close} to linear programs. While this method turned out to be
-quite slow, due to the fact that the number of iterations increase quite
-rapidly as the tolerance decreases, it does stand as an alternative method. A
-method that does not require Goodtech to pay any license fees. It is important
+word---\emph{close} to linear programs. Although this method turned out to be
+slower than a commercially available alternate solver, due to the fact that the
+number of iterations increases quite rapidly as the tolerance decreases, it
+does stand as an alternative method, mainly because it does not require
+Goodtech to pay any license fees.
+It is important
 to point out that the method is entirely independent of specific LP
-implementations. The only requirement for implementing the method is a LP
+implementations. The only requirement for implementing the method is an LP
 solver. There are more available LP solvers than QP solvers in general,
-but there are also more free LP solvers than free QP solvers [TODO: Cite 
-Wikipedia?].
+but there are also more free LP solvers than free QP
+solvers\cite{wikilp}\cite{wikiqp}.
 
-Afterwards, we presented a tree-structural approach for reducing our workload.
-While this approach did not improve the running time of each call to the QP
-solver, it did reduce the \emph{number of calls} to the QP solver by a
-significant amount. Because of fewer calls to the QP solver, it reduced the
-average number of CPU-seconds used to solve a subinstance. This method is
-independent of any specific QP solver, and since the method relies on reducing
-workload, and not increasing the speed of the solver, the percentage of speed
-increase by applying the method will most likely remain independent of solver.
+Afterwards, we presented a tree-structural approach for reducing the number
+of calls to the QP solver. This approach reduced the number of calls to the
+QP solver by a significant amount. Depending on problem size and the number
+of breakdowns, this approach caused the original method to perform from
+16\% to around 70\% faster, and with reason to believe that it would increase
+even further, as $\beta$ increases. This reduced the average number of
+CPU-seconds used to solve a subinstance.
+This method is
+independent of the choice of QP solver, and since the method relies on reducing
+the number of calls to the QP solver, and not increasing the speed of the
+actual solver, the relative speedup will most likely remain solver independent.
 
 \section{Future Work}
-This section presents discussions of possible future work regarding the methods
-described previously in this thesis.
+This section presents suggestions to future work regarding the methods
+described in this thesis.
 
 \subsubsection{Parallelization}
 Since we are solving a huge amount of QP problems, running several QP solvers
-at once is of interest. We look at the possibility of parallelizing both
+simultaneously is of interest. We suggest the parallelization of the methods
+presented in this thesis, as a future research topic.
+We consider the possibility of parallelizing both
 the naive method of solving all subinstances regardless of whether they are
-distinct or not, and the tree-structural approach. We begin by analyzing
+distinct or not, and the tree-structured approach. We begin by analyzing
 the parallelization of the naive approach.
 
 If we are to do this parallelization on a distributed computer, we need to
 analyze the amount of communication that is needed between each processor.
-Given some number of breakdowns $\beta$ and an instance $\mathcal{Q}$ of of
-size $m \times n$, we can map each subinstance of $\mathcal{Q}$ to some
-$\mathcal{Q}_i$ for $i=0,1,\ldots,s(\beta, n)$. Each processor needs to
+Given some number of breakdowns $\beta$ and an instance $\mathcal{Q}$ with
+$m$ rows and $n$ columns, we can map each subinstance of $\mathcal{Q}$ to some
+$\mathcal{Q}_i$ for $i=0,1,\ldots,s(\beta,n) - 1$. Each processor needs to
 have a copy of the original instance $\mathcal{Q}$, which is $O(mn)$ in terms
 of memory. Given a number of processors $p$, the main processor needs to
 transmit this problem to each processor, resulting in $O(pmn)$ in terms of
