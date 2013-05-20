@@ -1,0 +1,107 @@
+This section acts as an introduction to linear programming (LP). The terminology and
+notation we use is influenced by\cite{vanderbei}.
+
+In linear programming, we aim to maximize or minimize a linear function of
+some variables $x_j$ for $j=1,2,\ldots,n$. We refer to these variables as
+\textit{decision variables}. The linear function is denoted as a linear
+combination of the decision variables:
+\[
+\zeta = c_1 x_1 + c_2 x_2 + \cdots + c_n x_n,
+\]
+and is called the \textit{objective function}, and $c_i$ for $i=1,2,\ldots,n$
+are coefficients.
+This function is maximized
+or minimized subject to linear \textit{constraints}. These constraints are
+always either equalities or inequalities denoted as a linear combination
+of the decision variables:
+\[
+a_1x_1 + a_2 x_2 + \cdots + a_n x_n \left\{\begin{array}{c} \leq \\ = \\ \geq \end{array}\right\} b.
+\]
+where $a_i$ are coefficients and $b$ is some value.
+The problem of maximizing or minimizing $\zeta$ subject to one or more
+linear constraints is called a linear programming problem.
+We can formulate these problems as:
+\[
+\begin{array}{lrcrcccrcr}
+\textrm{maximize}   & c_1 x_1    &+& c_2 x_2    &+& \cdots &+& c_n x_n               \\
+\textrm{subject to} & a_{11} x_1 &+& a_{12} x_2 &+& \cdots &+& a_{1n} x_n &\leq& b_1 \\
+                    & a_{21} x_1 &+& a_{22} x_2 &+& \cdots &+& a_{2n} x_n &\leq& b_2 \\
+                    &            & &            & & \vdots & &            &    &     \\
+                    & a_{m1} x_1 &+& a_{m2} x_2 &+& \cdots &+& a_{mn} x_n &\leq& b_m \\
+                    \multicolumn{8}{r}{x_1,x_2,\ldots,x_n} &\geq& 0,
+\end{array}
+\]
+where $m$ is the number of constraints and $n$ is the number of decision variables.
+This formulation is referred to as \textit{standard form}\cite{vanderbei}.
+We can also formulate these problems in a more compact form:
+\[
+\max{c^T x},\quad \textrm{subject to}~Ax \leq b, ~ x \geq 0,
+\]
+where $c$ and $x$ are vectors in $\mathbb{R}^n$, $b$ is a vector in $\mathbb{R}^m$, and
+A is an $m \times n$ matrix.
+
+Constraints are not necessarily written as
+\textit{less-than} inequalities, so we have to convert them to get the problem
+in standard form. An equality
+\[
+a_1 x_1 + a_2 x_2 + \cdots + a_n x_n \geq b
+\]
+might be converted to a \textit{less-than} inequality by multiplying both
+sides by $-1$:
+\[
+- a_1 x_1 - a_2 x_2 - \cdots - a_n x_n \leq -b
+\]
+An equality constraint can be converted into two inequality constraints.
+Given the equality constraint
+\[
+a_1 x_1 + a_2 x_2 + \cdots + a_n x_n = b,
+\]
+we can convert it into the two inequalities
+\[
+\begin{array}{c}
+a_1 x_1 + a_2 x_2 + \cdots + a_n x_n \leq b \\
+a_1 x_1 + a_2 x_2 + \cdots + a_n x_n \geq b,
+\end{array}
+\]
+or equivalently
+\[
+\begin{array}{c}
+a_1 x_1 + a_2 x_2 + \cdots + a_n x_n \leq b \\
+- a_1 x_1 - a_2 x_2 - \cdots - a_n x_n \leq -b.
+\end{array}
+\]
+
+Any combination of values for the decision variables is called a \textit{solution}.
+If all the values submit to the constraints of the problem, the solution is
+said to be \textit{feasible}. In contrast, if any of the values of the solution
+does not submit to the constraints of the problem, the solution is said to
+be \textit{infeasible}. The set of all feasible solutions is called the
+\textit{feasible region}\footnote{Sometimes called feasible set,
+search space or solution space.}\cite{nocedal}. A solution that attains
+the maximum (or minimum if we are minimizing) objective value among all
+the feasible points is called an \textit{optimal solution}.
+
+A convex polytope may be defined as an intersection of half-spaces, and a system
+of linear inequalities may be regarded as an intersection of half-spaces\cite{branko}.
+Hence, the feasible region may be regarded as a closed convex polytope.
+Note that the feasible region might be empty, i.e. there are no feasible points.
+In that case, the linear programming problem itself is considered infeasible.
+
+Consider the following problem:
+\[
+\begin{array}{lcrcrl}
+    \textrm{maximize}   & & 2 x_1 &+&   x_2 \\
+    \textrm{subject to} & &   x_1 &+&   x_2 & \leq 3 \\
+                        & &   x_1 &-&   x_2 & \leq 1 \\
+                        &-&   x_1 &+& 3 x_2 & \leq 4 \\
+     \multicolumn{5}{r}{x_1,x_2}            & \geq 0.
+\end{array}
+\]
+Since the problem is only in two variables, we can illustrate the feasible region
+in two dimensions.
+
+\begin{figure}[ht!]
+\centering
+\input{include/lpback}
+\caption{Illustration of the feasible region of an LP problem.}
+\end{figure}

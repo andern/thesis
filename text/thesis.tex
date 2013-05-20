@@ -219,8 +219,8 @@ Among several main functions of PROMAPS, its bottleneck was pinpointed to
 a call to a QP solver. The aim of this thesis was to improve the performance
 of the methods initiated by this call.
 
-We presented an iterative method based on linear programming, as the data
-analyses suggested that the QP problems were--- in lack of a better
+We presented an iterative method based on linear programming, as the
+presented data suggested that the QP problems were--- in lack of a better
 word---\emph{close} to linear programs. Although this method turned out to be
 slower than a commercially available alternate solver, due to the fact that the
 number of iterations increases quite rapidly as the tolerance decreases, it
@@ -251,14 +251,15 @@ described in this thesis.
 
 \subsubsection{Parallelization}
 Since we are solving a huge amount of QP problems, running several QP solvers
-simultaneously is of interest. We suggest the parallelization of the methods
-presented in this thesis, as a future research topic.
-We consider the possibility of parallelizing both
-the naive method of solving all subinstances regardless of whether they are
-distinct or not, and the tree-structured approach. We begin by analyzing
-the parallelization of the naive approach.
+in parallel is of interest. We suggest the parallelization of the methods
+presented in this thesis as a future research topic.
 
-If we are to do this parallelization on a distributed computer, we need to
+%We consider the possibility of parallelizing both
+%the naive method of solving all subinstances regardless of whether they are
+%distinct or not, and the tree-structured approach. We begin by analyzing
+%the parallelization of the naive approach.
+
+If we are to parallelize the naive method on a distributed computer, we need to
 analyze the amount of communication that is needed between each processor.
 Given some number of breakdowns $\beta$ and an instance $\mathcal{Q}$ with
 $m$ rows and $n$ columns, we can map each subinstance of $\mathcal{Q}$ to some
@@ -281,6 +282,10 @@ This would require
 O\left(\frac{s(\beta, n)n}{p}\right)
 \]
 in terms of memory for each processor.
+
+Further research topics may include parallelization of both the naive approach
+and the tree-structural approach on both a shared memory computer and a
+distributed computer.
 
 %\onecolumn
 %\newpage
