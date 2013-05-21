@@ -34,9 +34,9 @@ We can formulate these problems as:
 where $m$ is the number of constraints and $n$ is the number of decision variables.
 This formulation is referred to as \textit{standard form}\cite{vanderbei}.
 We can also formulate these problems in a more compact form:
-\[
-\max{c^T x},\quad \textrm{subject to}~Ax \leq b, ~ x \geq 0,
-\]
+\begin{equation}
+\max{c^T x},\quad \textrm{subject to}~Ax \leq b, ~ x \geq 0, \label{eq:primal}
+\end{equation}
 where $c$ and $x$ are vectors in $\mathbb{R}^n$, $b$ is a vector in $\mathbb{R}^m$, and
 A is an $m \times n$ matrix.
 
@@ -86,6 +86,8 @@ of linear inequalities may be regarded as an intersection of half-spaces\cite{br
 Hence, the feasible region may be regarded as a closed convex polytope.
 Note that the feasible region might be empty, i.e. there are no feasible points.
 In that case, the linear programming problem itself is considered infeasible.
+There is also the concept of \textit{unbounded} problems, where we can attain
+an arbitrarily large objective value while still remaining feasible.
 
 Consider the following problem:
 \[
@@ -98,10 +100,67 @@ Consider the following problem:
 \end{array}
 \]
 Since the problem is only in two variables, we can illustrate the feasible region
-in two dimensions.
+in two dimensions. Figure \ref{fig:lpback} shows an illustration of the feasible
+region of the LP problem above. It also shows the level sets of the objective
+function from left to right when the function takes the values $0$, $2.5$ and
+$5$. The rightmost gray line represents the objective function when it takes
+its maximum value. Our optimal solution in this example is $(2,1)$, and the
+objective value is $5$.
 
 \begin{figure}[ht!]
 \centering
 \input{include/lpback}
-\caption{Illustration of the feasible region of an LP problem.}
+\caption{Illustration of the feasible region and level sets of the objective
+         function.}
+\label{fig:lpback}
 \end{figure}
+
+For every linear program there exists another problem associated with it called
+its \textit{dual} problem.
+The dual of the dual is equal to the original problem, which we refer to as
+the \textit{primal} problem.
+Considering the primal problem as denoted in (\ref{eq:primal}), its dual is
+\[
+\min{b^T y},\quad \textrm{subject to}~A^T y \geq c, ~ y \geq 0.
+\]
+These two problems are related on a number of levels.
+Note the symmetry between the primal problem and its dual.
+Also, every feasible solution for a primal problem gives a bound on the optimal
+objective function value for the dual problem, and vice
+versa\cite{vanderbei,nocedal,boyd}.
+
+An optimization problem with a quadratic objective function and linear constraints
+is called a quadratic program. Since quadratic programs also have
+linear constraints, everything we have discussed regarding the feasible region of
+linear programs still holds for quadratic programs. We formulate a quadratic
+program as:
+\[
+\min{\frac{1}{2}x^T G x + x^T c},\quad \textrm{subject to}~Ax \leq b, ~ x \geq 0.
+\]
+where G is a symmetrix $n \times n$ matrix, A is a $m \times n$ matrix and $c$
+and $c$, $x$ and $b$ are vectors in $\mathbb{R}^n$. If the matrix $G$ is
+positive semidefinite, then the objective function is convex, and the
+QP is considered convex. Convex QPs are in general easier to solve than
+nonconvex QPs because nonconvex QPs can have local minima, whereas
+convex QPs does not. In this thesis, we only consider convex QPs.
+
+We consider the linear program from before, and we introduce a quadratic
+objective function
+\[
+(x_1 - 1)^2 + (x_2 - 1)^2.
+\]
+Figure \ref{fig:qpback} depicts the feasible region along with our new
+quadratic function.
+The function's minimal value is obviously found at $(1,1)$, which is
+depicted with a small dot in the figure, along with the function's contours.
+\begin{figure}[ht!]
+\centering
+\input{include/qpback}
+\caption{Illustration of the feasible region and the contours of the quadratic
+         objective function.}
+\label{fig:qpback}
+\end{figure}
+Note that optimal solutions for linear programs are always extreme points
+of the polytope forming the feasible region. However, this is not true
+for quadratic programs, where the solution can be anywhere inside
+the feasible region.
