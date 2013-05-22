@@ -1,6 +1,6 @@
-This section acts as an introduction to linear programming problems and
-quadratic programming problems.
-The terminology and notation we use is influenced by\cite{vanderbei}.
+%This section acts as an introduction to linear programming problems and
+%quadratic programming problems.
+%The terminology and notation we use is influenced by\cite{vanderbei}.
 
 In linear programming, we aim to maximize or minimize a linear function of
 some variables $x_j$ for $j=1,2,\ldots,n$. We refer to these variables as
@@ -161,7 +161,43 @@ depicted with a small dot in the figure, along with the function's contours.
          objective function.}
 \label{fig:qpback}
 \end{figure}
-Note that optimal solutions for linear programs are always extreme points
-of the polytope forming the feasible region. However, this is not true
-for quadratic programs, where the solution can be anywhere inside
-the feasible region.
+
+\subsection{About Solving}
+Note that in the LP problem illustrated in Figure \ref{fig:lpback},
+the optimal solution is found at an extreme point
+of the feasible region. It turns out that the optimal point of any linear program is
+found at an extreme point of the feasible region.
+It follows from the maximum principle that the maximum of a convex function on
+a compact convex set is attained on the boundary\cite{rockafellar}.
+Due to this fact, there are a number of algorithms for solving linear
+programs that only considers the extreme points of the feasible region.
+They normally move along the boundary of the feasible region from one extreme
+point to another.
+Such algorithms are sometimes referred to as \textit{basis-exchange} algorithms,
+among which the well-known \textit{simplex method} categorize as.
+In contrast to basis-exchange algorithms, there are \textit{interior point} methods
+that move on the interior of the feasible region.
+
+In the simplex method, most steps increase (or decrease if we are minimizing) the
+objective value. By moving from one extreme point to another, the simplex algorithm
+greedily chooses the adjacent extreme point which will give the most increase
+(or decrease) in the objective value. 
+While in practice, the simplex algorithm is quite efficient, and is infact
+the most widely used of all optimization tools today\cite{nocedal}, there are
+linear programs such as the Klee-Minty cube\cite{klee} where the simplex method
+requires $2^n - 1$ iterations to solve (here $n = m$).
+
+As the simplex method's worst case complexity is proven to be exponential
+in the size of the problem, the search for algorithms with better theoretical
+properties arose, and interior point methods have exactly that.
+Interior point methods have a polynomial worst case
+complexity in the size of the problem. This is much more efficient in
+theory, but in practice, the simplex method tends to be faster than interior
+point methods on many linear programs. While interior point methods tend
+to do few, but expensive iterations, the simplex method tends to do
+many inexpensive iterations.
+
+We mentioned earlier that some QPs are more difficult to solve than others.
+For convex QPs, some methods can solve the problem in polynomial time, such
+as the \textit{ellipsoid method}\cite{kozlov}. However, solving nonconvex
+QPs is shown to be NP-hard\cite{sahni}.

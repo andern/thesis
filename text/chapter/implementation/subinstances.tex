@@ -174,3 +174,37 @@ Codes from \cite{codeproject} can be found in Appendix
 The remaining parts of the \texttt{construct}-routine is just running
 \texttt{mfind} on each generated modifier, and adding it to the tree
 if necessary. Then at the end, return the pointer to the root vertex.
+
+\subsection{Discrete Event Simulation}
+In a discrete event simulation (DES), operations are always triggered by events.
+In our DES, we only need to consider two types of events; a breakdown in the network,
+or that a link is fixed. Each edge or link in the network is represented by
+a variable, so each event can by represented by a single variable.
+If we let each event have the possibility of carrying multiple breakdowns, or that
+multiple links are fixed, we can represent each event by a set of variables.
+
+The current state of our system is easily represented by a QP $\mathcal{Q}$ and
+a single set. The single set represents the set of variables representing
+the current broken links in our network.
+As this set represents broken links, just like our modifiers $\mathcal{M}_k$
+represents breakdowns, we choose to denote the current state of the system
+by $\mathcal{M}$. 
+
+Given an event $S$ of variables to represent links that break down, we need
+to update the current state of the system. This is done with a simple
+\textit{union}
+\[
+\mathcal{M} = \mathcal{M} \cup S.
+\]
+Given an event $S$ of variables to represent fixed links, we update the current
+state with a simple \textit{relative complement}
+\[
+\mathcal{M} = \mathcal{M} \setminus S.
+\]
+We call these two operations for \texttt{break} and \texttt{fix}, respectively.
+After every change of state in the system, we need to solve the subinstance
+of $\mathcal{Q}$ defined by the modifier $\mathcal{M}$.
+
+As the state of the system changes, we need to solve more and more subinstances.
+We can choose whether or not we want to store the modifiers and their respective
+solutions in a tree or not.
