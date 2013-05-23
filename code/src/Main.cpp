@@ -149,6 +149,35 @@ double bestSpeed(ClpModel model, int b, int times) {
     return best;
 }
 
+void avgDeviance(int vertices, int edges, int times, int h, int b) {
+    double Hzero = h / 100.0;
+    double bzero = b / 100.0;
+    printf("%f\n", Hzero);
+    printf("%f\n", bzero);
+    double tot = 0;
+    for (int i = 0; i < times; i++) {
+        ClpModel model = randomInstance(vertices, edges, Hzero, bzero);
+
+        ClpInterior qp(model);
+        qp.setLogLevel(0);
+        ClpCholeskyBase* cholesky = new ClpCholeskyBase;
+        cholesky->setKKT(true);
+        qp.setCholesky(cholesky);
+
+        ClpSimplex lp(model);
+        lp.setLogLevel(0);
+        lp.deleteQuadraticObjective();
+
+        qp.primalDual();
+
+        lp.primal();
+        tot += abs((lp.getObjValue() - qp.getObjValue()) / qp.getObjValue());
+
+        sleep(1);
+    }
+    printf("(%d, %d, %f)\n", h, b, (tot / times));
+}
+
 void avgSpeed(int vertices, int edges, int b, int times) {
     double tot = 0;
     for (int i = 0; i < times; i++) {
@@ -169,11 +198,13 @@ void avgSpeed(int vertices, int edges, int b, int times) {
 
 int main() {
     srand((unsigned)time(NULL));
-    for (int i = 11; i < 26; i++) {
-        int edges = 25;
-        int vertices = (int) (0.35*edges);
-        int b = i;
-        avgSpeed(vertices, edges, i, 10);
+
+    for (int i = 50; i < 100; i++) {
+        for (int j = 50; j < 100; j++) {
+            int edges = 200;
+            int vertices = (int) (0.35*edges);
+            avgDeviance(vertices, edges, 10, i, j);
+        }
     } 
 
 /*    ClpModel model = clpFromTxt();

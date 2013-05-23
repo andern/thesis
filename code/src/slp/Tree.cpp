@@ -51,7 +51,7 @@ static bool mfindrec(const std::set<uint16_t>& m, struct vertex* v, struct verte
     for (struct vertex* vi : v->children) {
         if (isSubset(vi->m, m)) {
             ret = vi;
-            bool temp = mfind(m, vi, ret);
+            bool temp = mfindrec(m, vi, ret);
             if (temp) return true;
         }
     }
