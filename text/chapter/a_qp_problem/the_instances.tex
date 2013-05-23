@@ -1,11 +1,11 @@
-The instances have a lot in common, but most importantly they all:
+There are three instances, and they have a lot in common, but most
+importantly they all:
 \begin{enumerate}
 \item Have very large coefficients in the linear term compared to the
 quadratic term.
-\item All cross-product coefficients are zero in the quadratic term, i.e. in
-$x^T H x$, $H$ is diagonal.
+\item Have that all cross-product coefficients are zero in the quadratic
+term, i.e. in $x^T H x$, $H$ is diagonal.
 \end{enumerate}
-
 The instances are called---based on size---\textit{small}, \textit{large}
 and \textit{vlarge}.
 
@@ -75,6 +75,6 @@ unrealistic, it is also unrealistic that all edges in the network breaks down.
 A more realistic approach is to try to solve all subinstances with no more than
 $\beta$ breakdowns. That is, for some given $\beta$ and a problem size $n$, we solve
 \begin{equation}
-s(\beta, n) = \sum_{j=0}^\beta {\binom{n}{j}}
+\sigma(\beta, n) = \sum_{j=0}^\beta {\binom{n}{j}}
 \end{equation}
 subinstances with less than or equal to $\beta$ breakdowns.

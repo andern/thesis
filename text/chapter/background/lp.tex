@@ -9,7 +9,7 @@ combination of the decision variables:
 \[
 \zeta = c_1 x_1 + c_2 x_2 + \cdots + c_n x_n,
 \]
-and is called the \textit{objective function}, where $c_i$ for $i=1,2,\ldots,n$
+and is called the \textit{objective function}, where $c_j$
 are coefficients.
 This function is maximized
 or minimized subject to linear \textit{constraints}. These constraints are
@@ -18,7 +18,7 @@ of the decision variables:
 \[
 a_1x_1 + a_2 x_2 + \cdots + a_n x_n \left\{\begin{array}{c} \leq \\ = \\ \geq \end{array}\right\} b.
 \]
-where $a_i$ are coefficients and $b$ is some value.
+where $a_j$ are coefficients and $b$ is some value.
 The problem of maximizing or minimizing $\zeta$ subject to one or more
 linear constraints is called a linear programming problem.
 We can formulate these problems as:
@@ -136,9 +136,9 @@ linear constraints, everything we have discussed regarding the feasible region o
 linear programs still holds for quadratic programs. We formulate a quadratic
 program as:
 \[
-\min{\frac{1}{2}x^T G x + x^T c},\quad \textrm{subject to}~Ax \leq b, ~ x \geq 0.
+\min{\frac{1}{2}x^T G x + c^T x},\quad \textrm{subject to}~Ax \leq b, ~ x \geq 0.
 \]
-where G is a symmetrix $n \times n$ matrix, A is a $m \times n$ matrix and $c$
+where G is a symmetrix $n \times n$ matrix, A is a $m \times n$ matrix
 and $c$, $x$ and $b$ are vectors in $\mathbb{R}^n$. If the matrix $G$ is
 positive semidefinite, then the objective function is convex, and the
 QP is considered convex. Convex QPs are in general easier to solve than
@@ -153,7 +153,8 @@ objective function
 Figure \ref{fig:qpback} depicts the feasible region along with our new
 quadratic function.
 The function's minimal value is obviously found at $(1,1)$, which is
-depicted with a small dot in the figure, along with the function's contours.
+depicted with a small dot in the figure, along with the contours of the
+function.
 \begin{figure}[ht!]
 \centering
 \input{include/qpback}
