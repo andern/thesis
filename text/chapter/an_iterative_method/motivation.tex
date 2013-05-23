@@ -53,23 +53,26 @@ More specifically:
 \]
 
 Figure \ref{fig:sparsobj} shows how $\Delta$ changes in respect to the sparsity
-in the objective function, both in the linear and the quadratic terms, on a
-specific network. The x- and y- axes represent the percentage of zeroes in the
-diagonal elements of $H$ and the elements of $b$, respectively. The y-axis
-stops at 75\% because $\Delta$ started reaching values above 1.
+in the objective function, both in the linear and the quadratic terms, on
+randomly generated networks with $200$ edges and $70$ nodes.
+The percentage of zeroes in the diagonal elements of $H$ is represented
+by $x$, while the percentage of zeroes in $b$ is represented by $y$.
+Each data point represents the average $100\Delta$ over
+$100$ randomly generated networks. 
 
 \begin{figure}[ht!]
 \begin{center}
 %    Hidden. TODO: Show
     \input{include/delta3d}
 \end{center}
-\caption{Density in the objective function}
+\caption{Deviance as a function of density in the objective function.}
 \label{fig:sparsobj}
 \end{figure}
 
-$\mathcal{L}$ was always solved more than 85\% faster than $\mathcal{Q}$.
-(TODO: Test against CPLEX)
-(TODO: Discuss these results more, Talk more about the deviation, and how fast
-is solved.)
-These results give us an incentive to look into solution methods that are based
-upon linear programming, such as Successive Linear Programming (SLP).
+We can see that the density in the diagonal elements of $H$ has
+close to zero influence on the deviance.
+While we see that the density of $b$ certainly has more influence,
+the deviance actually never change more than around $4\%$.
+
+These results give us incentive to look into solution methods that
+are based upon linear programming.

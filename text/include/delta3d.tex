@@ -1,25 +1,25 @@
 \begin{tikzpicture}
     \begin{axis}[
-        width=\textwidth*0.95,
-        grid=major,
+        width=\textwidth*0.80,
+%        grid=major,
         view={245}{30},
 %        xmax=99,
 %        ymax=99,
-        zmax=1,
-        restrict z to domain=0:1,
+%        zmax=1,
+%        restrict z to domain=0:1,
         xlabel=x,
         ylabel=y,
-        zlabel=$\Delta$]
+        zlabel=$100\Delta$]
 
-        %\addplot3[surf,mesh/rows=101,mesh/cols=100] table[x=b,y=h,z=dev]
-        %                                           {include/data/delta3d.dat};
+        \addplot3[surf,mesh/rows=20,mesh/cols=20] table[x=b,y=h,z=dev]
+                                                   {include/data/delta3d.dat};
 
-        \addplot3[
-            surf,
-            mesh/rows=101,
-            mesh/cols=100,
-        ] 
-        table[x=b,y=h,z=dev] {include/data/delta3d.dat.bak};
 
+%        \addplot3[
+%            surf,
+%            mesh/rows=101,
+%            mesh/cols=100,
+%        ] 
+%        table[x=b,y=h,z=dev] {include/data/delta3d.dat};
 \end{axis}
 \end{tikzpicture}

@@ -152,8 +152,6 @@ double bestSpeed(ClpModel model, int b, int times) {
 void avgDeviance(int vertices, int edges, int times, int h, int b) {
     double Hzero = h / 100.0;
     double bzero = b / 100.0;
-    printf("%f\n", Hzero);
-    printf("%f\n", bzero);
     double tot = 0;
     for (int i = 0; i < times; i++) {
         ClpModel model = randomInstance(vertices, edges, Hzero, bzero);
@@ -171,11 +169,16 @@ void avgDeviance(int vertices, int edges, int times, int h, int b) {
         qp.primalDual();
 
         lp.primal();
-        tot += abs((lp.getObjValue() - qp.getObjValue()) / qp.getObjValue());
+        //printf("lp: %f\n", lp.getObjValue());
+        //printf("qp: %f\n", qp.getObjValue());
+        double diff = lp.getObjValue() - qp.getObjValue();
+        tot += fabs((lp.getObjValue() - qp.getObjValue()) / qp.getObjValue());
+        //printf("tot: %f\n", tot);
 
-        sleep(1);
+        //sleep(1);
     }
-    printf("(%d, %d, %f)\n", h, b, (tot / times));
+    printf("%-5d %-5d %-5f\n", h, b, (tot / times)*100.0);
+//    printf("(%d, %d, %f)\n", h, b, (tot / times));
 }
 
 void avgSpeed(int vertices, int edges, int b, int times) {
@@ -199,11 +202,11 @@ void avgSpeed(int vertices, int edges, int b, int times) {
 int main() {
     srand((unsigned)time(NULL));
 
-    for (int i = 50; i < 100; i++) {
-        for (int j = 50; j < 100; j++) {
+    for (int i = 0; i < 100; i += 5) {
+        for (int j = 0; j < 100; j += 5) {
             int edges = 200;
             int vertices = (int) (0.35*edges);
-            avgDeviance(vertices, edges, 10, i, j);
+            avgDeviance(vertices, edges, 100, i, j);
         }
     } 
 
