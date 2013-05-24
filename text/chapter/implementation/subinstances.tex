@@ -2,7 +2,7 @@ In this section, we discuss the implementation of the different approaches to
 solving several subinstances.
 As mentioned in the beginning of the chapter, the two
 main approaches are to solve a limited amount of subinstances, bounded
-by $s(\beta, n)$ for some $\beta$ and a problem size $n$, or to implement a discrete
+by $\sigma(\beta, n)$ for some $\beta$ and a problem size $n$, or to implement a discrete
 event simulator that only stores the current state of the network.
 First we will discuss the implementation of the tree structure, before we
 move on to the two main approaches.
@@ -87,7 +87,7 @@ the sparse format uses less memory. This might actually be the case in a lot
 of sets, especially when solving all possible subinstances where the number
 of breakdowns are limited by some $\beta$. Consider a very small case where
 $n = 200$ and we solve all subinstances
-$s(3, 200) = \sum_{j=0}^{3} {\binom{200}{j}} = S$.
+$\sigma(3, 200) = \sum_{j=0}^{3} {\binom{200}{j}} = S$.
 With a total number of $S$ sets stored as bit vectors, the memory use for
 storing the modifiers is $200S~\textrm{bits} \approx 32~\textrm{megabytes}$.
 Whereas, with $S$ sets of sparsely stored indices, the memory use for storing

@@ -266,14 +266,14 @@ If we are to parallelize the naive method on a distributed computer, we need to
 analyze the amount of communication that is needed between processors.
 Given some number of breakdowns $\beta$ and an instance $\mathcal{Q}$ with
 $m$ rows and $n$ columns, we can map each subinstance of $\mathcal{Q}$ to some
-$\mathcal{Q}_i$ for $i=0,1,\ldots,s(\beta,n) - 1$. Each processor needs to
+$\mathcal{Q}_i$ for $i=0,1,\ldots,\sigma(\beta,n) - 1$. Each processor needs to
 have a copy of the original instance $\mathcal{Q}$, which is $O(mn)$ in terms
 of memory size. Given a number of processors $p$, the main processor needs to
 transmit this problem to each processor, resulting in $O(pmn)$ in terms of
 communication before the calculations are started. Now, each
-processor solves $\frac{s(\beta, n)}{p}$ subinstances, resulting in
+processor solves $\frac{\sigma(\beta, n)}{p}$ subinstances, resulting in
 \[
-O(s(\beta, n)n)
+O(\sigma(\beta, n)n)
 \]
 in terms of communication by sending solutions back to the main processor.
 Sending few, but huge blocks of data is often faster than sending many small
@@ -282,7 +282,7 @@ Therefore, an alternative approach is to store all solutions on each processor,
 and then transmitting them all to the main processor.
 This would require
 \[
-O\left(\frac{s(\beta, n)n}{p}\right)
+O\left(\frac{\sigma(\beta, n)n}{p}\right)
 \]
 in terms of memory for each processor.
 
