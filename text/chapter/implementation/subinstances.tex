@@ -154,8 +154,8 @@ indices. That is, in \texttt{C++}, \texttt{set}.
 Because we do not need to store any information about edges in the tree,
 we do not need to implement edges as an object of its own. We defined
 a vertex \texttt{struct} earlier, having a \texttt{vector} of child
-vertices. That means that for each vertex we have, we can reach all children
-vertices, children's children vertices and so on, from that vertex.
+vertices. That means that for each vertex we have, we can reach all child
+vertices, children's child vertices and so on, from that vertex.
 So, if we have a pointer to the root of a tree, we can reach all vertices
 in the tree. Although we earlier defined a tree as an ordered pair
 $(V, E)$ of a set of vertices $V$ and a set of edges $E$, we only need a
@@ -177,34 +177,35 @@ if necessary. Then at the end, return the pointer to the root vertex.
 
 \subsection{Discrete Event Simulation}
 In a discrete event simulation (DES), operations are always triggered by events.
-In our DES, we only need to consider two types of events; a breakdown in the network,
-or that a link is fixed. Each edge or link in the network is represented by
+In a DES for the reliability analyses discussed in Chapter \ref{ch:intro},
+we only need to consider two types of events; a breakdown in the network,
+or that a link is repaired.
+Each link in the network is represented by
 a variable, so each event can by represented by a single variable.
-If we let each event have the possibility of carrying multiple breakdowns, or that
-multiple links are fixed, we can represent each event by a set of variables.
 
 The current state of our system is easily represented by a QP $\mathcal{Q}$ and
-a single set. The single set is a set of variables representing
-the current broken links in our network.
+a set of variables representing the current broken links in our network.
 As this set represents broken links, just like our modifiers $\mathcal{M}_k$
 represents breakdowns, we choose to denote the current state of the system
 by $\mathcal{M}$. 
 
-Given an event $S$ of variables to represent links that break down, we need
-to update the current state of the system. This is done with a simple
+Given a variable $x$ to represent a link that breaks down, we need to
+update the  current state of the system. This is done with a simple
 \textit{union}
 \[
-\mathcal{M} = \mathcal{M} \cup S.
+\mathcal{M} = \mathcal{M} \cup \left\{x\right\}.
 \]
-Given an event $S$ of variables to represent fixed links, we update the current
-state with a simple \textit{relative complement}
+Given a variable $x$ of variables to represent a repaired link, we update the
+current state with a simple \textit{relative complement}
 \[
-\mathcal{M} = \mathcal{M} \setminus S.
+\mathcal{M} = \mathcal{M} \setminus \left\{x\right\}.
 \]
-We call these two operations for \texttt{break} and \texttt{fix}, respectively.
+We call these two operations for \texttt{break} and \texttt{repair}, respectively.
 After every change of state in the system, we need to solve the subinstance
 of $\mathcal{Q}$ defined by the modifier $\mathcal{M}$.
 
 As the state of the system changes, we need to solve more and more subinstances.
 We can choose whether or not we want to store the modifiers and their respective
-solutions in a tree or not.
+solutions in a tree or not. If we choose to store distinct solutions in a tree,
+we check the tree for a solution for the subinstance defined by the newly
+updated modifier, before we potentially solve the problem.

@@ -1,3 +1,7 @@
+Throughout this chapter we refer to the implementations \texttt{construct\_clp},
+\texttt{construct\_slp}, \texttt{naive\_clp} and \texttt{naive\_slp} as
+\texttt{cClp}, \texttt{cSlp}, \texttt{nClp} and \texttt{nSlp}, respectively.
+
 Now that we are finished with implementations, we are interested in knowing
 how the methods perform.
 How the methods compare with each other is also an interesting topic.
@@ -25,14 +29,15 @@ the following properties:
 \item For each element $b_i$ in vector $b$, $b_i$ has a 50 percent probability of being 0.
 \item For each diagonal element $h_{ii}$ in matrix $H$, $h_{ii}$ has a 50 percent
       probability of being 0.
-\item If the elements in the two last points are \emph{not} 0, then the values lies in
-      the intervals specified in the last paragraph of Section \ref{ch:qp}, before
-      Section \ref{sec:instances}.
+\item If the elements in the two last points are \emph{not} 0, then the values lie in
+      the intervals $10 \leq |b_i| \leq 70$ for $b$, and
+      $10^{-5} \leq h_i \leq 10^{-1}$ for $H$, as specified in the beginning of
+      Chapter \ref{ch:qp}.
 \end{itemize}
 
 Also, unless specified otherwise, we present all running times in experiments where
 we use randomly generated instances, as the \emph{average} running time of
-$10$ runs of each test, with a new random instance each run.
+$10$ runs of each test, with a new random instance in each run.
 The reason for using the average number of seconds, and
 not the number of seconds used on the \emph{best} run, is because we do not want
 one generated instance that happens to converge really fast with our algorithm,
@@ -40,5 +45,10 @@ to represent the running time in the general case.
 
 All implementations are executed with a tolerance of $10^{-7}$, i.e.
 $\epsilon = 10^{-7}$, unless specified otherwise.
+The tolerance parameter for Slp is used as a stopping criteria for
+the algorithm, as described in Chapter \ref{ch:slp}.
+The tolerance parameter for Clp is used as a stopping criteria
+for the primal-dual predictor-corrector interior point method as implemented
+in Clp.
 
-In the next section, we describe the experiments in detail.
+In the next section, we describe experiments in detail.

@@ -1,14 +1,15 @@
 \textbf{Experiment 1}:
 We test the different
-methods on the instance \textit{small} with varying tolerance.
-For each specific tolerance, we solve $s(2, 238)$ subinstances, three times,
+methods on the instance \textit{small}, as introduced in Section
+\ref{sec:instances}  with varying tolerance.
+For each specific tolerance, we solve $\sigma(2, 238) = 28442$ subinstances, three times,
 and record the lowest of the three running times.
 The purpose is to assess how performance relates to specific tolerances.
 
 \textbf{Experiment 2}:
 We test our tree structure methods on the instances introduced in Section
 \ref{sec:instances}.
-The purpose is to indicate how well the methods work
+The purpose is to assess how the methods perform in terms of speed
 on real instances that Goodtech have faced.
 We run each implementation on each of the instances three times, and record
 the best out of the three runs.
@@ -17,11 +18,11 @@ the best out of the three runs.
 We compare \texttt{cClp} where we only solve subinstances with distinct
 solutions, with \texttt{nClp} where subinstances are solved regardless
 whether they are distinct or not.
-The purpose is to indicate how fast our tree structure method is.
+The purpose is to assess how fast our tree structure method is.
 Testing these methods on instances of increasing size indicates how well
 they scale, in addition to indicating their speed. 
 As $n$ reaches high values, anything besides $\beta \leq 1$ is unrealistic,
-so we let $\beta = 1$.
+so we let the maximum number of breakdowns be $\beta = 1$.
 
 \textbf{Experiment 4}:
 We continue to compare the tree structure method with naively solving all

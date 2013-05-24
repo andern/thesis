@@ -4,27 +4,27 @@
 
 In linear programming, we aim to maximize or minimize a linear function of
 some variables $x_j$ for $j=1,2,\ldots,n$. We refer to these variables as
-\textit{decision variables}. The linear function is denoted as a linear
-combination of the decision variables:
+\textit{decision variables}. The linear function to be optimized is defined as
+a linear combination of the decision variables:
 \[
 \zeta = c_1 x_1 + c_2 x_2 + \cdots + c_n x_n,
 \]
 and is called the \textit{objective function}, where $c_j$
-are coefficients.
+are known coefficients.
 This function is maximized
 or minimized subject to linear \textit{constraints}. These constraints are
-always either equalities or inequalities denoted as a linear combination
+either equalities or inequalities in a linear combination
 of the decision variables:
 \[
 a_1x_1 + a_2 x_2 + \cdots + a_n x_n \left\{\begin{array}{c} \leq \\ = \\ \geq \end{array}\right\} b.
 \]
-where $a_j$ are coefficients and $b$ is some value.
+where $a_j$ are known coefficients and $b$ is some given value.
 The problem of maximizing or minimizing $\zeta$ subject to one or more
 linear constraints is called a linear programming problem.
-We can formulate these problems as:
+We can formulate such problems as:
 \[
 \begin{array}{lrcrcccrcr}
-\textrm{maximize}   & c_1 x_1    &+& c_2 x_2    &+& \cdots &+& c_n x_n               \\
+\textrm{minimize}   & c_1 x_1    &+& c_2 x_2    &+& \cdots &+& c_n x_n               \\
 \textrm{subject to} & a_{11} x_1 &+& a_{12} x_2 &+& \cdots &+& a_{1n} x_n &\leq& b_1 \\
                     & a_{21} x_1 &+& a_{22} x_2 &+& \cdots &+& a_{2n} x_n &\leq& b_2 \\
                     &            & &            & & \vdots & &            &    &     \\
@@ -32,14 +32,15 @@ We can formulate these problems as:
                     \multicolumn{8}{r}{x_1,x_2,\ldots,x_n} &\geq& 0,
 \end{array}
 \]
-where $m$ is the number of constraints and $n$ is the number of decision variables.
+where $m$ is the number of constraints and $n$ is the number of decision
+variables.
 This formulation is referred to as \textit{standard form}\cite{vanderbei}.
-We can also formulate these problems in a more compact form:
+We can also formulate LP problems in a more compact form:
 \begin{equation}
-\max{c^T x},\quad \textrm{subject to}~Ax \leq b, ~ x \geq 0, \label{eq:primal}
+\min{c^T x},\quad \textrm{subject to}~Ax \leq b, ~ x \geq 0, \label{eq:primal}
 \end{equation}
-where $c$ and $x$ are vectors in $\mathbb{R}^n$, $b$ is a vector in $\mathbb{R}^m$, and
-A is an $m \times n$ matrix.
+where $c$ and $x$ are vectors in $\mathbb{R}^n$, $b$ is a vector in
+$\mathbb{R}^m$, and A is an $m \times n$ matrix.
 
 Constraints are not necessarily written as
 \textit{less-than} inequalities, so we have to convert them to get the problem
@@ -72,20 +73,23 @@ a_1 x_1 + a_2 x_2 + \cdots + a_n x_n \leq b \\
 \end{array}
 \]
 
-Any combination of values for the decision variables is called a \textit{solution}.
-If all the values submit to the constraints of the problem, the solution is
-said to be \textit{feasible}. In contrast, if any of the values of the solution
-does not submit to the constraints of the problem, the solution is said to
+Any combination of values assigned to the decision variables is called a
+\textit{solution}.
+If the values satisfy the constraints of the problem, the solution is
+said to be \textit{feasible}. In contrast, if the solution
+does not satisfy all the constraints of the problem, the solution is said to
 be \textit{infeasible}. The set of all feasible solutions is called the
-\textit{feasible region}\footnote{Sometimes called feasible set,
-search space or solution space.}\cite{nocedal}. A solution that attains
-the maximum (or minimum if we are minimizing) objective value among all
+\textit{feasible region}\footnote{Also referred to as feasible set,
+search space or solution space.}\cite{nocedal}. A feasible solution that
+attains the minimum (or maximum if we are maximizing) objective value among all
 the feasible points is called an \textit{optimal solution}.
 
-A convex polytope may be defined as an intersection of half-spaces, and a system
-of linear inequalities may be regarded as an intersection of half-spaces\cite{branko}.
+A convex polytope may be defined as an intersection of half-spaces, and a
+system of linear inequalities may be regarded as an intersection of
+half-spaces\cite{branko}.
 Hence, the feasible region may be regarded as a closed convex polytope.
-Note that the feasible region might be empty, i.e. there are no feasible points.
+Note that the feasible region might be empty, i.e. there are no feasible
+points.
 In that case, the linear programming problem itself is considered infeasible.
 There is also the concept of \textit{unbounded} problems, where we can attain
 an arbitrarily large objective value while still remaining feasible.
@@ -93,20 +97,22 @@ an arbitrarily large objective value while still remaining feasible.
 Consider the following problem:
 \[
 \begin{array}{lcrcrl}
-    \textrm{maximize}   & & 2 x_1 &+&   x_2 \\
+    \textrm{minimize}   &-& 2 x_1 &-&   x_2 \\
     \textrm{subject to} & &   x_1 &+&   x_2 & \leq 3 \\
                         & &   x_1 &-&   x_2 & \leq 1 \\
                         &-&   x_1 &+& 3 x_2 & \leq 4 \\
      \multicolumn{5}{r}{x_1,x_2}            & \geq 0.
 \end{array}
 \]
-Since the problem is only in two variables, we can illustrate the feasible region
-in two dimensions. Figure \ref{fig:lpback} shows an illustration of the feasible
+Since the problem is in only two variables, we can illustrate the feasible
+region in two dimensions.
+Figure \ref{fig:lpback} shows an illustration of the feasible
 region of the LP problem above. It also shows the level sets of the objective
-function from left to right when the function takes the values $0$, $2.5$ and
-$5$. The rightmost gray line represents the objective function when it takes
+function from left to right when the function takes the values $0$, $-2.5$ and
+$-5$, respectively.
+The rightmost gray line represents the objective function when it takes
 its maximum value. Our optimal solution in this example is $(2,1)$, and the
-objective value is $5$.
+objective value is $-5$.
 
 \begin{figure}[ht!]
 \centering
@@ -116,13 +122,13 @@ objective value is $5$.
 \label{fig:lpback}
 \end{figure}
 
-For every linear program there exists another problem associated with it called
-its \textit{dual} problem.
+For every linear program there exists an associated LP problem called
+the \textit{dual} problem.
 The dual of the dual is equal to the original problem, which we refer to as
 the \textit{primal} problem.
 Considering the primal problem as denoted in (\ref{eq:primal}), its dual is
 \[
-\min{b^T y},\quad \textrm{subject to}~A^T y \geq c, ~ y \geq 0.
+\max{b^T y},\quad \textrm{subject to}~A^T y \geq c, ~ y \geq 0.
 \]
 These two problems are related on a number of levels.
 Note the symmetry between the primal problem and its dual.
@@ -130,10 +136,10 @@ Also, every feasible solution for a primal problem gives a bound on the optimal
 objective function value for the dual problem, and vice
 versa\cite{vanderbei,nocedal,boyd}.
 
-An optimization problem with a quadratic objective function and linear constraints
-is called a quadratic program. Since quadratic programs also have
-linear constraints, everything we have discussed regarding the feasible region of
-linear programs still holds for quadratic programs. We formulate a quadratic
+An optimization problem with a quadratic objective function and linear
+constraints is called a quadratic program. Since quadratic programs also have
+linear constraints, everything we have discussed regarding the feasible region
+of linear programs still holds for quadratic programs. We formulate a quadratic
 program as:
 \[
 \min{\frac{1}{2}x^T G x + c^T x},\quad \textrm{subject to}~Ax \leq b, ~ x \geq 0.
@@ -142,17 +148,18 @@ where G is a symmetrix $n \times n$ matrix, A is a $m \times n$ matrix
 and $c$, $x$ and $b$ are vectors in $\mathbb{R}^n$. If the matrix $G$ is
 positive semidefinite, then the objective function is convex, and the
 QP is considered convex. Convex QPs are in general easier to solve than
-nonconvex QPs because nonconvex QPs can have local minima, whereas
-convex QPs does not. In this thesis, we only consider convex QPs.
+nonconvex QPs because nonconvex QPs can have suboptimal local minima, whereas
+convex QPs does not. In a convex QP, all possible local minima are global
+minima. In this thesis, we only consider convex QPs.
 
-We consider the linear program from before, and we introduce a quadratic
-objective function
+We consider the linear program from before, in which we replace the linear
+objective function with a quadratic one:
 \[
 (x_1 - 1)^2 + (x_2 - 1)^2.
 \]
 Figure \ref{fig:qpback} depicts the feasible region along with our new
 quadratic function.
-The function's minimal value is obviously found at $(1,1)$, which is
+The function's minimum value is obviously found at $(1,1)$, which is
 depicted with a small dot in the figure, along with the contours of the
 function.
 \begin{figure}[ht!]
@@ -163,38 +170,41 @@ function.
 \label{fig:qpback}
 \end{figure}
 
-\subsection{About Solving}
+\subsection{Solution Methods}
 Note that in the LP problem illustrated in Figure \ref{fig:lpback},
 the optimal solution is found at an extreme point
-of the feasible region. It turns out that the optimal point of any linear program is
-found at an extreme point of the feasible region.
+of the feasible region.
+It turns out that in any linear program, there exists an extreme point of the
+feasible region which attains the optimal objective value.
 It follows from the maximum principle that the maximum of a convex function on
 a compact convex set is attained on the boundary\cite{rockafellar}.
 Due to this fact, there are a number of algorithms for solving linear
 programs that only considers the extreme points of the feasible region.
 They normally move along the boundary of the feasible region from one extreme
 point to another.
-Such algorithms are sometimes referred to as \textit{basis-exchange} algorithms,
-among which the well-known \textit{simplex method} categorize as.
-In contrast to basis-exchange algorithms, there are \textit{interior point} methods
-that move on the interior of the feasible region.
+Such algorithms are sometimes referred to as \textit{basis-exchange}
+algorithms, among which the well-known \textit{simplex method} categorize as.
+In contrast to basis-exchange algorithms, there are \textit{interior point}
+methods that move in the interior of the feasible region.
 
-In the simplex method, most steps increase (or decrease if we are minimizing) the
-objective value. By moving from one extreme point to another, the simplex algorithm
-greedily chooses the adjacent extreme point which will give the most increase
-(or decrease) in the objective value. 
-While in practice, the simplex algorithm is quite efficient, and is infact
+In the simplex method, most steps decrease (or increase if we are maximizing)
+the objective value.
+%By moving from one extreme point to another, the simplex algorithm 
+%greedily chooses the adjacent extreme point which will give the most increase
+%(or decrease) in the objective value. 
+While in practice, the simplex algorithm is quite efficient, and is in fact
 the most widely used of all optimization tools today\cite{nocedal}, there are
 linear programs such as the Klee-Minty cube\cite{klee} where the simplex method
 requires $2^n - 1$ iterations to solve (here $n = m$).
 
 As the simplex method's worst case complexity is proven to be exponential
 in the size of the problem, the search for algorithms with better theoretical
-properties arose, and interior point methods have exactly that.
-Interior point methods have a polynomial worst case
+properties arose.
+Interior point methods have a polynomial worst case time
 complexity in the size of the problem. This is much more efficient in
 theory, but in practice, the simplex method tends to be faster than interior
-point methods on many linear programs. While interior point methods tend
+point methods on most real-life instances of linear programming.
+While interior point methods tend
 to do few, but expensive iterations, the simplex method tends to do
 many inexpensive iterations.
 

@@ -103,6 +103,7 @@ The aim is to develop a solver for effectively solving problems
 \newpage
 
 \chapter{Introduction}
+\label{ch:intro}
 As electrical transmission systems increase in complexity, it becomes
 more difficult to understand how different components in the system interact.
 We often aim to increase the utilization of such systems, and with that comes
@@ -149,34 +150,36 @@ in PROMAPS includes the following main functions:
 \item Post calculation of various auxiliary variables including economic data.
 \end{enumerate}
 Among these six functions, the third main function was identified as the most
-time-consuming. A major part of the third main function is a call to a QP
-solver\cite{trond}.
+time-consuming. A major part of the third main function is a call to a
+quadratic programming (QP) solver\cite{trond}.
 
 The maximum power
 supply can be calculated by an objective function that represents the power
 delivery profit. A typical objective function is
 \begin{equation}
-f(x) = -g - x^T \Phi D x + b^T x, \label{eq:goodtech}
+f(x) = - x^T \Phi D x + (c-g)^T x, \label{eq:goodtech}
 \end{equation}
 where $f(x)$ is the objective value ($E/s$) as a function of $x$, $x$ is the
 branch power vector ($W$), $g$ is a vector containing specific power
-generation cost ($E/J$), $\Phi$ is a diagonal matrix representing power loss
-($1/W$), $D$ is a diagonal matrix containing specific power transmission cost
-($E/J$), and $b$ is a vector containing specific power delivery price
-($E/J$). The symbols in parentheses are units of measurements.
-The symbol $E$ is the monetary unit, $J$ is joule and
-$W$ is watt\cite{digernes}.
+generation costs ($E/J$), $\Phi$ is a diagonal matrix representing power loss
+($1/W$), $D$ is a diagonal matrix containing specific power transmission costs
+($E/J$), and $c$ is a vector containing specific power delivery price
+($E/J$). The symbols in parentheses are units of measurements, where $E$
+denotes the monetary unit, $J$ denotes joule and $W$ denotes
+watt\cite{digernes}.
 
 We simplify (\ref{eq:goodtech}) to
 \begin{equation}
     f(x) = x^T H x + b^T x, \label{eq:obj}
 \end{equation}
-where $H$ is a diagonal matrix that represents quadratic cost terms ($E/s$).
-sign\cite{digernes}.
+where $H = - \Phi D$ is a diagonal matrix that represents quadratic cost terms
+($E/(W^2 s)$) and $b = c - g$ is a vector that represents linear cost terms
+($E/J$) \cite{digernes}.
 
 The maximum power delivery capacity can be defined as an optimization problem
 \begin{equation}
-   \max_{l \le x \le u} f(x)\quad\textrm{subject to}~Ax = 0 \label{eq:thesisqp}
+   \min_{x} f(x)\quad\textrm{subject to}~Ax = 0,
+                             ~l \leq x \leq u \label{eq:thesisqp}
 \end{equation}
 where $A$ is the grid configuration matrix or reduced incidence matrix, and
 $l$ and $u$ are the minimum and maximum branch (lower and upper) capacity,
@@ -185,18 +188,18 @@ respectively\cite{digernes}.
 If a branch with index $i$ fails, we can model that by letting
 $l_i = u_i = 0$ where $l_i$ and $u_i$ denote the $i$th element of $l$ and
 $u$, respectively. We refer to a branch failing as a \textit{breakdown}.
-We discuss breakdowns in more detail in Section \ref{sec:instances},
+We discuss breakdowns in more detail in sections \ref{sec:instances} to
 \ref{sec:subinstances} and Chapter \ref{ch:tree}.
 
 In the next section, we present a short introduction to linear and quadratic
 programming.
-We then move on to Chapter \ref{ch:qp} where we present some quadratic
-programming problems that Goodtech have supplied.
+We then move on to Chapter \ref{ch:qp} where we present some instances of the
+quadratic programming problem (\ref{eq:obj}) that Goodtech have supplied.
 Afterwards, in Chapter \ref{ch:slp}, we present
 an iterative optimization method based on Successive Linear Programming (SLP).
-When we move on to Chapter \ref{ch:tree} where we present methods for eliminating
-unnecessary work carried out in the third main function of PROMAPS, and
-thereby improving the speed in which it is performed.
+Then we move on to Chapter \ref{ch:tree}, where we present methods for
+eliminating unnecessary work carried out in the third main function of PROMAPS,
+and thereby improving the speed in which it is performed.
 We also present implementations of all the aforementioned methods in Chapter
 \ref{ch:implementation}, along with
 experiments and results in Chapter \ref{ch:experiments}.
@@ -225,7 +228,7 @@ word---\emph{close} to linear programs. Although this method turned out to be
 slower than a commercially available alternate solver, due to the fact that the
 number of iterations increases quite rapidly as the tolerance decreases, it
 does stand as an alternative method, mainly because it does not require
-Goodtech to pay any license fees.
+any license fees.
 It is important
 to point out that the method is entirely independent of specific LP
 implementations. The only requirement for implementing the method is an LP
@@ -237,9 +240,9 @@ Afterwards, we presented a tree-structural approach for reducing the number
 of calls to the QP solver. This approach reduced the number of calls to the
 QP solver by a significant amount. Depending on problem size and the number
 of breakdowns, this approach caused the original method to perform from
-16\% to around 70\% faster, and with reason to believe that it would increase
-even further, as $\beta$ increases. This reduced the average number of
-CPU-seconds used to solve a subinstance.
+16\% to around 70\% faster, and we have reason to believe that it would increase
+even further, as $\beta$ increases. The tree-structured approach reduced the
+average number of CPU-seconds used to solve a subinstance.
 This method is
 independent of the choice of QP solver, and since the method relies on reducing
 the number of calls to the QP solver, and not increasing the speed of the
@@ -260,12 +263,12 @@ presented in this thesis as a future research topic.
 %the parallelization of the naive approach.
 
 If we are to parallelize the naive method on a distributed computer, we need to
-analyze the amount of communication that is needed between each processor.
+analyze the amount of communication that is needed between processors.
 Given some number of breakdowns $\beta$ and an instance $\mathcal{Q}$ with
 $m$ rows and $n$ columns, we can map each subinstance of $\mathcal{Q}$ to some
 $\mathcal{Q}_i$ for $i=0,1,\ldots,s(\beta,n) - 1$. Each processor needs to
 have a copy of the original instance $\mathcal{Q}$, which is $O(mn)$ in terms
-of memory. Given a number of processors $p$, the main processor needs to
+of memory size. Given a number of processors $p$, the main processor needs to
 transmit this problem to each processor, resulting in $O(pmn)$ in terms of
 communication before the calculations are started. Now, each
 processor solves $\frac{s(\beta, n)}{p}$ subinstances, resulting in
