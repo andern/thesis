@@ -1,14 +1,14 @@
 \begin{tikzpicture}
     % grid and axes
-    \draw[->,name path=xaxis] (-0.2,0) -- (2.2,0) node[right] {$x$};
-    \draw[->,name path=yaxis] (0,-0.2) -- (0,2.2) node[above] {$y$};
+    \draw[scale=1.5,->,name path=xaxis] (-0.2,0) -- (2.2,0) node[right] {$x$};
+    \draw[scale=1.5,->,name path=yaxis] (0,-0.2) -- (0,2.2) node[above] {$y$};
 
     % draw lines
-    \draw[name path=line1, domain=0.6:2.5] plot(\x,{-\x + 3})
+    \draw[scale=1.5,name path=line1, domain=0.6:2.5] plot(\x,{-\x + 3})
                                                     node[above right=0.2cm] {};
-    \draw[name path=line2, domain=-0.2:1.6] plot(\x,{0.33*\x + 1.33})
+    \draw[scale=1.5,name path=line2, domain=-0.2:1.6] plot(\x,{0.33*\x + 1.33})
                                                     node[above right=0.2cm] {};
-    \draw[name path=line3, domain=0.7:2.3] plot(\x,{\x - 1})
+    \draw[scale=1.5,name path=line3, domain=0.7:2.3] plot(\x,{\x - 1})
                                                     node[above right=0.2cm] {};
 
     % calculate intersection points
@@ -20,35 +20,34 @@
 
     % write the coordinates of the corners.
     \path let \p0 = (a) in node [above right=0.0cm of a] {($1.25$, $1.75$)};
-    \path let \p0 = (b) in node [right=0.1cm of b] {\printpoint{\x0}{\y0}};
-    \path let \p0 = (c) in node [below right=-0.35cm of c]
-                                                       {\printpoint{\x0}{\y0}};
-    
+    \path let \p0 = (b) in node [right=0.1cm of b] {($2$, $1$)};
+    \path let \p0 = (c) in node [below right=-0.35cm of c] {($1$, $0$)};
+    %\path let \p0 = (d) in node [left=0.0cm of d] {($0$, $0$)};
     \path let \p0 = (e) in node [left=0.0cm of e] {($0$, $1.\overline{3}$)};
 
-    \node at (1, 1) (qopt) {};
-    \node at (2, 1) (lopt) {};
-    \node at (-0.5, 0.75) (qoptdesc) {$x^*$};
-    \node at (-1, 0.25) (x0desc) {$x_0$};
-    \node[text=red] at (2.5, 1.75) (loptdesc) {$\hat{x}_0$};
-    \draw[->] (qoptdesc) .. controls ([xshift=1cm] qoptdesc) and ([xshift=-1cm]
+    \node at (1.5, 1.5) (qopt) {};
+    \node at (3, 1.5) (lopt) {};
+    \node at (-0.75, 1.125) (qoptdesc) {$x^*$};
+    \node at (-1.5, 0.375) (x0desc) {$x_0$};
+    \node[text=red] at (3.75, 2.625) (loptdesc) {$\hat{x}_0$};
+    \draw[scale=1.5,->] (qoptdesc) .. controls ([xshift=1cm] qoptdesc) and ([xshift=-1cm]
                                                                qopt) .. (qopt);
-    \draw[->] (loptdesc) .. controls ([xshift=-1cm] loptdesc) and ([yshift=1cm]
+    \draw[scale=1.5,->] (loptdesc) .. controls ([xshift=-1cm] loptdesc) and ([yshift=1cm]
                                                                lopt) .. (lopt);
-    \draw[->] (x0desc) .. controls ([xshift=1cm] x0desc) and ([xshift=-1cm] d)
+    \draw[scale=1.5,->] (x0desc) .. controls ([xshift=1cm] x0desc) and ([xshift=-1cm] d)
                                                                      .. (d);
 
-    \draw[fill] (qopt) circle [radius=0.02];
+    \draw[scale=1.5,fill] (qopt) circle [radius=0.02];
 
     % draw the big polygin
-    \fill[very thick,fill=blue,fill opacity=0.3] (a.center) -- (b.center) --
+    \fill[very thick,fill=blue,fill opacity=0.1] (a.center) -- (b.center) --
                                                  (c.center) -- (d.center) --
                                                  (e.center) -- cycle;
 
-    \draw[thick, red, name path=lobj, domain=-0.4:0.4] plot(\x, {-\x}) {};
+    \draw[scale=1.5,thick, red, name path=lobj, domain=-0.4:0.4] plot(\x, {-\x}) {};
 
     % draw the quadratic objective function
-    \draw[thin, dashed] plot[id=qobj1, raw gnuplot] function {
+    \draw[scale=1.5,thin, dashed] plot[id=qobj1, raw gnuplot] function {
         f(x,y) = x**2 + y**2 - 2*x - 2*y + 1.75;
         set xrange[-1:2];
         set yrange[-2:2];
@@ -60,7 +59,7 @@
         unset surface;
         splot f(x,y);
     };
-    \draw[thin, dashed] plot[id=qobj2, raw gnuplot] function {
+    \draw[scale=1.5,thin, dashed] plot[id=qobj2, raw gnuplot] function {
         f(x,y) = x**2 + y**2 - 2*x - 2*y + 1.9;
         set xrange[-1:2];
         set yrange[-2:2];
@@ -72,7 +71,7 @@
         unset surface;
         splot f(x,y);
     };
-    \draw[thin, dashed] plot[id=qobj3, raw gnuplot] function {
+    \draw[scale=1.5,thin, dashed] plot[id=qobj3, raw gnuplot] function {
         f(x,y) = x**2 + y**2 - 2*x - 2*y + 1.98;
         set xrange[-1:2];
         set yrange[-2:2];

@@ -1,5 +1,5 @@
 \chapter{Implementation}
-Recall from Chapter \ref{ch:qp} that we discussed limiting the amount
+Recall from Section \ref{sec:instances} that we discussed limiting the amount
 of subinstances to solve. We did this by introducing a limit on the number of
 simultaneous breakdowns in the network by some $\beta$.
 Another approach is to implement a discrete-event simulator (DES). Each event
@@ -39,7 +39,7 @@ There are four different implementations we have, named
 \texttt{construct\_clp}, \texttt{construct\_slp}, \texttt{naive\_clp} and
 \texttt{naive\_slp}. The implementations with names ending with
 \texttt{\_clp} and \texttt{\_slp} uses Clp's QP solver and Slp, respectively,
-whenever a QP needs to be solved.
+whenever a QP problem needs to be solved.
 The \texttt{construct} implementations uses the tree structure presented
 in Chapter \ref{ch:tree} for storing subinstances with distinct solutions.
 The \texttt{naive} implementations, however, solves subinstances regardless of

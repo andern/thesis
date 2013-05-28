@@ -19,23 +19,43 @@
     \node[name intersections={of=line2 and yaxis}] (e) at (intersection-1) {};
 
     % write the coordinates of the corners.
-    \path let \p0 = (a) in node [above right=0.0cm of a] {($1.25$, $1.75$)};
-    \path let \p0 = (b) in node [right=0.1cm of b] {($2$, $1$)};
-    \path let \p0 = (c) in node [below right=-0.35cm of c] {($1$, $0$)};
-    \path let \p0 = (d) in node [left=0.0cm of d] {($0$, $0$)};
-    \path let \p0 = (e) in node [left=0.0cm of e] {($0$, $1.\overline{3}$)};
+%    \path let \p0 = (a) in node [above right=0.0cm of a] {($1.25$, $1.75$)};
+%    \path let \p0 = (b) in node [right=0.1cm of b] {($2$, $1$)};
+%    \path let \p0 = (c) in node [below right=-0.35cm of c] {($1$, $0$)};
+    %\path let \p0 = (d) in node [left=0.0cm of d] {($0$, $0$)};
+%    \path let \p0 = (e) in node [left=0.0cm of e] {($0$, $1.\overline{3}$)};
 
-    \node at (1.5, 1.5) (qopt) {};
+    \node at (1*1.5, 1*1.5) (qopt) {};
+    \node at (0, 0) (x0) {};
+    \node at (1.2*1.5,0.6*1.5) (x1) {};
+    \node at (0.88*1.5,0.8*1.5) (x2) {};
+    \node at (0.96*1.5,1.02*1.5) (x3) {};
+
+    \draw[scale=1.5,-,thick] (x0.center) -- (x1.center) -- (x2.center) --
+                            (x3.center) -- (qopt.center);
+%    \node at (3, 1.5) (lopt) {};
+%    \node at (-0.75, 1.125) (qoptdesc) {$x^*$};
+%    \node at (-1.5, 0.375) (x0desc) {$x_0$};
+%    \node[text=red] at (3.75, 2.625) (loptdesc) {$\hat{x}_0$};
+%    \draw[scale=1.5,->] (qoptdesc) .. controls ([xshift=1cm] qoptdesc) and ([xshift=-1cm]
+%                                                               qopt) .. (qopt);
+%    \draw[scale=1.5,->] (loptdesc) .. controls ([xshift=-1cm] loptdesc) and ([yshift=1cm]
+%                                                               lopt) .. (lopt);
+%    \draw[scale=1.5,->] (x0desc) .. controls ([xshift=1cm] x0desc) and ([xshift=-1cm] d)
+%                                                                     .. (d);
+
     \draw[scale=1.5,fill] (qopt) circle [radius=0.02];
 
-    % draw the big polygin
+    % draw the big polygon
     \fill[very thick,fill=blue,fill opacity=0.1] (a.center) -- (b.center) --
                                                  (c.center) -- (d.center) --
                                                  (e.center) -- cycle;
 
+%    \draw[scale=1.5,thick, red, name path=lobj, domain=-0.4:0.4] plot(\x, {-\x}) {};
+
     % draw the quadratic objective function
-    \draw[scale=1.5,thin, dashed] plot[id=qobj1, raw gnuplot] function {
-        f(x,y) = x**2 + y**2 - 2*x - 2*y + 1.75;
+    \draw[scale=1.5,thin, dashed] plot[id=qobjpath1, raw gnuplot] function {
+        f(x,y) = x**2 + y**2 - 2*x - 2*y + 1.8;
         set xrange[-1:2];
         set yrange[-2:2];
         set view 0,0;
@@ -46,8 +66,8 @@
         unset surface;
         splot f(x,y);
     };
-    \draw[scale=1.5,thin, dashed] plot[id=qobj2, raw gnuplot] function {
-        f(x,y) = x**2 + y**2 - 2*x - 2*y + 1.9;
+    \draw[scale=1.5,thin, dashed] plot[id=qobjpath2, raw gnuplot] function {
+        f(x,y) = x**2 + y**2 - 2*x - 2*y + 1.9456;
         set xrange[-1:2];
         set yrange[-2:2];
         set view 0,0;
@@ -58,8 +78,8 @@
         unset surface;
         splot f(x,y);
     };
-    \draw[scale=1.5,thin, dashed] plot[id=qobj3, raw gnuplot] function {
-        f(x,y) = x**2 + y**2 - 2*x - 2*y + 1.98;
+    \draw[scale=1.5,thin, dashed] plot[id=qobjpath3, raw gnuplot] function {
+        f(x,y) = x**2 + y**2 - 2*x - 2*y + 1.998;
         set xrange[-1:2];
         set yrange[-2:2];
         set view 0,0;

@@ -1,13 +1,13 @@
 \begin{tikzpicture}
     % grid and axes
-    \draw[->,name path=xaxis] (-0.2,0) -- (2.2,0) node[right] {$x$};
-    \draw[->,name path=yaxis] (0,-0.2) -- (0,2.2) node[above] {$y$};
+    \draw[scale=1.5,->,name path=xaxis] (-0.2,0) -- (2.2,0) node[right] {$x$};
+    \draw[scale=1.5,->,name path=yaxis] (0,-0.2) -- (0,2.2) node[above] {$y$};
 
     % draw lines
-    \draw[name path=line1, domain=0.6:2.5] plot(\x,{-\x + 3});
-    \draw[name path=line2, domain=-0.2:1.6] plot(\x,{0.33*\x + 1.33});
-    \draw[name path=line3, domain=0.7:2.3] plot(\x,{\x - 1});
-    \draw[name path=linesearch, domain=-0.1:2.1] plot(\x,{0.5*\x});
+    \draw[scale=1.5,name path=line1, domain=0.6:2.5] plot(\x,{-\x + 3});
+    \draw[scale=1.5,name path=line2, domain=-0.2:1.6] plot(\x,{0.33*\x + 1.33});
+    \draw[scale=1.5,name path=line3, domain=0.7:2.3] plot(\x,{\x - 1});
+    \draw[scale=1.5,name path=linesearch, domain=-0.1:2.1] plot(\x,{0.5*\x});
 
     % calculate intersection points
     \node[name intersections={of=line1 and line2}] (a) at (intersection-1) {};
@@ -16,38 +16,38 @@
     \node[name intersections={of=xaxis and yaxis}] (d) at (intersection-1) {};
     \node[name intersections={of=line2 and yaxis}] (e) at (intersection-1) {};
 
-    \node at (1.2,0.6) (x1) {};
-    \node at (1.95, 0.35) (x1desc) {$x_1$};
-    \draw[->] (x1desc) .. controls ([yshift=0.5cm] x1desc) and ([xshift=0.5cm]
+    \node at (1.2*1.5,0.6*1.5) (x1) {};
+    \node at (1.95*1.5, 0.35*1.5) (x1desc) {$x_1$};
+    \draw[scale=1.5,->] (x1desc) .. controls ([yshift=0.5cm] x1desc) and ([xshift=0.5cm]
                                                                    x1) .. (x1);
 
 
-    \node[red] at (0.7, 0.1) (alphadesc) {$\alpha$};
-    \node at (1.2, 0.6) (alpha) {};
-    \node at (1, 1) (qopt) {};
-    \node at (2, 1) (lopt) {};
-    \node at (-0.5, 0.75) (qoptdesc) {$x^*$};
-    \node at (2.5, 1.75) (loptdesc) {$\hat{x}_0$};
-    \node at (-1, 0.25) (x0desc) {$x_0$};
-    \draw[->] (qoptdesc) .. controls ([xshift=1cm] qoptdesc) and
+    \node[red] at (0.7*1.5, 0.1*1.5) (alphadesc) {$\alpha$};
+    \node at (1.2*1.5, 0.6*1.5) (alpha) {};
+    \node at (1*1.5, 1*1.5) (qopt) {};
+    \node at (2*1.5, 1*1.5) (lopt) {};
+    \node at (-0.5*1.5, 0.75*1.5) (qoptdesc) {$x^*$};
+    \node at (2.5*1.5, 1.75*1.5) (loptdesc) {$\hat{x}_0$};
+    \node at (-1*1.5, 0.25*1.5) (x0desc) {$x_0$};
+    \draw[scale=1.5,->] (qoptdesc) .. controls ([xshift=1cm] qoptdesc) and
                                                 ([xshift=-1cm] qopt) .. (qopt);
-    \draw[->] (loptdesc) .. controls ([xshift=-1cm] loptdesc) and
+    \draw[scale=1.5,->] (loptdesc) .. controls ([xshift=-1cm] loptdesc) and
                                                  ([yshift=1cm] lopt) .. (lopt);
-    \draw[->] (x0desc) .. controls ([xshift=1cm] x0desc) and
+    \draw[scale=1.5,->] (x0desc) .. controls ([xshift=1cm] x0desc) and
                                                       ([xshift=-1cm] d) .. (d);
 
-    \draw[fill] (qopt) circle [radius=0.02];
-    \draw[fill] (alpha) circle [radius=0.03];
+    \draw[scale=1.5,fill] (qopt) circle [radius=0.02];
+    \draw[scale=1.5,fill] (alpha) circle [radius=0.03];
 
     \draw [red, decorate,decoration={brace,mirror}] (d) -- (alpha);
 
     % draw the big polygon
-    \fill[very thick,fill=blue,fill opacity=0.3] (a.center) -- (b.center)
+    \fill[very thick,fill=blue,fill opacity=0.1] (a.center) -- (b.center)
                                               -- (c.center) -- (d.center)
                                               -- (e.center) -- cycle;
 
     % draw the quadratic objective function
-    \draw[thin, dashed] plot[id=qobjalpha, raw gnuplot] function {
+    \draw[scale=1.5,thin, dashed] plot[id=qobjalpha, raw gnuplot] function {
         f(x,y) = x**2 + y**2 - 2*x - 2*y + 1.8;
         set xrange[-1:2];
         set yrange[-2:2];

@@ -1,14 +1,14 @@
 \begin{tikzpicture}
     % grid and axes
-    \draw[->,name path=xaxis] (-0.2,0) -- (2.2,0) node[right] {$x_1$};
-    \draw[->,name path=yaxis] (0,-0.2) -- (0,2.2) node[above] {$x_2$};
+    \draw[scale=1.5,->,name path=xaxis] (-0.2,0) -- (2.2,0) node[right] {$x_1$};
+    \draw[scale=1.5,->,name path=yaxis] (0,-0.2) -- (0,2.2) node[above] {$x_2$};
 
     % draw lines
-    \draw[name path=line1, domain=0.6:2.5] plot(\x,{-\x + 3})
+    \draw[scale=1.5,name path=line1, domain=0.6:2.5] plot(\x,{-\x + 3})
                                                     node[above right=0.2cm] {};
-    \draw[name path=line2, domain=-0.2:1.6] plot(\x,{0.33*\x + 1.33})
+    \draw[scale=1.5,name path=line2, domain=-0.2:1.6] plot(\x,{0.33*\x + 1.33})
                                                     node[above right=0.2cm] {};
-    \draw[name path=line3, domain=0.7:2.3] plot(\x,{\x - 1})
+    \draw[scale=1.5,name path=line3, domain=0.7:2.3] plot(\x,{\x - 1})
                                                     node[above right=0.2cm] {};
 
     % calculate intersection points
@@ -20,26 +20,22 @@
 
     % write the coordinates of the corners.
     \path let \p0 = (a) in node [above right=0.0cm of a] {($1.25$, $1.75$)};
-    \path let \p0 = (b) in node [right=0.1cm of b] {\printpoint{\x0}{\y0}};
-    \path let \p0 = (c) in node [below right=-0.35cm of c]
-                                                       {\printpoint{\x0}{\y0}};
-    
+    \path let \p0 = (b) in node [right=0.1cm of b] {($2$, $1$)};
+    \path let \p0 = (c) in node [below right=-0.35cm of c] {($1$, $0$)};
+    \path let \p0 = (d) in node [left=0.0cm of d] {($0$, $0$)};
     \path let \p0 = (e) in node [left=0.0cm of e] {($0$, $1.\overline{3}$)};
-
-    \node at (1, 1) (qopt) {};
-    \node at (2, 1) (lopt) {};
 
 %    \draw[fill] (qopt) circle [radius=0.02];
 
     % draw the big polygin
-    \fill[very thick,fill=blue,fill opacity=0.3] (a.center) -- (b.center) --
+    \fill[very thick,fill=blue,fill opacity=0.1] (a.center) -- (b.center) --
                                                  (c.center) -- (d.center) --
                                                  (e.center) -- cycle;
 
-    \draw[gray, name path=lobj, domain=1.6:2.4] plot(\x, {5 - 2*\x}) {};
+    \draw[scale=1.5,gray, name path=lobj, domain=1.6:2.4] plot(\x, {5 - 2*\x}) {};
 %    \draw[gray, name path=lobj, domain=1.1:1.9] plot(\x, {3.75 - 2*\x}) {};
-    \draw[gray, name path=lobj, domain=0.6:1.4] plot(\x, {2.5 - 2*\x}) {};
+    \draw[scale=1.5,gray, name path=lobj, domain=0.6:1.4] plot(\x, {2.5 - 2*\x}) {};
 %    \draw[gray, name path=lobj, domain=0.1:0.9] plot(\x, {1.25 - 2*\x}) {};
-    \draw[gray, name path=lobj, domain=-0.4:0.4] plot(\x, {-2*\x}) {};
+    \draw[scale=1.5,gray, name path=lobj, domain=-0.4:0.4] plot(\x, {-2*\x}) {};
 
 \end{tikzpicture}

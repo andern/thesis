@@ -26,7 +26,7 @@ lp\_solve is a free linear (integer) programming solver released under the GNU
 Lesser General Public License (GNU LGPL). Its license is permissive like the
 CPL. \cite{lpsolve}
 \end{description}
-Incidentally, these tree solvers are the only three open source LP solvers
+Incidentally, these three solvers are the only three open source LP solvers
 suggested by the NEOS Optimization Guide~\cite{neos}.
 In addition to the mentioned criteria, it is important that the solver is
 fast.
@@ -35,7 +35,7 @@ Section \ref{sec:problem}.
 
 Testing the three solvers on linearized versions of the instances
 \textit{small} and \textit{large}---presented in
-Chapter \ref{sec:instances}---reveals the running times shown in Table
+Section \ref{sec:instances}---reveals the running times shown in Table
 \ref{table:lpres}.
 The running times are the number of seconds in CPU-time after 1000 runs.
 
@@ -50,8 +50,8 @@ The running times are the number of seconds in CPU-time after 1000 runs.
     \end{tabular}
     \label{table:lpres}
 \end{table}
-While lp\_solve is the fastest solver on a smaller LP, it doesn't scale as well
-as with larger problems as Clp does.
+While lp\_solve is the fastest solver on a smaller LP problem, it doesn't
+scale as well as with larger problems as Clp does.
 
 GoodTech need to solve problems with more than 200 variables, and
 \textit{small} is almost hitting that lower limit, so a good result on

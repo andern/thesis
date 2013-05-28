@@ -21,7 +21,7 @@ struct vertex {
   vector<struct vertex*> children;
 };
 \end{verbatim}
-A reader familiar with \texttt{C++} might notice that we use
+Readers familiar with \texttt{C++} might notice that we use
 \texttt{set} instead of using a bit vector as we discussed
 in Section \ref{sec:treesets}, and we will come to that later. Note that
 the sets consist of indices of primitive type \texttt{uint16\_t}, which is
@@ -184,8 +184,9 @@ or that a link is repaired.
 Each link in the network is represented by
 a variable, so each event can by represented by a single variable.
 
-The current state of our system is easily represented by a QP $\mathcal{Q}$ and
-a set of variables representing the current broken links in our network.
+The current state of our system is easily represented by a quadratic program 
+$\mathcal{Q}$ and a set of variables representing the current broken links in
+our network.
 As this set represents broken links, just like our modifiers $\mathcal{M}_k$
 represents breakdowns, we choose to denote the current state of the system
 by $\mathcal{M}$. 

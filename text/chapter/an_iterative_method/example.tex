@@ -130,8 +130,8 @@ T_1 &=& -\left[
 \]
 \end{comment}
 
-Now we minimize $T_1$ subject to the original constraints and call the LP for
-$\mathcal{L}_1$.
+Now we minimize $T_1$ subject to the original constraints and call the LP
+problem for $\mathcal{L}_1$.
 The linear program of $\mathcal{L}_1$ in standard form reads:
 \[
 \begin{array}{lcrcrl}
@@ -158,7 +158,7 @@ Again we perform a line search, but this time between the points $x_1$ and
 %$\hat{x}_1$ and find that $\alpha = 0.73$, $x_2 = (0.88, 0.8)$ and
 $\hat{x}_1$ and find that $\alpha = 0.27$, $x_2 = (0.88, 0.8)$ and
 $T_2 = -0.25x -0.4y -0.4$.
-Minimize $T_2$ subject to the original constraints and call the LP for
+Minimize $T_2$ subject to the original constraints and call the LP problem for
 $\mathcal{L}_2$.
 The linear program of $\mathcal{L}_2$ in standard form reads:
 \[
@@ -184,3 +184,13 @@ $\alpha = 0.77$ and that $x_3 = (0.96, 1.02)$.
 Assume $\epsilon = 0.5$, which imples that
 $\frac{f(x_2) - f(x_3)}{|f(x_2)|} \leq \epsilon$, so we stop and return $x_3$
 as our solution.
+
+\begin{figure}[ht!]
+\centering
+\input{include/slppath}
+\caption{Illustration of the path taken by the algorithm.}
+\label{fig:slppath}
+\end{figure}
+
+Figure \ref{fig:slppath} shows the iterates of the algorithm up until
+the termination condition is met.

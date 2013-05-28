@@ -52,13 +52,6 @@ insert path={
 
 \begin{document}
 
-% print a point given by two coordinates in pt (output is in cm)
-\newcommand*\printpoint[2]{(%
-\pgfmathparse{0.03514598035*#1}\pgfmathprintnumber{\pgfmathresult},%
-\pgfmathparse{0.03514598035*#2}\pgfmathprintnumber{\pgfmathresult})%
-}
-
-%\title{Fast Solver of a Quadratic Programming (QP) Problem}
 \title{Fast Solver of Closely Related Quadratic Programming
        Problems.}
 
@@ -69,25 +62,26 @@ insert path={
 
 \thispagestyle{empty}
 \begin{abstract}
-Goodtech and MathConsult have developed tools to compute the reliability of
-delivery in a masked network where every link has an error rate.
-This method is based on reliability theory to find actual error cases for
-further analysis, and optimization theory to compute an optimal delivery
-through the network for every error case.
-The optimization problems are formulated as Quadratic Programming (QP)
-problems.
-Because the number of possible error cases increases rapidly as the size of the
-network increases, it is crucial that every error case is analyzed very
-quickly.
-The aim is to develop a solver for effectively solving problems
-\begin{inparaenum}
-  \item with a problem size of 100 to 2000 variables;
-  \item with sparse matrices;
-  \item with positive-semidefinite quadratic terms in the objective function;
-        and
-  \item where the QP problem shall be solved many times with small variations
-        in the constraints.
-\end{inparaenum}
+Quadratic programming (QP) blabla. Linear programming (LP) blabla.
+%Goodtech and MathConsult have developed tools to compute the reliability of
+%delivery in a masked network where every link has an error rate.
+%This method is based on reliability theory to find actual error cases for
+%further analysis, and optimization theory to compute an optimal delivery
+%through the network for every error case.
+%The optimization problems are formulated as Quadratic Programming (QP)
+%problems.
+%Because the number of possible error cases increases rapidly as the size of the
+%network increases, it is crucial that every error case is analyzed very
+%quickly.
+%The aim is to develop a solver for effectively solving problems
+%\begin{inparaenum}
+%  \item with a problem size of 100 to 2000 variables;
+%  \item with sparse matrices;
+%  \item with positive-semidefinite quadratic terms in the objective function;
+%        and
+%  \item where the QP problem shall be solved many times with small variations
+%        in the constraints.
+%\end{inparaenum}
 \end{abstract}
 \newpage
 
@@ -151,7 +145,7 @@ in PROMAPS includes the following main functions:
 \end{enumerate}
 Among these six functions, the third main function has been identified as the
 most time-consuming. A major part of the third main function is a call to a
-quadratic programming (QP) solver\cite{trond}.
+QP solver\cite{trond}.
 
 The maximum power
 supply can be calculated by an objective function that represents the power
@@ -236,13 +230,13 @@ solver. There are more available LP solvers than QP solvers in general,
 but there are also more free LP solvers than free QP
 solvers\cite{wikilp}\cite{wikiqp}.
 
-Afterwards, we presented a tree-structural approach for reducing the number
+Afterwards, we presented a tree structural approach for reducing the number
 of calls to the QP solver. This approach reduced the number of calls to the
 QP solver by a significant amount. Depending on problem size and the number
 of breakdowns, this approach caused the original method to perform from
 16\% to around 70\% faster, and we have reason to believe that it would
 increase even further with $\beta$.
-The tree-structured approach therefore reduced the average number of
+The tree structural approach therefore reduced the average number of
 CPU-seconds used to solve a subinstance.
 This method is
 independent of the choice of QP solver, and since the method relies on reducing
@@ -288,7 +282,7 @@ O\left(\frac{\sigma(\beta, n)n}{p}\right)
 in terms of memory for each processor.
 
 Further research topics may include parallelization of both the naive approach
-and the tree-structural approach on both a shared memory computer and a
+and the tree structural approach on both a shared memory computer and a
 distributed computer.
 
 %\onecolumn
