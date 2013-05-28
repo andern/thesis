@@ -3,7 +3,7 @@ similar problem may need to be solved.
 Often this problem has minor changes in the constraints to the problem before
 it.
 If many problems are solved consecutively, it is important with as little
-``downtime'' as possible between each problem.
+downtime as possible between each problem.
 
 We have that
 \begin{align}
@@ -44,22 +44,23 @@ Section \ref{sec:example} changes from $-x + 3y \leq 4$ to
 $-x + 3y \leq 0$. The new linear program then reads:
 \[
 \begin{array}{lcrcrl}
-    \textrm{Maximize}   & & 0.25 x &+& 0.4 y & \\
+    \textrm{minimize}   &-& 0.25 x &-& 0.4 y & \\
     \textrm{subject to} & &      x &+&     y & \leq 3 \\
-    \textrm{and}        & &      x &-&     y & \leq 1 \\
-    \textrm{and}        &-&      x &+&   3 y & \leq 0 \\
-    \textrm{and}        & &      x &,&     y & \geq 0
+                        & &      x &-&     y & \leq 1 \\
+                        &-&      x &+&   3 y & \leq 0 \\
+      \multicolumn{5}{r}{x,y}                & \geq 0.
 \end{array}
 \]
 Figure \ref{fig:prac1} illustrates the new feasible region.
-Readers are encouraged to compare Figure \ref{fig:lp3} and Figure
+Readers are encouraged to compare Figure \ref{fig:lp3} with Figure
 \ref{fig:prac1} to note how the feasible region has changed and made the
 unconstrained minimum infeasible.
 
 \begin{figure}[ht!]
 \centering
 \input{include/slppractical1}
-\caption{A visual representation of the linearized version of the new QP.}
+\caption{A visual representation of the new QP problem and its linearized
+         version.}
 \label{fig:prac1}
 \end{figure}
 
@@ -104,7 +105,7 @@ x_{\mathcal{B}}^* =
 and update our dictionary to become
 \[
     \begin{array}{rcrcrcr}
-        \zeta &=& 1.01 &-& 0.10 w_3 &-& 0.10 w_1 \\ \hline
+        -\zeta &=& 1.01 &-& 0.10 w_3 &-& 0.10 w_1 \\ \hline
             y &=& 0.75 &-& 0.25 w_3 &-& 0.25 w_1 \\
             x &=& 2.25 &+& 0.25 w_3 &-& 0.75 w_1 \\
           w_2 &=&-0.50 &-& 0.50 w_3 &+& 0.50 w_1
@@ -112,12 +113,12 @@ and update our dictionary to become
 \]
 
 Note that this dictionary is not primally feasible. 
-In the current dictionary, we run the Dual Simplex method by letting $w_1$
+In the current dictionary, we run the dual simplex method by letting $w_1$
 enter the basis, while letting $w_2$ leave the basis.
 This leaves us with the following optimal dictionary:
 \[
     \begin{array}{rcrcrcr}
-        \zeta &=& 0.58 &-& 0.20 w_3 &-& 0.20 w_2 \\ \hline
+        -\zeta &=& 0.58 &-& 0.20 w_3 &-& 0.20 w_2 \\ \hline
             y &=& 0.50 &-& 0.50 w_3 &-& 0.50 w_2 \\
             x &=& 1.50 &-& 0.50 w_3 &-& 1.50 w_2 \\
           w_1 &=& 1.00 &+& 1.00 w_3 &+& 2.00 w_2
@@ -130,8 +131,8 @@ initial guess $x_0$. We get that
 \[
     T_0 = -2.5 + x - y,
 \]
-which gives us the objective function in Figure \ref{fig:prac1}. Solving that
-linear program, we end up with a basic solution $\hat{x}_0 = (0,0)$.
+which becomes our new objective function. Solving that
+linear program, we end up with an optimal solution $\hat{x}_0 = (0,0)$.
 Since $x_0$ and $\hat{x}_0$ are two adjacent vertices of the feasible region,
 the entire line search takes place on the edge between those points.
 Since the unconstrained minimum $x^u$ is infeasible, the solution $x^*$ must

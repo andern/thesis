@@ -1,9 +1,9 @@
 The method described in Chapter \ref{ch:slp} relies on repetitively solving
 linear programs. Before implementing such a method, it is important to choose
-an appropriate LP solver. The solver must
+an appropriate LP solver. The solver should 
 \begin{inparaenum}[\itshape a\upshape)]
 \item be released under a free license; and
-\item it must allow library calls in C/C++
+\item allow library calls in C/C++
 \end{inparaenum}
 
 Among a list of about 50 solvers (most of them proprietary), the
@@ -26,7 +26,6 @@ lp\_solve is a free linear (integer) programming solver released under the GNU
 Lesser General Public License (GNU LGPL). Its license is permissive like the
 CPL. \cite{lpsolve}
 \end{description}
-
 Incidentally, these tree solvers are the only three open source LP solvers
 suggested by the NEOS Optimization Guide~\cite{neos}.
 In addition to the mentioned criteria, it is important that the solver is
@@ -42,8 +41,8 @@ The running times are the number of seconds in CPU-time after 1000 runs.
 
 \begin{table}[ht!]
     \centering
-    \caption{Running time in CPU-seconds used by each solver to solve 1000
-             instances of each problem.}
+    \caption{Running time in CPU-seconds used by each solver to solve each
+             instance 1000 times.}
     \begin{tabular}{lrrr}
         Data Set       & Clp    & GLPK   & lp\_solve \\ \hline
         \textit{small} & 6.929  & 26.096 & 4.734 \\
@@ -51,9 +50,8 @@ The running times are the number of seconds in CPU-time after 1000 runs.
     \end{tabular}
     \label{table:lpres}
 \end{table}
-
-While lp\_solve is the fastest on a smaller LP, it doesn't scale as well as
-with larger problems like Clp does.
+While lp\_solve is the fastest solver on a smaller LP, it doesn't scale as well
+as with larger problems as Clp does.
 
 GoodTech need to solve problems with more than 200 variables, and
 \textit{small} is almost hitting that lower limit, so a good result on
@@ -61,4 +59,4 @@ GoodTech need to solve problems with more than 200 variables, and
 This means that Clp outperforms the other two solvers in this test.
 
 Although this is not an extensive test, it is a pretty good indicator that Clp
-will be the fastest solver on similar problems.
+is the fastest solver on similar problems.

@@ -6,8 +6,7 @@ we have a closed-form definition for the specific objective function that
 we described in Chapter \ref{ch:qp}. The function prototype for the
 Taylor series expansion reads:
 \begin{verbatim}
-void taylor(double* T, const double* x,
-            const ClpModel& m);
+void taylor(double* T, const double* x, const ClpModel& m);
 \end{verbatim}
 where \texttt{ClpModel} gives us access to both the linear and quadratic
 objective term. The result of the Taylor-series expansion, i.e. the 
@@ -37,8 +36,7 @@ and setting $m^\prime(\alpha) = 0$ and solving for $\alpha$:
 \]
 The function prototype for the line search function reads:
 \begin{verbatim}
-double lineSearch(const double* p,
-                  const double* q,
+double lineSearch(const double* p, const double* q,
                   const ClpModel& m);
 \end{verbatim}
 where \texttt{ClpModel} gives us access to both the linear and quadratic
@@ -48,8 +46,7 @@ The termination condition of Slp depends on the objective value of the two
 previous iterations. So, in order to terminate, we need a function that can
 compute the objective value. The function prototype for this function reads:
 \begin{verbatim}
-double objVal(const double* p,
-              const ClpModel& m);
+double objVal(const double* p, const ClpModel& m);
 \end{verbatim}
 where \texttt{ClpModel} again gives us access to both the linear and quadratic
 objective term.
@@ -59,7 +56,7 @@ of columns in the problem. The running times are dependent on the $b$ vector,
 which is not stored sparsely.
 
 When it comes to decisions to be made around data types and storage formats,
-there is not really too much to be said, because the choices are quite limited.
+the choices are quite limited.
 It is pretty much dependant on the linear programming solver that is used.
 As mentioned earlier, Clp stores matrices in a sparse format, and all the sub
 functions only operate on non-zero elements in those matrices, so there is not
@@ -69,14 +66,11 @@ An implementation of Algorithm \ref{alg:iter} in \texttt{C++} looks like this:
 \begin{verbatim}
 ClpModel lin = m; // A linear copy of m
 do {
-  taylor(T, x, m);
-  // Set new linear objective
-  lin.chgObjCoefficients(T);
-  // Run the primal simplex method
+  taylor(T, x, m); // Set new linear objective
+  lin.chgObjCoefficients(T); // Run the primal simplex method
   lin.primal();
 
-  const double* xhat = 
-          lin.primalColumnSolution();
+  const double* xhat =  lin.primalColumnSolution();
   double alpha = lineSearch(x, xhat, m);
   if (alpha > 1) alpha = 1;
 

@@ -23,12 +23,10 @@ the approximation becomes
 \label{eq:texp}
 T_a(x) = - a^THa + 2a^THx + b^Tx.
 \end{equation}
-
 Now, if $a = 0$ we are left with
 \[
 T_0(x) = b^Tx.
 \]
-
 We introduce a new function $g(x) = T_0(x)$, and we formulate a new LP
 that we call $\mathcal{L}$:
 \[
@@ -65,14 +63,14 @@ $100$ randomly generated networks.
 %    Hidden. TODO: Show
     \input{include/delta3d}
 \end{center}
-\caption{Deviance as a function of density in the objective function.}
+\caption{Deviation as a function of density in the objective function.}
 \label{fig:sparsobj}
 \end{figure}
 
 We can see that the density in the diagonal elements of $H$ has
-close to zero influence on the deviance.
+close to zero influence on the deviation.
 While we see that the density of $b$ certainly has more influence,
-the deviance actually never change more than around $4\%$.
+the deviation actually never change more than around $4\%$.
 
 These results give us incentive to look into solution methods that
 are based upon linear programming.

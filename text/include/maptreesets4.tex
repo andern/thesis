@@ -1,8 +1,8 @@
 \begin{tikzpicture}
-[level 1/.style={sibling distance=14mm, level distance=10mm},
-level 2/.style={sibling distance=9mm, level distance=10mm}
+[level 1/.style={sibling distance=16mm, level distance=12mm},
+level 2/.style={sibling distance=10mm, level distance=12mm}
 ]
-\tikzset{every node/.style={shape=circle,fill=black!25,minimum size=7mm}}
+\tikzset{every node/.style={shape=circle,draw,fill=black!5,minimum size=9mm}}
 %\tikzset{every node/.style={shape=circle,
 %                            font=\bfseries \Large,
 %                            minimum size=3cm,
@@ -22,16 +22,16 @@ level 2/.style={sibling distance=9mm, level distance=10mm}
         node[fill=red!40] {$8$}
         child {
             node {$10$};
-            \path edge from parent[draw,line width=3pt,-,red!20];
+            \path edge from parent[draw,line width=3pt,-,red!40];
         }
         child {
             node {$12$}
             child {
                 node {$15$}
             };
-            \path edge from parent[draw,line width=3pt,-,red!20];
+            \path edge from parent[draw,line width=3pt,-,red!40];
         };
-    \path edge from parent[draw,line width=3pt,-,red!20];
+    \path edge from parent[draw,line width=3pt,-,red!40];
     }
     child {
         node {$16$}

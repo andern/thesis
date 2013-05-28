@@ -31,8 +31,8 @@ $x^{\mathcal{U}}$, i.e. the unconstrained minimum of $f$.
 Additionally we note that $\hat{x}_k$ lies on the boundary of the feasible
 region.
 From this we see that if the unconstrained minimum lies inside the feasible
-region ($x^* = x^\mathcal{U}$) there exists a point on the line segment between
-$x_k$ and $\hat{x}_k$ that is closer to $x^*$ than the two end points.
+region, i.e. $x^* = x^\mathcal{U}$, there exists a point on the line segment
+between $x_k$ and $\hat{x}_k$ that is closer to $x^*$ than the two end points.
 
 We perform a \emph{line search} by finding the minimum value of $f$ on the
 straight line between the points $x_k$ and $\hat{x}_k$:
@@ -40,17 +40,16 @@ straight line between the points $x_k$ and $\hat{x}_k$:
 \alpha_k \in \argmin_{\alpha \leq 1} f((1-\alpha) x_k + \alpha \hat{x}_k).
 \]
 Call $\alpha_k$ the \emph{step length}.
-
 We calculate $x_{k+1}$ using the step length $\alpha_k$:
 \[
 x_{k+1} = (1-\alpha_k) x_k + \alpha_k\hat{x}_k.
 \]
-If, however, the unconstrained minimum lies outside the feasible region
-($x^* \neq x^\mathcal{U}$), $\alpha_k$ might be greater than $1$, and the
+If, however, the unconstrained minimum lies outside the feasible region, i.e.
+$x^* \neq x^\mathcal{U}$, $\alpha_k$ might be greater than $1$, and the
 minimum value of $f$ of all the \emph{feasible} points collinearly with $x^*$
 and $\hat{x}_k$ will be $\hat{x}_k$.
 
-We Increase $k$ by one and repeat the process from the calculation of $T_k$
+We increase $k$ by one and repeat the process from the calculation of $T_k$
 until we reach our termination condition.
 We terminate when the relative difference in objective value of the two last
 iterations is less than some $\epsilon$. We terminate when

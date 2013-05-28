@@ -28,8 +28,7 @@ $10^{-7}$ & 70.78 & 6522.91 & 100.85 & 9395.92
 \end{table}
 
 The reason for Slp being so slow with low-valued tolerances is most likely that
-Slp converges really slowly as the termination condition becomes too strict
-because of the low tolerance value.
+Slp converges really slowly as the termination condition becomes too strict.
 \begin{figure}[ht!]
     \centering
     \input{include/small_tolerance}
@@ -72,8 +71,8 @@ reaches values lower than $10^{-4}$, so we let $\epsilon = 10^{-4}$ to see if
 Slp may keep up as $n$ increases.
 Table \ref{table:eps4instances} shows the running time in CPU-seconds required
 to solve the three instances.
-Unfortunately, we see that even with a high tolerance, Slp can not keep up with Clp
-as $n$ increases.
+Unfortunately, we see that even with a high tolerance, Slp can not keep up with
+Clp as $n$ increases.
 
 \begin{table}
 \centering
@@ -92,12 +91,14 @@ as $n$ increases.
 Since the two previous experiments indicate that Clp performs better, we
 go on to evaluate the tree-structural approach based on this solver.
 Table \ref{table:expfour} shows an excerpt of the test results. The table
-shows the average running time in CPU-seconds required to solve random instances
-of increasing size, along with $\sigma(1, n) = n + 1$ of its subinstances. The rightmost
-column shows the relative speed-up of \texttt{cClp} over \texttt{nClp}.
+shows the average running time in CPU-seconds required to solve random
+instances of increasing size, along with $\sigma(1, n) = n + 1$ of its
+subinstances.
+The rightmost column shows the relative speedup of \texttt{cClp} over
+\texttt{nClp}.
 A table with results for all $n=100,200,\ldots,2000$ can found in Appendix
 \ref{app:exp1}.
-We see that the relative speed-up of \texttt{cClp} over \texttt{nClp}
+We see that the relative speedup of \texttt{cClp} over \texttt{nClp}
 increases with the instance size.
 This is due to the fact that we save more time for each instance we do
 \emph{not} need to solve, as $n$ increases, simply because larger instances
@@ -119,31 +120,35 @@ that we might not have to solve.
 \end{table}
 
 \subsection*{Experiment 4}
-Table \ref{table:exptwo} shows the test results from this experiment.
-The table shows the average running time in CPU-seconds required to solve
-ten random instances along with $\sigma(\beta, 50)$ of its subinstances.
-The rightmost column represents how many subinstances we did not have to
-solve because their solutions were found in the tree.
-We see that the relative speed-up of \texttt{cClp} over \texttt{nClp}
+Table \ref{table:exptwo} shows the average running time in CPU-seconds required
+to solve ten random instances along with
+$\sigma(\beta, 50) = \sum_{j=0}^{\beta} \binom{50}{j}$ of its subinstances.
+The rightmost column represents how many subinstances we actually solved with
+a call to a QP solver, because their solutions were not found in the tree.
+We see that the relative speedup of \texttt{cClp} over \texttt{nClp}
 increases with $\beta$.
 This is due to the fact that as the tree grows in size, the chance that
 an unsolved subinstance is distinct, decreases. In fact, looking at the
-rightmost column in Table \ref{table:exptwo}, we can calculate the percentage
-of distinct solutions as $\beta$ increases.
-There are $74.3\%, 58.3\%, 45.4\%, 32.8\%$ and $24.2\%$ distinct solutions for
-$\beta$ equal to $1,2,3,4$ and $5$, respectively. This helps us clarify the reason
-why the relative speed-up of \texttt{cClp} over \texttt{nClp} increases.
+rightmost column in Table \ref{table:exptwo}, we see that this is the case.
+This helps us clarify the
+reason why the relative speedup of \texttt{cClp} over \texttt{nClp} increases.
 \begin{table}[ht!]
 \centering
 \caption{Results from Experiment 4.}
 \begin{tabular}{rrrcr}
-      $\beta$ & \texttt{cClp} & \texttt{nClp} & Relative Speedup & Skipped\\ \hline
-       1  & 0.03 & 0.04 & 25.0\% & 13.6 \\
-       2  & 0.64 & 0.94 & 31.9\% & 531.7 \\
-       3  & 7.06 & 15.90 & 55.6\% & 11391.3 \\
-       4  & 77.59 & 188.83 & 58.9\% & 168913.5 \\
-       5  & 586.54 & 1758.23 & 66.6\% & 1795250.7 \\
-       6  & 3115.83 & 0      & 0      & 14283962.0
+      $\beta$ & \texttt{cClp} & \texttt{nClp} & Relative Speedup & Distinct Solutions\\ \hline
+       1  & 0.03 & 0.04 & 25.0\% & 37.4 ($74.3$\%) \\
+       2  & 0.64 & 0.94 & 31.9\% & 744.3 ($58.3$\%) \\
+       3  & 7.06 & 15.90 & 55.6\% & 9484.7 ($45.4$\%) \\
+       4  & 77.59 & 188.83 & 58.9\% & 82262.5 ($32.8$\%) \\
+       5  & 586.54 & 1758.23 & 66.6\% & 574685.0 ($24.2$\%) \\
+%       6  & 3115.83 & 0      & 0      & 3976670.0 ($21.8$\%)
+%       1  & 0.03 & 0.04 & 25.0\% & 13.6 \\
+%       2  & 0.64 & 0.94 & 31.9\% & 531.7 \\
+%       3  & 7.06 & 15.90 & 55.6\% & 11391.3 \\
+%       4  & 77.59 & 188.83 & 58.9\% & 168913.5 \\
+%       5  & 586.54 & 1758.23 & 66.6\% & 1795250.7 \\
+%       6  & 3115.83 & 0      & 0      & 14283962.0
 \end{tabular}
 \label{table:exptwo}
 \end{table}

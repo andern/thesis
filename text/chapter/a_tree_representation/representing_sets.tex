@@ -1,5 +1,5 @@
 Sets of variables, such as the sets $\mathcal{M}_k$ and $\mathcal{Z}_k$ can be
-stored very compactly.
+stored very compactly on a computer.
 By using one bit per possible variable, with a total of $n$ possible variables,
 each set will require exactly $n$ bits of storage.
 We store these $n$ bits in a bit vector\footnote{Also known as bit array,
@@ -17,7 +17,7 @@ represented by the bit vector \texttt{11001} that evaluates to $25$, becoming
 its index. Another benefit of representing sets as bit vectors is
 that we can check whether a set is a
 subset of another set by performing bitwise operations. More specifically,
-a simple \texttt{AND} operation will suffice.
+simple \texttt{AND} and \texttt{NOT} operations will suffice.
 
 Consider two bit vectors $A^b$ and $B^b$ representing two sets $A$ and
 $B$, respectively.
@@ -54,4 +54,4 @@ The amount of bits needed is platform dependent and implementation specific,
 but in \texttt{C} it is never less than $16$ bits.}
 per variable in the set.
 We further discuss the trade-offs of the different methods of storage in
-Section \ref{ch:implementation}.
+Chapter \ref{ch:implementation}.

@@ -149,8 +149,8 @@ in PROMAPS includes the following main functions:
       frequency for functioning and failed delivery states.
 \item Post calculation of various auxiliary variables including economic data.
 \end{enumerate}
-Among these six functions, the third main function was identified as the most
-time-consuming. A major part of the third main function is a call to a
+Among these six functions, the third main function has been identified as the
+most time-consuming. A major part of the third main function is a call to a
 quadratic programming (QP) solver\cite{trond}.
 
 The maximum power
@@ -185,13 +185,13 @@ where $A$ is the grid configuration matrix or reduced incidence matrix, and
 $l$ and $u$ are the minimum and maximum branch (lower and upper) capacity,
 respectively\cite{digernes}.
 
-If a branch with index $i$ fails, we can model that by letting
+If a branch with index $i$ fails, we can model it by letting
 $l_i = u_i = 0$ where $l_i$ and $u_i$ denote the $i$th element of $l$ and
 $u$, respectively. We refer to a branch failing as a \textit{breakdown}.
 We discuss breakdowns in more detail in sections \ref{sec:instances} to
 \ref{sec:subinstances} and Chapter \ref{ch:tree}.
 
-In the next section, we present a short introduction to linear and quadratic
+In the next chapter, we present a brief introduction to linear and quadratic
 programming.
 We then move on to Chapter \ref{ch:qp} where we present some instances of the
 quadratic programming problem (\ref{eq:obj}) that Goodtech have supplied.
@@ -240,16 +240,17 @@ Afterwards, we presented a tree-structural approach for reducing the number
 of calls to the QP solver. This approach reduced the number of calls to the
 QP solver by a significant amount. Depending on problem size and the number
 of breakdowns, this approach caused the original method to perform from
-16\% to around 70\% faster, and we have reason to believe that it would increase
-even further, as $\beta$ increases. The tree-structured approach reduced the
-average number of CPU-seconds used to solve a subinstance.
+16\% to around 70\% faster, and we have reason to believe that it would
+increase even further with $\beta$.
+The tree-structured approach therefore reduced the average number of
+CPU-seconds used to solve a subinstance.
 This method is
 independent of the choice of QP solver, and since the method relies on reducing
 the number of calls to the QP solver, and not increasing the speed of the
 actual solver, the relative speedup will most likely remain solver independent.
 
 \section{Future Work}
-This section presents suggestions to future work regarding the methods
+In this section, we present suggestions to future work regarding the methods
 described in this thesis.
 
 \subsubsection{Parallelization}

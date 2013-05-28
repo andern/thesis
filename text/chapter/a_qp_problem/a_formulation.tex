@@ -38,17 +38,19 @@ where $H$ is a positive semidefinite diagonal $n \times n$ matrix, $A$ is a
 $m \times n$ oriented incidence matrix, and $b, l, u$ and $x$ are vectors in
 $\mathbb{R}^n$.
 
-The function $f$ in (\ref{eq:generalqp}) is called the objective function of
+The function $f$ is called the objective function of
 the problem. In (\ref{eq:obj}) and (\ref{eq:thesisqp}), $f$ consists of a
 quadratic term ($x^T H x$) and a linear term ($b^T x$).
 
-In practical applications, a large proportion of the diagonal elements of H are
-zero, and for the non-zero elements we typically have
-$10^{-5} \le h_i \le 10^{-1}$. Here $h_i$ denotes the $i$th diagonal element of
-$H$. For the components $b_i$ of vector $b$, we typically have
+In practical applications, a large proportion of the diagonal elements of $H$
+and $b$ are zero.
+For the non-zero elements of $H$, we typically have
+$10^{-5} \le h_i \le 10^{-1}$.
+Here $h_i$ denotes the $i$th diagonal element of $H$.
+For the non-zero elements $b_i$ of vector $b$, we typically have
 $10 \le |b_i| \le 70$. All elements of $l$ and $u$ are non-positive 
 and non-negative, respectively. However, the methods developed in this thesis
 do not require these values.
-These value restrictions comes part from conversations with Goodtech, and
+These values come part from conversations with Goodtech, and
 part from a couple of real instances that they have supplied.
 The next section describes the supplied instances in detail.

@@ -1,16 +1,16 @@
 \chapter{Implementation}
 Recall from Chapter \ref{ch:qp} that we discussed limiting the amount
 of subinstances to solve. We did this by introducing a limit on the number of
-simultaneous break-downs in the network by some $\beta$.
+simultaneous breakdowns in the network by some $\beta$.
 Another approach is to implement a discrete-event simulator (DES). Each event
 occurs at a particular instant in time that changes the state of the system.
-In this case, each event would either be a breakdown in the network, or that
-a breakdown is fixed.
+In this case, each event would either be a link breaking down, or that a link
+is repaired.
 
 The difference in these two approaches are prominent, but they share the same
 core, namely a QP solver. In this chapter we first discuss the implementation
 of the solver declared in Chapter \ref{ch:slp}, before we move on to the
-implementation of the two approaches of solving several subinstances.
+implementation of the two approaches for solving several subinstances.
 \label{ch:implementation}
 
 \section{Finding an LP Solver}
@@ -32,7 +32,7 @@ implementations.
 Although Clp is written primarily for solving linear
 programs, it comes with a QP solver. This QP solver uses an implementation
 of a primal-dual predictor-corrector interior point method. In addition
-to Clp's QP solver, we also have the QP solver presented in Section
+to Clp's QP solver, we also have the QP solver presented in Chapter
 \ref{ch:slp}.
 
 There are four different implementations we have, named
@@ -41,9 +41,9 @@ There are four different implementations we have, named
 \texttt{\_clp} and \texttt{\_slp} uses Clp's QP solver and Slp, respectively,
 whenever a QP needs to be solved.
 The \texttt{construct} implementations uses the tree structure presented
-in Section \ref{ch:tree} for storing subinstances with distinct solutions.
+in Chapter \ref{ch:tree} for storing subinstances with distinct solutions.
 The \texttt{naive} implementations, however, solves subinstances regardless of
 whether they have distinct solutions or not.
 
-In the next section, we present several experiments to perform on our
+In the next chapter, we present several experiments to perform on our
 implementations.

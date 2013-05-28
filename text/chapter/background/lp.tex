@@ -87,7 +87,7 @@ the feasible points is called an \textit{optimal solution}.
 A convex polytope may be defined as an intersection of half-spaces, and a
 system of linear inequalities may be regarded as an intersection of
 half-spaces\cite{branko}.
-Hence, the feasible region may be regarded as a closed convex polytope.
+Hence, the feasible region may be regarded as a convex polytope.
 Note that the feasible region might be empty, i.e. there are no feasible
 points.
 In that case, the linear programming problem itself is considered infeasible.
@@ -111,7 +111,7 @@ region of the LP problem above. It also shows the level sets of the objective
 function from left to right when the function takes the values $0$, $-2.5$ and
 $-5$, respectively.
 The rightmost gray line represents the objective function when it takes
-its maximum value. Our optimal solution in this example is $(2,1)$, and the
+its minimum value. Our optimal solution in this example is $(2,1)$, and the
 objective value is $-5$.
 
 \begin{figure}[ht!]
@@ -133,7 +133,7 @@ Considering the primal problem as denoted in (\ref{eq:primal}), its dual is
 These two problems are related on a number of levels.
 Note the symmetry between the primal problem and its dual.
 Also, every feasible solution for a primal problem gives a bound on the optimal
-objective function value for the dual problem, and vice
+objective function value for its dual problem, and vice
 versa\cite{vanderbei,nocedal,boyd}.
 
 An optimization problem with a quadratic objective function and linear
@@ -147,13 +147,15 @@ program as:
 where G is a symmetrix $n \times n$ matrix, A is a $m \times n$ matrix
 and $c$, $x$ and $b$ are vectors in $\mathbb{R}^n$. If the matrix $G$ is
 positive semidefinite, then the objective function is convex, and the
-QP is considered convex. Convex QPs are in general easier to solve than
-nonconvex QPs because nonconvex QPs can have suboptimal local minima, whereas
-convex QPs does not. In a convex QP, all possible local minima are global
-minima. In this thesis, we only consider convex QPs.
+QP problem is considered convex.
+Convex QP problems are in general easier to solve than
+nonconvex QP problems because nonconvex QP problems can have suboptimal
+local minima, whereas convex QP problems does not.
+In a convex QP problem, all possible local minima are global
+minima. In this thesis, we only consider convex QP problems.
 
 We consider the linear program from before, in which we replace the linear
-objective function with a quadratic one:
+objective function with a quadratic:
 \[
 (x_1 - 1)^2 + (x_2 - 1)^2.
 \]

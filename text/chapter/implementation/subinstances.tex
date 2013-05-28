@@ -1,9 +1,9 @@
 In this section, we discuss the implementation of the different approaches to
 solving several subinstances.
 As mentioned in the beginning of the chapter, the two
-main approaches are to solve a limited amount of subinstances, bounded
-by $\sigma(\beta, n)$ for some $\beta$ and a problem size $n$, or to implement a discrete
-event simulator that only stores the current state of the network.
+main approaches are to solve a limited number of subinstances, bounded
+by $\sigma(\beta, n)$ for some $\beta$ and a problem size $n$, or to implement
+a discrete event simulator that only stores the current state of the network.
 First we will discuss the implementation of the tree structure, before we
 move on to the two main approaches.
 
@@ -23,7 +23,7 @@ struct vertex {
 \end{verbatim}
 A reader familiar with \texttt{C++} might notice that we use
 \texttt{set} instead of using a bit vector as we discussed
-in Section \ref{ch:tree}, and we will come to that later. Note that
+in Section \ref{sec:treesets}, and we will come to that later. Note that
 the sets consist of indices of primitive type \texttt{uint16\_t}, which is
 short for \texttt{unsigned short int}. That means that the sets are limited to
 $2^{16} = 65536$ elements, and therefore also putting a limit to the size
@@ -70,11 +70,12 @@ struct vertex* v, struct vertex*& ret)
 }
 \end{verbatim}
 It is quite evident from the code that the performance of the \texttt{isSubset}
-function is important. In Chapter \ref{ch:tree} we discussed using bit vectors 
-to represent sets. We concluded that a simple \texttt{AND} operation would tell
-us whether a set was a subset of another set.
+function is important. In Section \ref{sec:treesets} we discussed using bit
+vectors  to represent sets. We concluded that simple \texttt{AND} and
+\texttt{NOT} operations would tell us whether a set is a subset of another
+set.
 We also discussed the possibility of it being more memory efficient than
-storing sets in a sparse format where only the indices of each variable was
+storing sets in a sparse format where only the indices of each variable is 
 stored.
 
 Using a bit vector, each set consumes exactly $n$ bits of storage if our
@@ -141,8 +142,8 @@ Codes for the benchmark can be found in Appendix \ref{app:setbench}.
 We see that the bit vector implementation is much faster than the sparse
 implementation on smaller universes. However, the sparse implementation
 scales much better than the bit vector implementation when the size of
-the universe increases. When it comes to memory, the situation is the same,
-except reversed. The sets of sparsely stored indices obviously uses less
+the universe increases. When it comes to memory, the situation is the opposite.
+The sets of sparsely stored indices obviously uses less
 memory when $\beta$ is small, i.e. the modifiers are more sparse. However, they
 do not scale as nicely as the bit vectors. So the choice relies on what is
 most important: memory or speed. Since the nature of this thesis is to
@@ -154,7 +155,7 @@ indices. That is, in \texttt{C++}, \texttt{set}.
 Because we do not need to store any information about edges in the tree,
 we do not need to implement edges as an object of its own. We defined
 a vertex \texttt{struct} earlier, having a \texttt{vector} of child
-vertices. That means that for each vertex we have, we can reach all child
+vertices. This means that for each vertex we have, we can reach all child
 vertices, children's child vertices and so on, from that vertex.
 So, if we have a pointer to the root of a tree, we can reach all vertices
 in the tree. Although we earlier defined a tree as an ordered pair
@@ -195,7 +196,7 @@ update the  current state of the system. This is done with a simple
 \[
 \mathcal{M} = \mathcal{M} \cup \left\{x\right\}.
 \]
-Given a variable $x$ of variables to represent a repaired link, we update the
+Given a variable $x$ to represent a repaired link, we update the
 current state with a simple \textit{relative complement}
 \[
 \mathcal{M} = \mathcal{M} \setminus \left\{x\right\}.

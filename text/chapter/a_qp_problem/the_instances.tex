@@ -1,5 +1,4 @@
-There are three instances, and they have a lot in common, but most
-importantly they all:
+There are three instances, and they all:
 \begin{enumerate}
 \item Have very large coefficients in the linear term compared to the
 quadratic term.
@@ -60,8 +59,8 @@ $\textrm{mean}(h_{ii})$ & $5.2864 \times 10^{-3}$ & $5.8984 \times 10^{-3}$ \\
 The rows and columns in each problem represent vertices and edges respectively.
 An avid reader might notice that \textit{small} and \textit{large} are very
 much alike.
-That is entirely justified as \textit{large} is four \textit{small}-networks
-connected to form one large network.
+This is entirely justified as \textit{large} is four \textit{small}-networks
+connected, forming one large network.
 
 For each of these instances, Goodtech wants to solve several versions
 with slight variations in the input.
@@ -71,9 +70,11 @@ If one or more variables in an instance is forced to zero, it forms a new
 instance that we refer to as a $\emph{subinstance}$ of the original instance.
 This means that for each of the three instances described in this chapter,
 they ideally want to solve a total of $2^n - 1$ subinstances. While this is
-unrealistic, it is also unrealistic that all edges in the network breaks down.
+unrealistic for large $n$, it is also unrealistic that all edges in the
+network breaks down.
 A more realistic approach is to try to solve all subinstances with no more than
-$\beta$ breakdowns. That is, for some given $\beta$ and a problem size $n$, we solve
+$\beta$ breakdowns.
+That is, for some given $\beta$ and a problem size $n$, we solve
 \begin{equation}
 \sigma(\beta, n) = \sum_{j=0}^\beta {\binom{n}{j}}
 \end{equation}

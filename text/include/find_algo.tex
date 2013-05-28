@@ -6,7 +6,7 @@
 \ForEach{child vertex $v_i$ of $v_k$}{
     \If{$\mathcal{M}_i \subseteq \mathcal{M}_l$}{
         $j \leftarrow$ \texttt{find}($\mathcal{M}_l$, $v_i$) \\
-        \If{$j$ is $-1$}{
+        \If{$j$ is not $-1$}{
             \KwRet{$j$}
         }
     }

@@ -89,10 +89,8 @@ int main() {
 \section{next\_combination}
 \label{app:nextcombination}
 \begin{verbatim}
-template <class BidIt>
-inline bool next_combination(
-BidIt n_begin, BidIt n_end,
-BidIt r_begin, BidIt r_end)
+template <class BidIt> inline bool next_combination(
+BidIt n_begin, BidIt n_end, BidIt r_begin, BidIt r_end)
 {
   bool boolmarked=false;
   BidIt r_marked;
@@ -105,10 +103,9 @@ BidIt r_begin, BidIt r_end)
   --tmp_r_end;
 
   for(BidIt r_it1=tmp_r_end;
-  r_it1!=r_begin || r_it1==r_begin;
-  --r_it1,--n_it1)
+  r_it1!=r_begin || r_it1==r_begin; --r_it1,--n_it1)
   {
-    if(*r_it1==*n_it1 )
+    if(*r_it1==*n_it1)
     { 
       if(r_it1!=r_begin)
       {
@@ -125,8 +122,7 @@ BidIt r_begin, BidIt r_end)
       if(boolmarked==true)
       {
         BidIt n_marked;
-        for (BidIt n_it2=n_begin;
-        n_it2!=n_end;++n_it2)
+        for (BidIt n_it2=n_begin; n_it2!=n_end; ++n_it2)
         {
           if(*r_marked==*n_it2) {
             n_marked=n_it2;break;
@@ -135,15 +131,13 @@ BidIt r_begin, BidIt r_end)
 
 
         BidIt n_it3=++n_marked;  
-        for  (BidIt r_it2=r_marked;
-        r_it2!=r_end;++r_it2,++n_it3)
+        for (BidIt r_it2=r_marked;r_it2!=r_end;++r_it2,++n_it3)
         {
           *r_it2=*n_it3;
         }
         return true;
       }
-      for(BidIt n_it4=n_begin;
-      n_it4!=n_end; ++n_it4)
+      for(BidIt n_it4=n_begin; n_it4!=n_end; ++n_it4)
         if(*r_it1==*n_it4)
         {
           *r_it1=*(++n_it4);
@@ -159,7 +153,9 @@ BidIt r_begin, BidIt r_end)
 \section{Generate Random Instance}
 \label{app:random}
 \begin{verbatim}
-static CoinPackedMatrix packMatrix(double** m, int rows, int cols) {
+static
+CoinPackedMatrix packMatrix(double** m, int rows, int cols)
+{
     std::vector<int> row_ind_vec;
     std::vector<int> col_ind_vec;
     std::vector<double> ele_vec;
@@ -181,22 +177,27 @@ static CoinPackedMatrix packMatrix(double** m, int rows, int cols) {
     const int *colIndices = &col_ind_vec[0];
     const double *elements = &ele_vec[0];
 
-    CoinPackedMatrix cpm(false, rowIndices, colIndices, elements, numels);
+    CoinPackedMatrix cpm(false, rowIndices, colIndices,
+                         elements, numels);
     cpm.setDimensions(rows, cols);
 
     return cpm;
 }
 
-static double g_randd(double min, double max) {
+static double g_randd(double min, double max)
+{
     double num = (double) rand() / RAND_MAX;
     return (min + (num * (max - min)));
 }
 
-static int g_randi(int min, int max) {
+static int g_randi(int min, int max)
+{
     return (rand() % (max-min) + min);
 }
 
-ClpModel randomInstance(int vertices, int edges, double Hzero, double bzero) {
+ClpModel randomInstance(int vertices, int edges, double Hzero,
+double bzero)
+{
     srand((uint16_t)time(NULL));
 
     /* Matrix A */
@@ -237,7 +238,8 @@ ClpModel randomInstance(int vertices, int edges, double Hzero, double bzero) {
     const int *colIndices = &col_ind_vec[0];
     const double *elements = &ele_vec[0];
 
-    CoinPackedMatrix H(false, rowIndices, colIndices, elements, numels);
+    CoinPackedMatrix H(false, rowIndices, colIndices, elements,
+                       numels);
     H.setDimensions(edges, edges);
 
     /* Vector b */
