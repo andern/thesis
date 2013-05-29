@@ -54,7 +54,7 @@ insert path={
 
 \title{Fast Solver of Closely Related Quadratic Programming
        Problems.}
-
+\date{June 1, 2013}
 \author{Andreas Halle}
 \maketitle
 \thispagestyle{empty}
@@ -225,7 +225,7 @@ experiments and results in Chapter \ref{ch:experiments}.
 \include{chapter/computational_experiments/main}
 %\endgroup
 
-\chapter{Conclusion and Suggestions to Future Work}
+\chapter{Conclusion}
 Goodtech and MathConsult have developed a tool called PROMAPS that calculates
 the power delivery as a function of demand, and the probability for undelivered
 energy for each load branch in the system, and in the system as a whole.
@@ -260,11 +260,11 @@ independent of the choice of QP solver, and since the method relies on reducing
 the number of calls to the QP solver, and not increasing the speed of the
 actual solver, the relative speedup will most likely remain solver independent.
 
-\section{Future Work}
-In this section, we present suggestions to future work regarding the methods
+\chapter{Future Work}
+In this chapter, we present suggestions to future work regarding the methods
 described in this thesis.
 
-\subsubsection{Parallelization}
+\section{Parallelization}
 Since we are solving a huge amount of QP problems, running several QP solvers
 in parallel is of interest. We suggest the parallelization of the methods
 presented in this thesis as a future research topic.
@@ -301,6 +301,31 @@ in terms of memory for each processor.
 Further research topics may include parallelization of both the naive approach
 and the tree structural approach on both a shared memory computer and a
 distributed computer.
+
+\section{Coordinate Descent}
+Consider a minimization problem
+\[
+    \min f(x) = x^T H x + b^T x,
+\]
+where $H$ is diagonal a $n \times n$ matrix, and $x$ and $b$ are vectors in
+$\mathbb{R}^n$.
+Since $H$ is diagonal, the contours of $f$ are ellipses
+whose axes are aligned with the coordinate directions\cite{nocedal}.
+By performing successive one-dimensional minimizations along the
+coordinate directions $e_1,e_2,\ldots,e_n$, we can find the minimizer of $f$
+in $n$ iterations. This is illustrated in Figure \ref{fig:coordinatedescent}
+for $n = 2$.
+
+\begin{figure}[ht!]
+\centering
+\input{include/coordinatedescent}
+\caption{Illustration of minimization along the coordinate directions of a
+         quadratic with a diagonal Hessian.}
+\label{fig:coordinatedescent}
+\end{figure}
+
+We suggest the development of a direct method based upon coordinate
+descent as a future research topic.
 
 %\onecolumn
 %\newpage
