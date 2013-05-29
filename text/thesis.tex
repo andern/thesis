@@ -62,14 +62,31 @@ insert path={
 
 \thispagestyle{empty}
 \begin{abstract}
-Quadratic programming (QP) blabla. Linear programming (LP) blabla.
+Goodtech and MathConsult have developed a tool called PROMAPS.
+It calculates the power delivery as a function of demand, and the probability
+for undelivered energy for each load branch in the system, and in the
+system as a whole. This problem is formulated as several closely related 
+quadratic programming (QP) problems, whose only difference is in the column
+bounds. A major part of the bottleneck of PROMAPS, has been found to be
+calls to a QP solver. The aim of this thesis is to develop a fast solver
+with the characteristics of these QP problems. The characteristics of the
+QP problems suggest that methods based upon linear programming (LP) are
+suited for solving them. In this thesis, we present an iterative QP solver
+using methods based upon linear programming. We also present a tree structured
+method that reduces the number of calls to a QP solver by a significant amount.
+
 %Goodtech and MathConsult have developed tools to compute the reliability of
-%delivery in a masked network where every link has an error rate.
+%delivery in a masked network where every link has an error rate. 
 %This method is based on reliability theory to find actual error cases for
 %further analysis, and optimization theory to compute an optimal delivery
 %through the network for every error case.
 %The optimization problems are formulated as Quadratic Programming (QP)
-%problems.
+%problems. For each problem, Goodtech wants to solve a number of closely
+%related QP problems, with only minor changes in the column bounds.
+%The aim of this thesis is to develop a solver for effectively
+%solving the formulated QP problems. The way the QP problems are formulated
+%suggests that methods based upon linear programming (LP) are suited
+%for solving them. 
 %Because the number of possible error cases increases rapidly as the size of the
 %network increases, it is crucial that every error case is analyzed very
 %quickly.
