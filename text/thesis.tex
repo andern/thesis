@@ -168,7 +168,7 @@ The maximum power
 supply can be calculated by an objective function that represents the power
 delivery profit. A typical objective function is
 \begin{equation}
-f(x) = - x^T \Phi D x + (c-g)^T x, \label{eq:goodtech}
+f(x) = x^T \Phi D x + (g-c)^T x, \label{eq:goodtech}
 \end{equation}
 where $f(x)$ is the objective value ($E/s$) as a function of $x$, $x$ is the
 branch power vector ($W$), $g$ is a vector containing specific power
@@ -183,8 +183,8 @@ We simplify (\ref{eq:goodtech}) to
 \begin{equation}
     f(x) = x^T H x + b^T x, \label{eq:obj}
 \end{equation}
-where $H = - \Phi D$ is a diagonal matrix that represents quadratic cost terms
-($E/(W^2 s)$) and $b = c - g$ is a vector that represents linear cost terms
+where $H = \Phi D$ is a diagonal matrix that represents quadratic cost terms
+($E/(W^2 s)$) and $b = g - c$ is a vector that represents linear cost terms
 ($E/J$) \cite{digernes}.
 
 The maximum power delivery capacity can be defined as an optimization problem
