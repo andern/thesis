@@ -14,8 +14,8 @@ Testing the performance of our methods on specific instances will tell us
 how it performs on those specific instances, but not how it performs in general.
 While the methods developed in this thesis are specified for instances with
 specific properties, the methods do not \emph{require} these properties.
-To test the performance of our methods in general, we need to test it
-on random instances
+To test the performance of our methods in general, we need to test them
+on random instances.
 
 In several experiments, we will test our methods on randomly generated
 instances.
@@ -25,9 +25,9 @@ the following properties:
 \item We let $m = \lfloor \frac{7}{20}n \rfloor$ in order to make our random
       instances roughly as sparse as those presented in Section
       \ref{sec:instances}.
-\item For each element $b_i$ in vector $b$, $b_i$ has a 50 percent probability of being 0.
-\item For each diagonal element $h_{ii}$ in matrix $H$, $h_{ii}$ has a 50 percent
-      probability of being 0.
+\item For each element $b_i$ in vector $b$, $b_i$ has probability $50\%$ of being 0.
+\item For each diagonal element $h_{ii}$ in matrix $H$, $h_{ii}$ has
+      probability $50\%$ of being 0.
 \item If the elements in the two last points are \emph{not} 0, then the values lie in
       the intervals $10 \leq |b_i| \leq 70$ for $b$, and
       $10^{-5} \leq h_i \leq 10^{-1}$ for $H$, as specified in the beginning of

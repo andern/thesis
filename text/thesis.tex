@@ -12,6 +12,7 @@
 \usepackage{tikz}
 \usetikzlibrary{intersections,positioning,calc,arrows,shapes,
                 decorations.pathreplacing,spy,automata}
+\definecolor{tleblue}{RGB}{178,175,255}
 
 \usepackage{pgfplots}
 %\pgfplotsset{compat=1.7}
@@ -33,6 +34,33 @@
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
+
+\makeatletter
+\newcommand\ackname{Acknowledgements}
+\if@titlepage
+  \newenvironment{acknowledgements}{%
+      \titlepage
+      \null\vfil
+      \@beginparpenalty\@lowpenalty
+      \begin{center}%
+        \bfseries \ackname
+        \@endparpenalty\@M
+      \end{center}}%
+     {\par\vfil\null\endtitlepage}
+\else
+  \newenvironment{acknowledgements}{%
+      \if@twocolumn
+        \section*{\abstractname}%
+      \else
+        \small
+        \begin{center}%
+          {\bfseries \ackname\vspace{-.5em}\vspace{\z@}}%
+        \end{center}%
+        \quotation
+      \fi}
+      {\if@twocolumn\else\endquotation\fi}
+\fi
+\makeatother
 
 \makeatletter
 \tikzset{circle split part fill/.style  args={#1,#2}{%
@@ -60,19 +88,20 @@ insert path={
 \thispagestyle{empty}
 \newpage
 
-\thispagestyle{empty}
 \begin{abstract}
 Goodtech and MathConsult have developed a tool called PROMAPS.
 It calculates the power delivery as a function of demand, and the probability
-for undelivered energy for each load branch in the system, and in the
-system as a whole. This problem is formulated as several closely related 
-quadratic programming (QP) problems, whose only difference is in the column
-bounds. A major part of the bottleneck of PROMAPS, has been found to be
-calls to a QP solver. The aim of this thesis is to develop a fast solver
-with the characteristics of these QP problems. The characteristics of the
+for undelivered power for each load branch in the system, and in the
+system as a whole. This problem is formulated as many closely related 
+quadratic programming (QP) problems, whose only difference is in the variable
+bounds. These QP problems have several common characteristics.
+A major computational bottleneck of PROMAPS, has been found to be
+calls to a QP solver. The aim of this thesis is to develop a fast solver for
+several closely related QP problems with these common characteristics.
+The characteristics of the
 QP problems suggest that methods based upon linear programming (LP) are
 suited for solving them. In this thesis, we present an iterative QP solver
-using methods based upon linear programming. We also present a tree structured
+using methods based upon LP. We also present a tree structured
 method that reduces the number of calls to a QP solver by a significant amount.
 
 %Goodtech and MathConsult have developed tools to compute the reliability of
@@ -102,6 +131,17 @@ method that reduces the number of calls to a QP solver by a significant amount.
 \end{abstract}
 \newpage
 
+\thispagestyle{empty}
+\begin{acknowledgements}
+I would like to express my gratitude to my supervisor, Professor Dag Haugland, for his
+invaluable feedback and his frequent proofreading throughout this work.
+
+I would also like to thank Goodtech and especially Trond Tollefsen for trusting
+me with this task, and for providing useful data when necessary.
+\end{acknowledgements}
+
+\thispagestyle{empty}
+
 %\end{@twocolumnfalse}
 %]
 %{
@@ -109,7 +149,7 @@ method that reduces the number of calls to a QP solver by a significant amount.
 %    {\fnsymbol{footnote}}
 %  \footnotetext[1]{University of Bergen, Department of Informatics, P.O.Box 7803, N-5020 Bergen, Norway}
 %}
-\setcounter{page}{3}
+\setcounter{page}{4}
 \tableofcontents
 \newpage
 
@@ -139,7 +179,7 @@ planning, for analyzing different alternatives for network reinforcement's
 \end{quote}
 
 Goodtech and MathConsult have developed a tool called PROMAPS
-(Probability Methods Applied to Power Systems). It calculates the power
+(PRObability Methods Applied to Power Systems). It calculates the power
 delivery as a function of demand, and the probability for undelivered
 energy for each load branch in the system, and in the system as a whole.
 According to Svendsen et al. \cite{trond}, a typical calculation sequence
@@ -164,9 +204,9 @@ Among these six functions, the third main function has been identified as the
 most time-consuming. A major part of the third main function is a call to a
 QP solver\cite{trond}.
 
-The maximum power
-supply can be calculated by an objective function that represents the power
-delivery profit. A typical objective function is
+The optimal power
+supply can be calculated by minimizing an objective function that represents
+the power delivery costs. A typical objective function is
 \begin{equation}
 f(x) = x^T \Phi D x + (g-c)^T x, \label{eq:goodtech}
 \end{equation}
@@ -187,7 +227,7 @@ where $H = \Phi D$ is a diagonal matrix that represents quadratic cost terms
 ($E/(W^2 s)$) and $b = g - c$ is a vector that represents linear cost terms
 ($E/J$) \cite{digernes}.
 
-The maximum power delivery capacity can be defined as an optimization problem
+The optimal power supply can be defined as an optimization problem
 \begin{equation}
    \min_{x} f(x)\quad\textrm{subject to}~Ax = 0,
                              ~l \leq x \leq u \label{eq:thesisqp}
@@ -277,9 +317,10 @@ presented in this thesis as a future research topic.
 If we are to parallelize the naive method on a distributed computer, we need to
 analyze the amount of communication that is needed between processors.
 Given some number of breakdowns $\beta$ and an instance $\mathcal{Q}$ with
-$m$ rows and $n$ columns, we can map each subinstance of $\mathcal{Q}$ to some
-$\mathcal{Q}_i$ for $i=0,1,\ldots,\sigma(\beta,n) - 1$. Each processor needs to
-have a copy of the original instance $\mathcal{Q}$, which is $O(mn)$ in terms
+$m$ rows and $n$ columns in matrix $A$, we can map each subinstance of
+$\mathcal{Q}$ to some $\mathcal{Q}_i$ for $i=0,1,\ldots,\sigma(\beta,n) - 1$.
+Each processor needs
+a copy of the original instance $\mathcal{Q}$, which is $O(mn)$ in terms
 of memory size. Given a number of processors $p$, the main processor needs to
 transmit this problem to each processor, resulting in $O(pmn)$ in terms of
 communication before the calculations are started. Now, each
@@ -307,7 +348,7 @@ Consider a minimization problem
 \[
     \min f(x) = x^T H x + b^T x,
 \]
-where $H$ is diagonal a $n \times n$ matrix, and $x$ and $b$ are vectors in
+where $H$ is a diagonal $n \times n$ matrix, and $x$ and $b$ are vectors in
 $\mathbb{R}^n$.
 Since $H$ is diagonal, the contours of $f$ are ellipses
 whose axes are aligned with the coordinate directions\cite{nocedal}.

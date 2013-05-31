@@ -188,26 +188,26 @@ The current state of our system is easily represented by a quadratic program
 $\mathcal{Q}$ and a set of variables representing the current broken links in
 our network.
 As this set represents broken links, just like our modifiers $\mathcal{M}_k$
-represents breakdowns, we choose to denote the current state of the system
+represent breakdowns, we choose to denote the current state of the system
 by $\mathcal{M}$. 
 
 Given a variable $x$ to represent a link that breaks down, we need to
 update the  current state of the system. This is done with a simple
-\textit{union}
+union
 \[
-\mathcal{M} = \mathcal{M} \cup \left\{x\right\}.
+\mathcal{M} \leftarrow \mathcal{M} \cup \left\{x\right\}.
 \]
 Given a variable $x$ to represent a repaired link, we update the
-current state with a simple \textit{relative complement}
+current state with a simple relative complement
 \[
-\mathcal{M} = \mathcal{M} \setminus \left\{x\right\}.
+\mathcal{M} \leftarrow \mathcal{M} \setminus \left\{x\right\}.
 \]
 We call these two operations for \texttt{break} and \texttt{repair}, respectively.
 After every change of state in the system, we need to solve the subinstance
 of $\mathcal{Q}$ defined by the modifier $\mathcal{M}$.
 
 As the state of the system changes, we need to solve more and more subinstances.
-We can choose whether or not we want to store the modifiers and their respective
-solutions in a tree or not. If we choose to store distinct solutions in a tree,
+We can choose whether or not we store the modifiers and their respective
+solutions in a tree. If we store distinct solutions in a tree,
 we check the tree for a solution for the subinstance defined by the newly
 updated modifier, before we potentially solve the problem.

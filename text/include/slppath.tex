@@ -18,6 +18,11 @@
     \node[name intersections={of=xaxis and yaxis}] (d) at (intersection-1) {};
     \node[name intersections={of=line2 and yaxis}] (e) at (intersection-1) {};
 
+    % draw the big polygon
+    \fill[very thick,fill=tleblue] (a.center) -- (b.center) --
+                                                 (c.center) -- (d.center) --
+                                                 (e.center) -- cycle;
+
     \node at (1*1.5, 1*1.5) (qopt) {};
     \node at (0, 0) (x0) {};
     \node at (1.2*1.5,0.6*1.5) (x1) {};
@@ -31,11 +36,6 @@
 
     \draw[scale=1.5,-,thin] (x0.center) -- (x1.center) -- (x2.center) --
                             (x3.center) -- (qopt.center);
-
-    % draw the big polygon
-    \fill[very thick,fill=blue,fill opacity=0.1] (a.center) -- (b.center) --
-                                                 (c.center) -- (d.center) --
-                                                 (e.center) -- cycle;
 
     % draw the quadratic objective function
     \draw[scale=1.5,thin, dashed] plot[id=qobjpath1, raw gnuplot] function {

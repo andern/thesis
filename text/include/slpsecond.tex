@@ -7,7 +7,6 @@
     \draw[scale=1.5,name path=line1, domain=0.6:2.5] plot(\x,{-\x + 3});
     \draw[scale=1.5,name path=line2, domain=-0.2:1.6] plot(\x,{0.33*\x + 1.33});
     \draw[scale=1.5,name path=line3, domain=0.7:2.3] plot(\x,{\x - 1});
-    \draw[scale=1.5,name path=linesearch, domain=-0.1:2.1] plot(\x,{0.5*\x});
 
     % calculate intersection points
     \node[name intersections={of=line1 and line2}] (a) at (intersection-1) {};
@@ -15,6 +14,13 @@
     \node[name intersections={of=xaxis and line3}] (c) at (intersection-1) {};
     \node[name intersections={of=xaxis and yaxis}] (d) at (intersection-1) {};
     \node[name intersections={of=line2 and yaxis}] (e) at (intersection-1) {};
+
+    % draw the big polygon
+    \fill[very thick,fill=tleblue] (a.center) -- (b.center)
+                                              -- (c.center) -- (d.center)
+                                              -- (e.center) -- cycle;
+
+    \draw[scale=1.5,name path=linesearch, domain=-0.1:2.1] plot(\x,{0.5*\x});
 
     \node at (1.2*1.5,0.6*1.5) (x1) {};
     \node at (1.95*1.5, 0.35*1.5) (x1desc) {$x_1$};
@@ -37,14 +43,9 @@
                                                       ([xshift=-1cm] d) .. (d);
 
     \draw[scale=1.5,fill] (qopt) circle [radius=0.02];
-    \draw[scale=1.5,fill] (alpha) circle [radius=0.03];
+    \draw[scale=1.5,fill] (alpha) circle [radius=0.02];
 
     \draw [red, decorate,decoration={brace,mirror}] (d) -- (alpha);
-
-    % draw the big polygon
-    \fill[very thick,fill=blue,fill opacity=0.1] (a.center) -- (b.center)
-                                              -- (c.center) -- (d.center)
-                                              -- (e.center) -- cycle;
 
     % draw the quadratic objective function
     \draw[scale=1.5,thin, dashed] plot[id=qobjalpha, raw gnuplot] function {

@@ -10,13 +10,17 @@
                                                     node[above right=0.2cm] {};
     \draw[scale=1.5,name path=line3, domain=0.7:2.3] plot(\x,{\x - 1})
                                                     node[above right=0.2cm] {};
-
     % calculate intersection points
     \node[name intersections={of=line1 and line2}] (a) at (intersection-1) {};
     \node[name intersections={of=line1 and line3}] (b) at (intersection-1) {};
     \node[name intersections={of=xaxis and line3}] (c) at (intersection-1) {};
     \node[name intersections={of=xaxis and yaxis}] (d) at (intersection-1) {};
     \node[name intersections={of=line2 and yaxis}] (e) at (intersection-1) {};
+
+    % draw the big polygin
+    \fill[very thick,fill=tleblue] (a.center) -- (b.center) --
+                                                 (c.center) -- (d.center) --
+                                                 (e.center) -- cycle;
 
     % write the coordinates of the corners.
     \path let \p0 = (a) in node [above right=0.0cm of a] {($1.25$, $1.75$)};
@@ -38,11 +42,6 @@
                                                                      .. (d);
 
     \draw[scale=1.5,fill] (qopt) circle [radius=0.02];
-
-    % draw the big polygin
-    \fill[very thick,fill=blue,fill opacity=0.1] (a.center) -- (b.center) --
-                                                 (c.center) -- (d.center) --
-                                                 (e.center) -- cycle;
 
     \draw[scale=1.5,thick, red, name path=lobj, domain=-0.4:0.4] plot(\x, {-\x}) {};
 

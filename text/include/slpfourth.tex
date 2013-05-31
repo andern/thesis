@@ -18,6 +18,11 @@
     \node[name intersections={of=xaxis and yaxis}] (d) at (intersection-1) {};
     \node[name intersections={of=line2 and yaxis}] (e) at (intersection-1) {};
 
+    % draw the big polygin
+    \fill[very thick,fill=tleblue] (a.center) -- (b.center)
+                                              -- (c.center) -- (d.center)
+                                              -- (e.center) -- cycle;
+
     % write the coordinates of the corners.
     \path let \p0 = (a) in node [above right=0.0cm of a] {($1.25$, $1.75$)};
     \path let \p0 = (b) in node [right=0.1cm of b] {($2$, $1$)};
@@ -41,11 +46,6 @@
     \draw[scale=1.5,fill] (qopt) circle [radius=0.02];
 
     \draw[scale=1.5,fill] (x1) circle [radius=0.02];
-
-    % draw the big polygin
-    \fill[very thick,fill=blue,fill opacity=0.1] (a.center) -- (b.center)
-                                              -- (c.center) -- (d.center)
-                                              -- (e.center) -- cycle;
 
     \draw[scale=1.5,thick, red, name path=lobj, domain=0.48:1.28] plot(\x, {-0.625*\x + 1.35})
                                                                             {};
