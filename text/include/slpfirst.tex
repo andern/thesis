@@ -1,14 +1,14 @@
 \begin{tikzpicture}
     % grid and axes
-    \draw[scale=1.5,->,name path=xaxis] (-0.2,0) -- (2.2,0) node[right] {$x$};
-    \draw[scale=1.5,->,name path=yaxis] (0,-0.2) -- (0,2.2) node[above] {$y$};
+    \draw[thin, scale=1.5,->,name path=xaxis] (-0.2,0) -- (2.2,0) node[right] {$x$};
+    \draw[thin, scale=1.5,->,name path=yaxis] (0,-0.2) -- (0,2.2) node[above] {$y$};
 
     % draw lines
-    \draw[scale=1.5,name path=line1, domain=0.6:2.5] plot(\x,{-\x + 3})
+    \draw[thin, scale=1.5,name path=line1, domain=0.6:2.5] plot(\x,{-\x + 3})
                                                     node[above right=0.2cm] {};
-    \draw[scale=1.5,name path=line2, domain=-0.2:1.6] plot(\x,{0.33*\x + 1.33})
+    \draw[thin, scale=1.5,name path=line2, domain=-0.2:1.6] plot(\x,{0.33*\x + 1.33})
                                                     node[above right=0.2cm] {};
-    \draw[scale=1.5,name path=line3, domain=0.7:2.3] plot(\x,{\x - 1})
+    \draw[thin, scale=1.5,name path=line3, domain=0.7:2.3] plot(\x,{\x - 1})
                                                     node[above right=0.2cm] {};
     % calculate intersection points
     \node[name intersections={of=line1 and line2}] (a) at (intersection-1) {};

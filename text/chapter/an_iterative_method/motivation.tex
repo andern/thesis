@@ -27,33 +27,47 @@ Now, if $a = 0$ we are left with
 \[
 T_0(x) = b^Tx.
 \]
-We introduce a new function $g(x) = T_0(x)$, and we formulate a new LP problem
-that we call $\mathcal{L}$:
+Generally, for any QP problem $\mathcal{Q}$ as formulated in
+(\ref{eq:thesisqp}), there exists an associated LP problem $\mathcal{L}$
+formulated as:
 \[
 \min_{x \in \mathbb{R}^n} g(x)
 \quad \textrm{subject to}
 ~
 Ax = 0,
 ~
-l \le x \le u.
+l \le x \le u,
 \]
+where $g(x) = T_0(x)$.
+%We introduce a new function $g(x) = T_0(x)$, and we formulate a new LP problem
+%that we call $\mathcal{L}$:
+%\[
+%\min_{x \in \mathbb{R}^n} g(x)
+%\quad \textrm{subject to}
+%~
+%Ax = 0,
+%~
+%l \le x \le u.
+%\]
 We let $\hat{x}$ denote some optimal solution of $\mathcal{L}$, and let $x^*$
 denote some optimal solution of $\mathcal{Q}$.
 
-By minimizing $\mathcal{L}$, we can get an idea about the quality of
+We can get an idea about the quality of
 $\mathcal{L}$'s solution with respect to $\mathcal{Q}$ by substituting
-$\hat{x}$ into (\ref{eq:obj}) and checking how much the numerical value
+$\hat{x}$ into (\ref{eq:obj}) and seeing how much the numerical value
 deviates from the optimal objective value of $\mathcal{Q}$.
-For any QP problem and its linearized version, we denote this deviation by
-$\Delta$.
-More specifically:
+For any QP problem $\mathcal{Q}$ and its associated LP problem $\mathcal{L}$,
+we denote this deviation by
 \[
-\Delta = \left|\frac{f(\hat{x}) - f(x^*)}{f(x^*)}\right|
+\Delta = \left|\frac{f(\hat{x}) - f(x^*)}{f(x^*)}\right|.
 \]
 
 Figure \ref{fig:sparsobj} shows how $\Delta$ changes in respect to the sparsity
 in the objective function, both in the linear and the quadratic terms, on
-randomly generated networks with $200$ edges and $70$ nodes.
+randomly generated instances with $200$ edges and $70$ nodes\footnote{
+We discuss the
+characteristics of the randomly generated instances in the beginning of Chapter
+\ref{ch:experiments}.}.
 The percentage of zeroes in the diagonal elements of $H$ is represented
 by $x$, while the percentage of zeroes in $b$ is represented by $y$.
 Each data point represents the average $100\Delta$ over
