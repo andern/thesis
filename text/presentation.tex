@@ -1,0 +1,255 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{intersections,positioning,calc,arrows,shapes,
+                decorations.pathreplacing,spy,automata}
+\usepackage{pgfplots}
+\usepackage[ruled]{algorithm2e}
+\usetheme{boxes}
+\title[Fast Solver of Closely Related Quadratic Programming Problems]
+      {Fast Solver of Closely Related Quadratic Programming Problems}
+\author{Andreas Halle}
+\institute{Department of Informatics}
+\date{June 10, 2013}
+
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+
+\begin{document}
+
+
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+
+\section{Introduksjon}
+
+
+
+\begin{frame}{PROMAPS}
+\begin{itemize}
+\item Utviklet av Goodtech og MathConsult.
+\item Kalkurerer leveransepåliteligheten i et nettverk ved å kalkulere risiko
+      ved utfall av grener i nettverket.
+\item Dette er formulert som en rekke veldig like QP-problemer
+      (Quadratic Programming).
+\item QP-løseren en flaskehals. Skjermbildet (PROMAPS) oppdaterer seg hvert
+      femte minutt.
+\item \url{http://www.tu.no/energi/2011/10/07/her-beregnes-risikoen-for-svikt-i-kraftnettet}
+\end{itemize}
+\end{frame}
+
+
+
+%\begin{frame}{QP-problemet}
+%\begin{itemize}
+%\item Objektfunksjonen representerer kostnader for strømleveranse.
+%\item Sidekravene representerer nettverket, hvor summen av flyten i en
+%      node er lik $0$.
+%\item Mer spesifikt...
+%\end{itemize}
+%\end{frame}
+
+
+
+\begin{frame}{Objektfunksjonen}
+\[
+f(x) = x^T \Phi D x + (g - c)^T x
+\]
+\begin{itemize}
+\item $f(x)$ representerer leveransekostnader ($E/s$)
+\item $x$ representerer strømmen over grenene ($W$)
+\item $\Phi$ representerer strømtap ($1/W$)
+\item $D$ representerer overføringskostnader ($E/J$)
+\item $g$ representerer kostnader for å generere strøm ($E/J$)
+\item $c$ representerer leveransepris ($E/J$)
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Objektfunksjonen}
+\[
+f(x) = x^T H x + b^T x
+\]
+\begin{itemize}
+\item $H = \Phi D$ representerer kostnader ($E/(W^2 s)$)
+\item $b = g - c$ representerer kostnader ($E/J$)
+\item $H$ er en matrise på størrelsen $n \times n$
+\item $b$ og $x$ er vektorer i $\mathbb{R}^n$
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Optimeringsproblemet}
+Vi definerer et konveks QP-problem
+\[
+\min_{x \in \mathbb{R}^n} f(x) \quad \textrm{subject to} ~ Ax = 0, ~ l \leq x \leq u
+\]
+\begin{itemize}
+\item A er en $m \times n$ insidensmatrise for et strømnettverk
+\item $m$ noder
+\item $n$ grener
+\item $l$ og $u$ er nedre og øvre grenkapasitet ($W$)
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Utfall}
+Vi ønsker å modellere utfall.
+\begin{itemize}
+\item Setter $l_i = u_i = 0$
+\item Goodtech ønsker å løse QP-problemet for ulike utfall
+\item Definerer subinstanser for kombinasjoner av grener som faller ut
+\item Instanse er et QP-problem uten utfall
+\item Subinstanse er en instanse med utfall
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Utfall}
+\begin{itemize}
+\item Vil løse så mange subinstanser som mulig.
+\item Usannsynlig at det er mange utfall.
+\item Vi prøver å løse alle subinstanser som har mindre eller lik $\beta$ utfall.
+\end{itemize}
+\[
+\sigma (\beta, n) = \sum_{j=0}^{\beta} \binom{n}{j}
+\]
+\end{frame}
+
+
+
+\begin{frame}{Subinstanser}
+\begin{itemize}
+\item En mengde av variabler som representerer utfall $\mathcal{M}_k$
+\item $k = \sum_{j \in \mathcal{M}_k}^{} 2^{j-1}$
+\item Eks. $\mathcal{M}_k = \left\{1,3,5 \right\}$. $k = 21$
+\item En subinstanse $\mathcal{Q}_k$ defineres av $\mathcal{M}_k$
+\item Optimal løsning til subinstanse $\mathcal{Q}_k$ noterer vi som $x_k^*$
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Instanser fra Goodtech}
+\input{include/newhistH}
+\end{frame}
+
+
+
+\begin{frame}{Instanser fra Goodtech}
+\begin{table}[ht!]
+    \centering
+    \caption{Størrelse for hver instanse}
+    \begin{tabular}{lrrr}
+    Problemstørrelse & \textit{small} & \textit{large} & \textit{vlarge} \\\hline
+    Rader        & 82             & 328            & 1127 \\
+    Kolonne      & 238            & 952            & 3437 \\
+    Ikke-nuller A & 348            & 1392           & 4840 \\
+    Ikke-nuller H & 108            & 432            & 894 \\
+    \end{tabular}
+    \label{table:sizes}
+\end{table}
+\begin{table}[ht!]
+    \centering
+    \caption{Verdier i objektfunksjonen}
+
+    \begin{tabular}{lrr}
+      & \textit{small} og \textit{large}         & \textit{vlarge} \\\hline
+    $\max(h_{ii})$      & $2.9614 \times 10^{-2}$ & $4.9011 \times 10^{-2}$ \\
+    $\min(h_{ii})$      & $4.9290 \times 10^{-5}$ & $1.1026 \times 10^{-5}$ \\
+$\textrm{mean}(h_{ii})$ & $5.2864 \times 10^{-3}$ & $5.8984 \times 10^{-3}$ \\
+    $\max(b_{i})$       & 20                      & 20 \\
+    $\min(b_{i})$       & -70                     & -50 \\
+    \end{tabular}
+    \label{table:maxmin}
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}{Instanser fra Goodtech}
+\begin{itemize}
+\item Vi ser at det lineære leddet har mye høyere verdier enn det kvadratiske
+\item Prøver å lineærisere objektfunksjonen
+\item Lineær taylor-utvikling av objektfunksjonen i punkt $a$: \\
+      $T_a(x) = -a^T H a + 2a^T H x + b^T x$ \\
+      $T_0(x) = b^T x$
+\end{itemize}
+Definerer et LP $\mathcal{L}$ for hvert QP $\mathcal{Q}$
+\[
+\min_{x \in \mathbb{R}^n} g(x) \quad \textrm{subject to} ~ Ax = 0, ~ l \leq x \leq u
+\]
+\begin{itemize}
+\item $g(x) = T_0(x) = b^T x$
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Hvor like er $\mathcal{L}$ og $\mathcal{Q}$?}
+\begin{itemize}
+\item Optimal løsning til $\mathcal{Q}$ noteres $x^*$
+\item Optimal løsning til $\mathcal{L}$ noteres $\hat{x}$
+\item Vi noterer avvik mellom $f(\hat{x})$ og $f(x^*)$ for
+      $\Delta = \left| \frac{f(\hat{x}) - f(x^*)}{f(x^*)} \right|$
+\item Vi genererer tilfeldige instanser og sjekker $\Delta$
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{$100\Delta$}
+\begin{figure}[ht!]
+\input{include/delta3d}
+\caption{Avvik som en funksjon av tettheten i objektfunksjonen. $x$ er prosent
+         nuller på diagonalen til $H$. $y$ er prosent nuller i $b$}
+\end{figure}
+\end{frame}
+
+
+
+\begin{frame}{Hvor like er $\mathcal{L}$ og $\mathcal{Q}$?}
+Når vi løser $\mathcal{L}$ så har vi allerede oppnådd minst $95\%$ av optimal
+målfunksjonsverdi for $\mathcal{Q}$!
+\begin{itemize}
+\item Metode basert på successive linear programming (SLP)
+\item Lar vi startverdien $x_0 = 0$, når vi rundt $95\%$ av optimal målfunksjonsverdi etter
+      første iterasjon
+\item Taylor-utvikling i $x_k$ noterer vi som $T_k$
+\item Definerer $\mathcal{L}_k$ som LP-problemet å minimere $T_k$ underlagt
+      sidekravene til $\mathcal{Q}$.
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Slp}
+\input{include/slp_algo}
+\end{frame}
+
+
+
+\begin{frame}{Et eksempel}
+\[
+\begin{array}{lcrcrcl}
+\textrm{minimize}           & &   (x-1)^2 &+&   (y-1)^2 & - &  2 \\
+\textrm{subject to}         & &         x &+&         y &\leq& 3 \\
+                            & &         x &-&         y &\leq& 1 \\
+                            & &         x &+&       3 y &\leq& 4 \\
+                 \multicolumn{5}{r}{x,y}                &\geq& 0,
+\end{array}
+\]
+\end{frame}
+
+
+
+\end{document}
