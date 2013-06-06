@@ -92,8 +92,65 @@
 \item Her ser vi stien som algoritmen tar fra startpunktet til vi terminerer
 \item Etter at vi har løst en instans, så er det veldig sannsynlig at vi skal
       løse et veldig likt problem like etterpå, med en liten endring i
-      høyresiden av sidekravene.
+      høyresiden av sidekravene
 \item Hvis vi gjør det, så er det mulig at vi gjør den primale løsningen
-      ikke-tillatt. Vi vet at en endring i 
+      ikke-tillatt. Vi vet at den duale likningslisten fortsatt er tillatt
+      etter en endring i verdiene på høyresiden, så vi bruker den duale
+      simplex-metoden til å oppnå $x_0$
+\item Vi ser at hele linjesøket tar plass på denne linja, hvor optimale
+      punkt ligger, så linjesøket finner $x^*$ og terminerer
+\item Så slik fungerer metoden basert på SLP. Det neste vi skal se på er ikke
+      en egen optimeringsalgoritme, men heller en måte å redusere antall
+      subinstanser vi trenger å løse med et kall til en QP-løser
+\item Så husk at vi har en mengde med grener som faller ut som vi noterer som
+      $\mathcal{M}_k$. Og vi definerer en subinstans $\mathcal{Q}_k$ utifra
+      $\mathcal{Q}$ og $\mathcal{M}_k$
+\item Vi noterer også en mengde med variabler som er $0$ i den optimale
+      løsningen til $\mathcal{Q}_k$ for $\mathcal{Z}_k$
+\item Et viktig poeng å dra fram her er at hvis vi tvinger en variabel som
+      allerede er $0$ i en optimal løsning til en instans, så vil ikke den
+      optimale løsningen endre seg
+\item I den ene instansen fra Goodtech, så viste det seg at kardinaliteten
+      til $\mathcal{Z}_0 = 1749$. Dvs. at det var 1749 variabler lik null i den
+      optimale løsningen. Det betyr at $2^{1749}$ subinstanser har samme
+      løsning
+\item Vi lager en tre-struktur over subinstanser som vi kan søke etter
+      løsninger i
+\item Jeg tenkte jeg skulle prøve å forklare tre-strukturen ved å vise hvordan
+      man konstruere treet jeg har her, men for å spare tid så konstruerer
+      vi det kun for to variabler. Vi bruker de samme mengdene som her, så
+      har vi en fasit å sjekke opp mot
+\item Hver node tilsvarer en subinstans, så vi har en modifikator, en optimal
+      løsning, og en mengde over nuller i løsningen
+\item Vi begynner først med å generere alle mulige kombinasjoner av utfall
+\item Vi begynner med rot-noden, som tilsvarer instansen uten utfall
+\item Og for hver node i treet, så vil hver modifikator til en barnnode være en
+      utvidelse av modifikatoren til noden
+\item Jeg går rett til eksperimentene jeg har utført.
+\item Her ser vi fire forskjellige implementasjoner. Slp her er algoritmen
+      som jeg viste fram tidligere. Clp er en åpen og gratis LP og QP-løser
+      ledet av en ansatt hos IBM.
+\item c-en her står for construct, som betyr at vi løser subinstansene ved
+      å konstruere et tre slik som jeg gjorde.
+\item n-en her står for naive, som betyr at den naivt løser alle kombinasjonene
+      av subinstanser.
+\item Tabellen her viser resultater av de fire implementasjonene når de løser
+      \textit{small} og 28442 av dens subinstanser
+\item Det er dessverre veldig tydelig at Slp ikke greier å henge med.
+\item Her ser vi et loglog-plot av verdiene i tabellen.
+\item I det neste eksperimentet prøver vi implementasjonene på de tre
+      instansene vi fikk tildelt. Vi ser her også dessverre at Slp
+      ikke henger med.
+\item På de neste to eksperimentene så genererer vi tilfeldige instanser med
+      lik karakteristikk som instansene fra Goodtech.
+\item Vi tester her kun Clp ettersom Slp ikke greide å henge med. Vi ser her at
+      tre-strukturen reduserer kjøretiden med opp til $23\%$ som $n$ øker.
+\item På det siste eksperimentet så genererer vi tilfeldige instanser med $50$
+      grener, og øker antall utfall.
+\item Ettersom $\beta$ øker, så ser vi at vi øker hastigheten med opp mot
+      $70\%$
+\item Her ser vi antall CPU-sekunder brukt i gjennomsnitt til å løse en
+      subinstans. Vi ser at ettersom $\beta$ øker, så beveger vi oss ned
+      mot en fjerdedel av tiden per subinstans
 \end{enumerate}
 \end{document}
