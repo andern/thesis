@@ -9,10 +9,11 @@
 \title[Fast Solver of Closely Related Quadratic Programming Problems]
       {Fast Solver of Closely Related Quadratic Programming Problems}
 \author{Andreas Halle}
-\institute{Department of Informatics}
+%\institute{Department of Informatics}
 \date{June 10, 2013}
 
 
+\definecolor{tleblue}{RGB}{178,175,255}
 \DeclareMathOperator*{\argmin}{arg\,min}
 
 
@@ -33,8 +34,7 @@
 \begin{frame}{PROMAPS}
 \begin{itemize}
 \item Utviklet av Goodtech og MathConsult.
-\item Kalkurerer leveransepåliteligheten i et nettverk ved å kalkulere risiko
-      ved utfall av grener i nettverket.
+\item Kalkurerer leveransepåliteligheten i et nettverk
 \item Dette er formulert som en rekke veldig like QP-problemer
       (Quadratic Programming).
 \item QP-løseren en flaskehals. Skjermbildet (PROMAPS) oppdaterer seg hvert
@@ -107,8 +107,8 @@ Vi ønsker å modellere utfall.
 \item Setter $l_i = u_i = 0$
 \item Goodtech ønsker å løse QP-problemet for ulike utfall
 \item Definerer subinstanser for kombinasjoner av grener som faller ut
-\item Instanse er et QP-problem uten utfall
-\item Subinstanse er en instanse med utfall
+\item Instans er et QP-problem uten utfall
+\item Subinstans er en instans med utfall
 \end{itemize}
 \end{frame}
 
@@ -132,8 +132,8 @@ Vi ønsker å modellere utfall.
 \item En mengde av variabler som representerer utfall $\mathcal{M}_k$
 \item $k = \sum_{j \in \mathcal{M}_k}^{} 2^{j-1}$
 \item Eks. $\mathcal{M}_k = \left\{1,3,5 \right\}$. $k = 21$
-\item En subinstanse $\mathcal{Q}_k$ defineres av $\mathcal{M}_k$
-\item Optimal løsning til subinstanse $\mathcal{Q}_k$ noterer vi som $x_k^*$
+\item En subinstans $\mathcal{Q}_k$ defineres av $\mathcal{M}_k$
+\item Optimal løsning til subinstans $\mathcal{Q}_k$ noterer vi som $x_k^*$
 \end{itemize}
 \end{frame}
 
@@ -148,7 +148,7 @@ Vi ønsker å modellere utfall.
 \begin{frame}{Instanser fra Goodtech}
 \begin{table}[ht!]
     \centering
-    \caption{Størrelse for hver instanse}
+    \caption{Størrelse for hver instans}
     \begin{tabular}{lrrr}
     Problemstørrelse & \textit{small} & \textit{large} & \textit{vlarge} \\\hline
     Rader        & 82             & 328            & 1127 \\
@@ -180,7 +180,7 @@ $\textrm{mean}(h_{ii})$ & $5.2864 \times 10^{-3}$ & $5.8984 \times 10^{-3}$ \\
 \begin{itemize}
 \item Vi ser at det lineære leddet har mye høyere verdier enn det kvadratiske
 \item Prøver å lineærisere objektfunksjonen
-\item Lineær taylor-utvikling av objektfunksjonen i punkt $a$: \\
+\item Lineær Taylor-utvikling av objektfunksjonen i punkt $a$: \\
       $T_a(x) = -a^T H a + 2a^T H x + b^T x$ \\
       $T_0(x) = b^T x$
 \end{itemize}
@@ -218,8 +218,7 @@ Definerer et LP $\mathcal{L}$ for hvert QP $\mathcal{Q}$
 
 
 \begin{frame}{Hvor like er $\mathcal{L}$ og $\mathcal{Q}$?}
-Når vi løser $\mathcal{L}$ så har vi allerede oppnådd minst $95\%$ av optimal
-målfunksjonsverdi for $\mathcal{Q}$!
+Oppnår $95\%$ optimal verdi etter løst $\mathcal{L}$.
 \begin{itemize}
 \item Metode basert på successive linear programming (SLP)
 \item Lar vi startverdien $x_0 = 0$, når vi rundt $95\%$ av optimal målfunksjonsverdi etter
@@ -245,9 +244,314 @@ målfunksjonsverdi for $\mathcal{Q}$!
 \textrm{subject to}         & &         x &+&         y &\leq& 3 \\
                             & &         x &-&         y &\leq& 1 \\
                             & &         x &+&       3 y &\leq& 4 \\
-                 \multicolumn{5}{r}{x,y}                &\geq& 0,
+                 \multicolumn{5}{r}{x,y}                &\geq& 0
 \end{array}
 \]
+\begin{itemize}
+\item $T_0 = -2 x - 2 y$ blir lineær objektfunksjon
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{$\mathcal{L}_0$}
+\begin{center}
+\input{include/slpfirst}
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}{Linjesøk}
+\begin{center}
+\input{include/slpsecond}
+\end{center}
+\begin{itemize}
+\item $\alpha = 0.6$
+\item $x_1 = 0.4x_0 + 0.6 \hat{x}_0 = (1.2, 0.6)$
+\item $T_1 = 0.4x - 0.8y - 1.8$
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}{$\mathcal{L}_1$}
+\begin{center}
+\input{include/slpthird}
+\end{center}
+\begin{itemize}
+\item $\alpha = 0.27$
+\item $x_2 = (0.88, 0.8)$
+\item $T_2 = -0.25x - 0.4y - 0.4$
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{$\mathcal{L}_2$}
+\begin{center}
+\input{include/slpfourth}
+\end{center}
+\begin{itemize}
+\item $\alpha = 0.23$
+\item $x_3 = (0.96, 1.02)$
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Sti}
+\begin{center}
+\input{include/slppath}
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}{Endrer et sidekrav}
+\begin{center}
+\input{include/slppractical1}
+\end{center}
+\begin{itemize}
+\item $-x + 3y \leq 4$
+\item $-x + 3y \leq 0$
+\item $\alpha = 0.2$
+\item $x_1 = 0.8x_0 + 0.2 \hat{x}_0 = (1.2,0.4) = x^*$
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Like optimale løsninger}
+\begin{itemize}
+\item En mengde $\mathcal{M}_k$ med grener som faller ut.
+\item En subinstans $\mathcal{Q}_k$ definert av $\mathcal{Q}$ og $\mathcal{M}_k$
+\item Optimal løsning til $\mathcal{Q}_k$ noteres som $x_k^*$
+\item En mengde med variabler som er $0$ i $x_k^*$ noteres som $\mathcal{Z}_k$.
+\item $2^n - 1$ subinstanser. $\left| \mathcal{Z}_0 \right| = 1749$ i \textit{vlarge}.
+\item $2^{1749} \approx 3 \times 10^{526}$ subinstanser har løsning $x_0^*$
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Søker etter $\mathcal{M}_{14} = \left\{  2,3,4 \right\}$}
+\begin{center}
+\input{include/maptreesets2}
+\[
+\small
+    \begin{array}{ll}
+        \mathcal{M}_0    = \left\{{}\right\}           & \mathcal{Z}_0    = \left\{{1,3}\right\} \\
+        \mathcal{M}_2    = \left\{{2}\right\}          & \mathcal{Z}_2    = \left\{{2,3,5}\right\} \\
+        \mathcal{M}_3    = \left\{{1,2}\right\}        & \mathcal{Z}_3    = \left\{{1,2,4,5}\right\} \\
+        \mathcal{M}_7    = \left\{{1,2,3}\right\}      & \mathcal{Z}_7    = \left\{{1,2,3,5}\right\} \\
+        \mathcal{M}_8    = \left\{{4}\right\}          & \mathcal{Z}_8    = \left\{{1,4,5}\right\} \\
+        \mathcal{M}_{10} = \left\{{2,4}\right\}        & \mathcal{Z}_{10} = \left\{{2,3,4,5}\right\}
+    \end{array}
+~
+    \begin{array}{ll}
+        \mathcal{M}_{12} = \left\{{3,4}\right\}        & \mathcal{Z}_{12} = \left\{{4,3,1}\right\} \\
+        \mathcal{M}_{15} = \left\{{1,2,3,4}\right\}    & \mathcal{Z}_{15} = \left\{{1,2,3,4}\right\} \\
+        \mathcal{M}_{16} = \left\{{5}\right\}          & \mathcal{Z}_{16} = \left\{{1,3,5}\right\} \\
+        \mathcal{M}_{28} = \left\{{3,4,5}\right\}      & \mathcal{Z}_{28} = \left\{{2,3,4,5}\right\} \\
+        \mathcal{M}_{29} = \left\{{1,3,4,5}\right\}    & \mathcal{Z}_{29} = \left\{{1,2,3,4,5}\right\}
+    \end{array}
+\]
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}{Søker etter $\mathcal{M}_{14} = \left\{  2,3,4 \right\}$}
+\begin{center}
+\input{include/maptreesets3}
+\[
+\small
+    \begin{array}{ll}
+        \mathcal{M}_0    = \left\{{}\right\}           & \mathcal{Z}_0    = \left\{{1,3}\right\} \\
+        \mathcal{M}_2    = \left\{{2}\right\}          & \mathcal{Z}_2    = \left\{{2,3,5}\right\} \\
+        \mathcal{M}_3    = \left\{{1,2}\right\}        & \mathcal{Z}_3    = \left\{{1,2,4,5}\right\} \\
+        \mathcal{M}_7    = \left\{{1,2,3}\right\}      & \mathcal{Z}_7    = \left\{{1,2,3,5}\right\} \\
+        \mathcal{M}_8    = \left\{{4}\right\}          & \mathcal{Z}_8    = \left\{{1,4,5}\right\} \\
+        \mathcal{M}_{10} = \left\{{2,4}\right\}        & \mathcal{Z}_{10} = \left\{{2,3,4,5}\right\}
+    \end{array}
+~
+    \begin{array}{ll}
+        \mathcal{M}_{12} = \left\{{3,4}\right\}        & \mathcal{Z}_{12} = \left\{{4,3,1}\right\} \\
+        \mathcal{M}_{15} = \left\{{1,2,3,4}\right\}    & \mathcal{Z}_{15} = \left\{{1,2,3,4}\right\} \\
+        \mathcal{M}_{16} = \left\{{5}\right\}          & \mathcal{Z}_{16} = \left\{{1,3,5}\right\} \\
+        \mathcal{M}_{28} = \left\{{3,4,5}\right\}      & \mathcal{Z}_{28} = \left\{{2,3,4,5}\right\} \\
+        \mathcal{M}_{29} = \left\{{1,3,4,5}\right\}    & \mathcal{Z}_{29} = \left\{{1,2,3,4,5}\right\}
+    \end{array}
+\]
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}{Søker etter $\mathcal{M}_{14} = \left\{  2,3,4 \right\}$}
+\begin{center}
+\input{include/maptreesets4}
+\[
+\small
+    \begin{array}{ll}
+        \mathcal{M}_0    = \left\{{}\right\}           & \mathcal{Z}_0    = \left\{{1,3}\right\} \\
+        \mathcal{M}_2    = \left\{{2}\right\}          & \mathcal{Z}_2    = \left\{{2,3,5}\right\} \\
+        \mathcal{M}_3    = \left\{{1,2}\right\}        & \mathcal{Z}_3    = \left\{{1,2,4,5}\right\} \\
+        \mathcal{M}_7    = \left\{{1,2,3}\right\}      & \mathcal{Z}_7    = \left\{{1,2,3,5}\right\} \\
+        \mathcal{M}_8    = \left\{{4}\right\}          & \mathcal{Z}_8    = \left\{{1,4,5}\right\} \\
+        \mathcal{M}_{10} = \left\{{2,4}\right\}        & \mathcal{Z}_{10} = \left\{{2,3,4,5}\right\}
+    \end{array}
+~
+    \begin{array}{ll}
+        \mathcal{M}_{12} = \left\{{3,4}\right\}        & \mathcal{Z}_{12} = \left\{{4,3,1}\right\} \\
+        \mathcal{M}_{15} = \left\{{1,2,3,4}\right\}    & \mathcal{Z}_{15} = \left\{{1,2,3,4}\right\} \\
+        \mathcal{M}_{16} = \left\{{5}\right\}          & \mathcal{Z}_{16} = \left\{{1,3,5}\right\} \\
+        \mathcal{M}_{28} = \left\{{3,4,5}\right\}      & \mathcal{Z}_{28} = \left\{{2,3,4,5}\right\} \\
+        \mathcal{M}_{29} = \left\{{1,3,4,5}\right\}    & \mathcal{Z}_{29} = \left\{{1,2,3,4,5}\right\}
+    \end{array}
+\]
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}{Søker etter $\mathcal{M}_{14} = \left\{  2,3,4 \right\}$}
+\begin{center}
+\input{include/maptreesets5}
+\[
+\small
+    \begin{array}{ll}
+        \mathcal{M}_0    = \left\{{}\right\}           & \mathcal{Z}_0    = \left\{{1,3}\right\} \\
+        \mathcal{M}_2    = \left\{{2}\right\}          & \mathcal{Z}_2    = \left\{{2,3,5}\right\} \\
+        \mathcal{M}_3    = \left\{{1,2}\right\}        & \mathcal{Z}_3    = \left\{{1,2,4,5}\right\} \\
+        \mathcal{M}_7    = \left\{{1,2,3}\right\}      & \mathcal{Z}_7    = \left\{{1,2,3,5}\right\} \\
+        \mathcal{M}_8    = \left\{{4}\right\}          & \mathcal{Z}_8    = \left\{{1,4,5}\right\} \\
+        \mathcal{M}_{10} = \left\{{2,4}\right\}        & \mathcal{Z}_{10} = \left\{{2,3,4,5}\right\}
+    \end{array}
+~
+    \begin{array}{ll}
+        \mathcal{M}_{12} = \left\{{3,4}\right\}        & \mathcal{Z}_{12} = \left\{{4,3,1}\right\} \\
+        \mathcal{M}_{15} = \left\{{1,2,3,4}\right\}    & \mathcal{Z}_{15} = \left\{{1,2,3,4}\right\} \\
+        \mathcal{M}_{16} = \left\{{5}\right\}          & \mathcal{Z}_{16} = \left\{{1,3,5}\right\} \\
+        \mathcal{M}_{28} = \left\{{3,4,5}\right\}      & \mathcal{Z}_{28} = \left\{{2,3,4,5}\right\} \\
+        \mathcal{M}_{29} = \left\{{1,3,4,5}\right\}    & \mathcal{Z}_{29} = \left\{{1,2,3,4,5}\right\}
+    \end{array}
+\]
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}{Algoritme: \texttt{find}}
+\begin{algorithm}[H]
+\caption{\texttt{find($\mathcal{M}_l$, $v_k$)}}
+\label{alg:find}
+\input{include/find_algo}
+\end{algorithm}
+\end{frame}
+
+
+\begin{frame}{Eksperiment 1}
+%\begin{itemize}
+%\item Vi løser \textit{small}, med $\sigma(2, 238) = 28 442$ subinstanser
+%\end{itemize}
+Vi løser \textit{small}, med $\sigma(2, 238) = 28 442$ subinstanser
+\begin{table}[ht!]
+\centering
+\caption{Resultater av de forskjellige implementasjonen med endrende toleranse.}
+\begin{tabular}{rrrrr}
+$\epsilon$ & \texttt{cClp} & \texttt{cSlp} & \texttt{nClp} & \texttt{nSlp} \\ \hline
+$10^{-1}$ & 45.51 & 55.61 & 72.32 & 85.51 \\
+$10^{-2}$ & 46.34 & 55.89 & 73.11 & 85.51 \\
+$10^{-3}$ & 51.12 & 59.04 & 75.60 & 85.28 \\
+$10^{-4}$ & 52.46 & 73.79 & 77.83 & 107.39 \\
+$10^{-5}$ & 54.48 & 232.53 & 81.16 & 355.47 \\
+$10^{-6}$ & 65.42 & 1363.46 & 93.29 & 2022.25 \\
+$10^{-7}$ & 70.78 & 6522.91 & 100.85 & 9395.92
+\end{tabular}
+\label{table:expone}
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}{Eksperiment 1}
+\begin{figure}[ht!]
+    \centering
+    \input{include/small_tolerance}
+    \caption{Kjøretid i CPU-sekunder for å løse \textit{small} og dens subinstanser.}
+    \label{fig:smalltolerance}
+\end{figure}
+\end{frame}
+
+
+
+\begin{frame}{Eksperiment 2}
+\begin{table}
+\centering
+\caption{Kjøretid i CPU-sekunder for å løse de tre instansene.}
+\label{table:eps4instances}
+\begin{tabular}{crrr}
+\textrm{Implementation} & \textit{small} & \textit{large} & \textit{vlarge} \\ \hline
+\texttt{cClp}           & 0.52           & 9.55           & 76.18 \\
+\texttt{cSlp}           & 0.71           & 32.88          & 585.60 \\
+\texttt{nClp}           & 0.65           & 11.68          & 157.53 \\
+\texttt{nSlp}           & 0.89           & 39.87          & 1173.74
+\end{tabular}
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}{Tilfeldige instanser}
+\begin{itemize}
+\item $m = \lfloor \frac{7}{20}n \rfloor$
+\item $b_i$ har 50\% sannsynlighet for å være null. Ellers $10 \leq | b_i | \leq 70$.
+\item $h_{ii}$ har 50\% sannsynlighet for å være null. Ellers $10^{-5} \leq h_{ii} \leq 10^{-1}$.
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Eksperiment 3}
+\begin{table}[ht!]
+    \centering
+    \caption{Kjøretid for å løse tilfeldige instanser med økende $n$. $\beta = 1$.}
+    \label{table:expfour}
+\begin{tabular}{rrrc}
+    $n$ & \texttt{cClp}  & \texttt{nClp}  & Relative Speedup \\ \hline
+    500 & 4.9   & 5.9   & 16.9\% \\
+   1000 & 42.1  & 53.0  & 20.6\% \\
+   1500 & 181.5 & 234.5 & 22.6\% \\
+   2000 & 547.1 & 710.2 & 23.0\%
+\end{tabular}
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}
+\begin{table}[ht!]
+\centering
+\caption{Kjøretid i CPU-sekunder for $n = 50$ og økende $\beta$.}
+\begin{tabular}{rrrcr}
+      $\beta$ & \texttt{cClp} & \texttt{nClp} & Relativ Speedup & Distinkte løsninger\\ \hline
+       1  & 0.03 & 0.04 & 25.0\% & 37.4 ($74.3$\%) \\
+       2  & 0.64 & 0.94 & 31.9\% & 744.3 ($58.3$\%) \\
+       3  & 7.06 & 15.90 & 55.6\% & 9484.7 ($45.4$\%) \\
+       4  & 77.59 & 188.83 & 58.9\% & 82262.5 ($32.8$\%) \\
+       5  & 586.54 & 1758.23 & 66.6\% & 574685.0 ($24.2$\%) \\
+\end{tabular}
+\label{table:exptwo}
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}
+\input{include/construct_incb}
 \end{frame}
 
 
