@@ -1,0 +1,99 @@
+\documentclass[a4paper,twocolumn]{report}
+\usepackage[utf8]{inputenc}
+\begin{document}
+\begin{enumerate}
+\item Velkommen til presentasjon av masteroppgaven min
+\item Fortelle litt om hvordan oppgaven har blitt til, eller oppstått
+\item Goodtech og Mathconsult har utviklet et program PROMAPS, som kalkulerer
+      leveransepåliteligheten i et nettverk ved å kalkulere risiko ved utfall
+      av grener i nettverket
+\item Kommer tilbake til dette
+\item Dette er formulert som et QP-problem, eller en rekke veldig like
+      QP-problemer
+\item Det viser seg at QP-løseren er flaskehals. Og derfor oppdaterer
+      skjermbildet seg hvert 5. minutt
+\item Vi skal se på et skjermbilde av PROMAPS her i en artikkel fra Teknisk
+      Ukeblad
+\item Tar en titt på QP-problemet
+\item Objektfunksjonen representerer leveransekostnader, det her er da
+      pengeenhet per sekund, eller penger per sekund
+\item $x$ er en ukjent, og representerer antall Watt vi sender over hver gren
+\item $\Phi$ representerer strømtap over hver gren i Watt
+\item $D$ er kostnader for å sende strøm over hver gren, penger per Joule
+\item $g$ er kostnader for å generere strøm i penger per Joule
+\item $c$ er leveransepris i penger per Joule, dette er da altså inntekt
+\item Vi forkorter dette til en mer gjenkjennelig objektfunksjon
+\item Her representerer både $H$ og $b$ kostnader. $H$ er en diagonalmatrise og
+      er positivt semidefinitt, som betyr at vi jobber med et konveks
+      QP-problem
+\item Vi definerer et QP-problem min... underlagt $Ax = 0$, og $x$ mellom $l$
+      $u$. $l$ og $u$ er nedre og øvre grenkapasitet i Watt
+\item Goodtech vil løse QP-problemet vi definerte, bare med utfall i
+      forskjellige grener. Vi modellerer dette ved å sette $l_i=u_i=0$
+\item Vi har et QP problem $\mathcal{Q}$ som definert, uten utfall, som vi
+      kaller en instans
+\item Så har vi også subinstanser $\mathcal{Q}_k$ som er en instans med et
+      eller flere utfall
+\item Vi vil helst løse så mange subinstanser som mulig, for å få mest mulig
+      nøyaktig analyse
+\item For et problem med $n$ grener, er det $2^n$ subinstanser. Men usannsynlig
+      det er mange utfall
+\item Prøver å begrense antall subinstanser ved å sette en realistisk grense
+      for antall utfall
+\item Kalkulerer antall utfall ved funksjonen sigma
+\item Hver variabel representerer en gren, så vi har en mengde med variabler
+      som representerer utfall, som vi noterer $\mathcal{M}_k$, for
+      modifikator
+\item Vi har en en-til-en korrenspondanse mellom kombinasjoner av utfall og
+      deres indekser
+\item Vi har en subinstans $\mathcal{Q}_k$ som defineres av $\mathcal{Q}$ og
+      $\mathcal{M}_k$, og vi noterer dens optimale løsning $x_k^*$
+\item Jeg fikk tilsendt tre instanser av Goodtech, small, large og vlarge. Her
+      ser vi verdiene på diagonalen til $H$, etter kolonne
+\item Vi ser at alle verdiene er lavere enn $10^{-1}$, og at de fleste verdiene
+      er lavere enn $10^{-2}$
+\item Videre så ser vi her størrelsen på de tre instansene, og merk at over
+      $50\%$ av diagonalelementene i $H$ er $0$ i alle tre instansene
+\item Et viktig poeng å dra fram her er at verdiene i det lineære leddet er mye
+      høyere enn verdiene i det kvadratiske leddet, så det gir oss motivasjon
+      til å se på metoder basert på lineær programmering
+\item Hva skjer hvis vi bare ignorerer det kvadratiske leddet? Har det stor
+      innflytelse på optimal verdi?
+\item Vi noterer en lineær Taylor-utvikling av $f$ i punktet $a$ for $T_a$,
+      og da er $T_0 = b^T x$
+\item Vi definerer et LP program hvor vi minimerer det lineære leddet,
+      underlagt de samme sidekravene som i QP-problemet
+\item Kort fortalt her så noterer vi avviket mellom optimal løsning til
+      $\mathcal{L}$ og $\mathcal{Q}$ for $\Delta$
+\item Vi ser her et 3D-plot som viser avviket mellom $\mathcal{L}$ og
+      $\mathcal{Q}$ som en funksjon av tettheten i objektfunksjonen
+\item Vi ser at tettheten i $H$ har veldig lite innflytelse på avviket
+\item Vi ser også at $b$ har mye større innflytelse på avviket, men legg
+      merke til at avviket er aldri større enn $5\%$, det er faktisk såvidt
+      over $4\%$
+\item På grunn av dette kommer altså successive linear programming inn i
+      bildet. Vi vil oppnå $95\%$ av optimal verdi etter første iterasjon
+      hvis vi begynner i $0$
+\item Her har vi selge algoritmen, vi gjør først en taylorutvikling i det
+      punktet vi står i, så løser vi $\mathcal{L}$
+\item Så gjør vi et LINJESØK mellom punktet vi står i og optimale løsning til
+      $\mathcal{L}$. Vi finner altså optimal målfunksjonsverdi av alle punktene
+      på linja mellom de to endepunktene
+\item Så flytter vi oss til det punktet vi fant i linjesøket, og fortsetter
+      algoritmen helt til vi når termineringskravet vårt
+\item Et eksempel. Vi minimerer dette problemet. Det optimalet punktet er her
+      $x = 1$ og $y = 1$ hvor optimale objektverdi er $-2$
+\item Vi ser her den lineære objektfunksjonen
+\item Her har vi et bilde over det tilatte området. Det i rødt representerer
+      ting som har med LP å gjøre. Vi ser her den lineære objektfunksjonen.
+\item Vi gjør et linjesøk her mellom $x_0$ og $\hat{x}_0$ som vist her
+\item Gjør et nytt linjesøk her, og finner da $x_2$
+\item Nytt linjesøk, og havner på $x_3 = (0.96,1.02)$
+\item Her ser vi stien som algoritmen tar fra startpunktet til vi terminerer
+\item Etter at vi har løst en instans, så er det veldig sannsynlig at vi skal
+      løse et veldig likt problem like etterpå, med en liten endring i
+      høyresiden av sidekravene.
+\item Hvis vi gjør det, så er det mulig at vi gjør den primale løsningen
+      ikke-tillatt. Vi vet at en endring i 
+\end{enumerate}
+\end{document}
