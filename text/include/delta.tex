@@ -1,0 +1,8 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        xlabel=Prosent nuller i $H$,
+        ylabel=$100\Delta$]
+
+        \addplot table[x=h,y=dev] {include/data/delta.dat};
+\end{axis}
+\end{tikzpicture}
